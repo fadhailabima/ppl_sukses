@@ -10,8 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <script src="js/jquery.min.js"></script>
 </head>
+
 
 <body style="background-color:#bfdeeb">
 
@@ -24,7 +24,7 @@
         </svg>
     </a>
     <ul class="dropdown-menu text-light" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="">Logout</a></li>
+        <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
 
     </ul>
 
@@ -46,124 +46,181 @@
 
     <!--form-->
     <div class="me-5 ms-5">
+        
         <br>
         <ul class="nav nav-pills justify-content-center text-dark">
             <li class="nav-item"><a href="/dashboardmahasiswa" class="nav-link text-dark"><b>Home</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/profile/edit" class="nav-link active" aria-current="page" style="background-color:#101E31"><b>Edit Profil</b></a></li>
-            <li class="nav-item"><a href="entry_irs.php" class="nav-link text-dark"><b>Data IRS</b></a></li>
-            <li class="nav-item"><a href="entry_khs.php" class="nav-link text-dark"><b>Data KHS</b></a></li>
-            <li class="nav-item"><a href="entry_pkl.php" class="nav-link text-dark"><b>Data PKL</b></a></li>
-            <li class="nav-item"><a href="entry_skripsi.php" class="nav-link text-dark"><b>Data Skripsi</b></a></li>
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page" style="background-color:#101E31"><b>Edit Profil</b></a></li>
+            <li class="nav-item"><a href="" class="nav-link text-dark"><b>Data IRS</b></a></li>
+            <li class="nav-item"><a href="" class="nav-link text-dark"><b>Data KHS</b></a></li>
+            <li class="nav-item"><a href="" class="nav-link text-dark"><b>Data PKL</b></a></li>
+            <li class="nav-item"><a href="" class="nav-link text-dark"><b>Data Skripsi</b></a></li>
         </ul>
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 bg-secondary">
-                <h6 class="m-0 font-weight-bold text-white">Isi Data Diri Mahasiswa</h6>
+        <div class="container mt-4 flex justify-center items-center">
+            <h2 class="text-4xl text-center">Profile Mahasiswa</h2>
+        </div>
+        @if (session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
             </div>
-            @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
+        @endif
+        <div class="container mx-auto px-4 mt-4 bg-white rounded-2xl max-w-screen-md">
+            <div class="flex justify-center">
+                <div class="row">    
+                    <div class="col-md-4 col-lg-2 col-sm-4 w-1/4 mt-4 text-center">
+                        <img src="{{ asset('storage/photo/'.auth()->user()->photo) }}" class="rounded-circle img-thumbnail" style="height: 130px; width: 130px; position: absolute; margin: auto auto; left: 0; right: 475px">
+
+                        {{-- <br>
+                        <form method="POST"  action="/dashboardmahasiswa/profile/edit" enctype="multipart/form-data">
+                            @method('put')
+                            @csrf
+                            <input type="hidden" name="id_mhs" value="">
+                            <div>
+                                <label for="photo" class="block text-sm font-medium text-gray-700">Input Foto Profil :</label>
+                                <input type="file" name="photo" id="photo" class="form-control @error('photo')
+                                is-invalid    
+                                @enderror  mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                    value="{{ old('photo', auth()->user()->photo) }}">
+                                @error('nomortlp')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <button type="submit" class="bg-black text-white text-center py-2 px-4 mt-2 rounded" name="submit" value="submit">Simpan</button>
+                        </form> --}}
+                    </div>
+                    <div class="col-md-8 col-lg-10 col-sm-8 w-3/4">
+                        <form class="user" method="POST" action="/dashboardmahasiswa/profile/edit" enctype="multipart/form-data">
+                            @method('put')
+                            @csrf
+                            <div class="mb-3 row mt-4">
+                                <label for="name"  class="col-sm-4 col-form-label">Nama :</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="text"
+                                        class="form-control 
+                                        @error('name')
+                                    is-invalid    
+                                    @enderror"
+                                        id="name" name="name" 
+                                        value="{{ old('name', auth()->user()->name) }}">
+                                    @error('name')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="nim" class="col-sm-4 col-form-label">NIM :</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="text"
+                                        class="form-control 
+                                    @error('nim')
+                                    is-invalid    
+                                    @enderror"
+                                        id="nim" name="nim"
+                                        value="{{ old('nim', auth()->user()->nim) }}" disabled>
+                                    @error('nim')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="jurusan" class="col-sm-4 col-form-label">Jurusan :</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="text"
+                                        class="form-control 
+                                    @error('jurusan')
+                                    is-invalid    
+                                    @enderror"
+                                        id="jurusan" name="jurusan" required
+                                        value="{{ old('jurusan', auth()->user()->jurusan) }}">
+                                    @error('jurusan')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="angkatan" class="col-sm-4 col-form-label">Angkatan :</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="text"
+                                        class="form-control 
+                                        @error('angkatan')
+                                    is-invalid    
+                                    @enderror"
+                                        id="angkatan" name="angkatan"
+                                        value="{{ old('angkatan', auth()->user()->angkatan) }}" disabled>
+                                    @error('angkatan')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="alamat" class="col-sm-4 col-form-label">Alamat :</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="text"
+                                        class="form-control 
+                                        @error('alamat')
+                                    is-invalid    
+                                    @enderror"
+                                        id="alamat" name="alamat" required
+                                        value="{{ old('alamat', auth()->user()->alamat) }}">
+                                    @error('alamat')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="nomortlp" class="col-sm-4 col-form-label">Nomor Telepon :</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="text"
+                                        class="form-control 
+                                        @error('nomortlp')
+                                    is-invalid    
+                                    @enderror"
+                                        id="nomortlp" name="nomortlp" required
+                                        value="{{ old('nomortlp', auth()->user()->nomortlp) }}">
+                                    @error('nomortlp')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="photo" class="col-sm-4 col-form-label">Input Foto Profil :</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="file" name="photo" id="photo" class="form-control @error('photo')
+                                    is-invalid    
+                                    @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        value="{{ old('photo', auth()->user()->photo) }}">
+                                    @error('nomortlp')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                                <div class="mt-4">
+                                    <div class="inline-block">
+                                        <button type="submit" name="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                                    </div>
+                                    <div class="inline-block ml-4">
+                                        <a href="/dashboardmahasiswa" class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded">Cancel</a>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
                 </div>
-            @endif
-            <div class="card-body">
-                <form class="user" method="POST" action="/dashboardmahasiswa/profile/edit">
-                    @method('put')
-                    @csrf
-                    <label for="name">Nama</label>
-                    <div class="form-group">
-                        <input type="text"
-                            class="form-control 
-                             @error('name')
-                        is-invalid    
-                        @enderror"
-                            id="name" name="name" placeholder="Masukkan nama anda"
-                            value="{{ old('name', auth()->user()->name) }}">
-                        @error('name')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <label for="nim">NIM</label>
-                    <div class="form-group">
-                        <input type="text"
-                            class="form-control 
-                        @error('nim')
-                        is-invalid    
-                        @enderror"
-                            id="nim" name="nim" placeholder="Masukkan NIM anda" required
-                            value="{{ old('nim', auth()->user()->nim) }}" disabled>
-                        @error('nim')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <label for="jurusan">Jurusan</label>
-                    <div class="form-group">
-                        <input type="text"
-                            class="form-control 
-                        @error('jurusan')
-                        is-invalid    
-                        @enderror"
-                            id="jurusan" name="jurusan" placeholder="Masukkan jurusan anda" required
-                            value="{{ old('jurusan', auth()->user()->jurusan) }}">
-                        @error('jurusan')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <label for="angkatan">Angkatan</label>
-                    <div class="form-group">
-                        <input type="text"
-                            class="form-control 
-                             @error('angkatan')
-                        is-invalid    
-                        @enderror"
-                            id="angkatan" name="angkatan" placeholder="Masukkan Angkatan anda" required
-                            value="{{ old('angkatan', auth()->user()->angkatan) }}" disabled>
-                        @error('angkatan')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <label for="alamat">Alamat</label>
-                    <div class="form-group">
-                        <input type="text"
-                            class="form-control 
-                             @error('alamat')
-                        is-invalid    
-                        @enderror"
-                            id="alamat" name="alamat" placeholder="Masukkan alamat anda" required
-                            value="{{ old('alamat', auth()->user()->alamat) }}">
-                        @error('alamat')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <label for="nomortlp">Nomor Telepon</label>
-                    <div class="form-group">
-                        <input type="text"
-                            class="form-control 
-                             @error('nomortlp')
-                        is-invalid    
-                        @enderror"
-                            id="nomortlp" name="nomortlp" placeholder="Masukkan Nomor Telepon anda" required
-                            value="{{ old('nomortlp', auth()->user()->nomortlp) }}">
-                        @error('nomortlp')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-    
-                    <button type="submit" class="btn btn-primary btn-user btn-block">
-                        Submit
-                    </button>
-    
-                </form>
             </div>
         </div>
     </div>

@@ -48,7 +48,7 @@
     </ul>
 
     <div class="container">
-        <img src="{{ asset('images/logo.png') }}"" alt="logo" width="40" height="40">
+        <img src="{{ asset('images/logo.png') }}" alt="logo" width="40" height="40">
         <div class="container justify-content-left text-left text-light">
             <h4>Sistem Monitoring Mahasiswa</h4>
             <h4>UNDIP</h4>

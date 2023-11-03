@@ -68,9 +68,6 @@
                                 
                                 <div class="col-6" style="margin-top: 15px;">
                                     <br>
-                                    {{-- <ul class="nav nav-pills justify-content text-dark ml-1">
-                                        <li class="nav-item"><a href="/dashboardmahasiswa/profile/edit" class="nav-link active" aria-current="page" style="background-color:#101E31"><b>Perbarui Data</b></a></li>
-                                    </ul> --}}
                                     <br><br><br><br>
                                 </div>
                             </div>

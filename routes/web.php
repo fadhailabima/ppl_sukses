@@ -3,6 +3,8 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\EditMhsController;
+use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,3 +49,10 @@ Route::get('/dashboardmahasiswa', [MahasiswaController::class, 'index'])->middle
 // //edit
 Route::get('/dashboardmahasiswa/profile/edit', [EditMhsController::class, 'index'])->middleware('mhs');
 Route::put('/dashboardmahasiswa/profile/edit', [EditMhsController::class, 'update'])->middleware('mhs');
+
+// Operator
+// Dashboard
+Route::get('/dashboardadmin', [OperatorController::class, 'index'])->middleware('admin');
+// Register Akun
+Route::get('/dashboardadmin/register', [RegisterController::class, 'index'])->middleware('admin');
+Route::post('/dashboardadmin/register', [RegisterController::class, 'store'])->middleware('admin');

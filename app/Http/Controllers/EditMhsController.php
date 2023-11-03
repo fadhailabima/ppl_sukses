@@ -28,20 +28,20 @@ class EditMhsController extends Controller
     {
         $validatedata = $request->validate([
             'name' => 'required|max:255',
-            'nim' => 'required|integer',
+            'nim' => 'nullable|integer',
             'jurusan' => 'required|string',
-            'angkatan' => 'required|integer|digits:4',
+            'angkatan' => 'nullable|integer|digits:4',
             'alamat' => 'required|string',
             'nomortlp' => 'required|digits_between:8,12:',
-            // 'photo' => 'required|file|image|mimes:png,jpg,jpeg'
+            // 'photo' => 'nullable|file|image|mimes:png,jpg,jpeg'
         ]);
 
         // $file = $request->file('photo');
         // $fileName = uniqid(). '.'. $file->getClientOriginalExtension();
         // $file->storeAs('public/photo/', $fileName);
         // $validatedata['photo'] = $fileName;
-        // //('angkatan', $id)->get();
-        // // $validatedata['id'] = auth()->user()->id;
+        //('angkatan', $id)->get();
+        // $validatedata['id'] = auth()->user()->id;
 
         User::where('id', auth()->user()->id)->update($validatedata);
 

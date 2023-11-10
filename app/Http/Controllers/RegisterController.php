@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('operator.register', [
@@ -26,10 +21,10 @@ class RegisterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -41,9 +36,7 @@ class RegisterController extends Controller
     {
         $validatedata = $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|email:dns',
             'nim' => 'required',
-            'jurusan' => 'required',
             'angkatan' => 'required',
             'level' => 'required',
             'status' => 'required',
@@ -53,7 +46,7 @@ class RegisterController extends Controller
         //cara keduia
         $validatedata['password'] = bcrypt($validatedata['password']);
         //$validatedata['password'] = Hash::make($validatedata['password']);
-        User::create($validatedata);
+        User::create($validatedata)->with('success', 'Registrasi Berhasil');
 
         //alert pertama
         //$request->session()->flash('success', 'Registrasi Berhasil, Silahkan login');
@@ -68,10 +61,10 @@ class RegisterController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
-    {
-        //
-    }
+    // public function show(User $user)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -79,10 +72,10 @@ class RegisterController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {
-        //
-    }
+    // public function edit(User $user)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -91,10 +84,10 @@ class RegisterController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
+    // public function update(Request $request, User $user)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -102,10 +95,10 @@ class RegisterController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
-    {
-        //
-    }
+    // public function destroy(User $user)
+    // {
+    //     //
+    // }
     // public function import(Request $request)
     // {
     //     $this->validate($request, [

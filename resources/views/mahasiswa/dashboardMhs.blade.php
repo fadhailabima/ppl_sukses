@@ -56,14 +56,14 @@
         <br>
         {{-- <ul class="nav nav-pills justify-content-center text-dark"> --}}
         <ul class="nav nav-pills justify-content-center text-dark">
-            <li class="nav-item"><a href="/dashboardmahasiswa" class="nav-link active" aria-current="page"
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
                     style="background-color:#101E31"><b>Home</b></a></li>
             <li class="nav-item"><a href="/dashboardmahasiswa/profile/edit" class="nav-link text-dark"><b>Edit
                         Profil</b></a></li>
-            <li class="nav-item"><a href="entry_irs.php" class="nav-link text-dark"><b>Data IRS</b></a></li>
-            <li class="nav-item"><a href="entry_khs.php" class="nav-link text-dark"><b>Data KHS</b></a></li>
-            <li class="nav-item"><a href="entry_pkl.php" class="nav-link text-dark"><b>Data PKL</b></a></li>
-            <li class="nav-item"><a href="entry_skripsi.php" class="nav-link text-dark"><b>Data Skripsi</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiIRSMahasiswa" class="nav-link text-dark"><b>Data IRS</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiKHSMahasiswa" class="nav-link text-dark"><b>Data KHS</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiPKLMahasiswa" class="nav-link text-dark"><b>Data PKL</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiSkripsiMahasiswa" class="nav-link text-dark"><b>Data Skripsi</b></a></li>
         </ul>
 
         <br>
@@ -72,7 +72,7 @@
                 <div class="col-7" style="margin-top: 60px;">
                     <div class="row">
                         <div class="col-6">
-                            <img src="{{ asset('storage/photo/' . auth()->user()->photo) }}" alt="Informatika Undip"
+                            <img src="{{ asset('storage/photo/' . auth()->user()->photo) }}" 
                                 class="rounded-circle img-thumbnail ml-8 mt-3" style="position: absolute; margin: auto auto; left: 0; right: 300px; height: 200px; width: 200px;">
                         </div>
                     </div>
@@ -104,6 +104,7 @@
                                     <div class="card-text">
                                         @foreach ($irs as $item)
                                             <p>SKS : {{ $item->jmlsks }}</p>
+                                            <p>Semester : {{ $item->semester }}</p>
                                         @endforeach
                                     </div>
                                 </div>
@@ -112,7 +113,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <div class="card mb-1 text-xs md:text-base w-96 h-40" style="background-color:#009bd6;">
+                            <div class="card mb-1 text-xs md:text-base w-96 h-38" style="background-color:#009bd6;">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
@@ -136,7 +137,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <div class="card mb-1 md:text-base w-96 h-28" style="background-color:#00719c;">
+                            <div class="card mb-1 md:text-base w-96 h-29" style="background-color:#00719c;">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">
@@ -148,7 +149,9 @@
                                     </div>
                                     <div class="card-text">
                                         @foreach ($p_k_l_s as $item)
-                                            <p>Status PKL : {{ $item->instansi }}</p>
+                                            <p>Semester : {{ $item->semester }}</p>
+                                            <p>Instansi : {{ $item->instansi }}</p>
+                                            <p>Dosen Pengampu : {{ $item->dosenpengampu }}</p>
                                         @endforeach
                                     </div>
                                 </div>
@@ -157,7 +160,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <div class="card mb-3 md:text-base w-96 h-40" style="background-color:#00415a;">
+                            <div class="card mb-2 md:text-base w-96 h-40" style="background-color:#00415a;">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-6">

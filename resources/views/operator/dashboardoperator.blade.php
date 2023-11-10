@@ -68,8 +68,8 @@
         <ul class="nav nav-pills justify-content-center text-dark">
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page" style="background-color:#101E31"><b>Home</b></a></li>
             <li class="nav-item"><a href="/dashboardadmin/register" class="nav-link text-dark"><b>Register User</b></a></li>
-            <li class="nav-item"><a href="edit_berkas.php" class="nav-link text-dark"><b>Edit Berkas</b></a></li>
-            <li class="nav-item"><a href="lihat_user.php" class="nav-link text-dark"><b>Lihat User</b></a></li>
+            {{-- <li class="nav-item"><a href="edit_berkas.php" class="nav-link text-dark"><b>Edit Berkas</b></a></li>
+            <li class="nav-item"><a href="lihat_user.php" class="nav-link text-dark"><b>Lihat User</b></a></li> --}}
         </ul>
         <br>
             <div class="card">

@@ -18,7 +18,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email:dns',
+            'nim' => 'required',
             'password' => 'required'
         ]);
 
@@ -29,7 +29,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             if (auth()->user()->level == "user") {
-                return redirect()->intended('/dashboardmahasiswa');
+                if (empty(auth()->user()->photo)) {
+                    return redirect('/lengkapidata')->with('datablmLengkap','Lengkapi Data Terlebih Dahulu');
+                } else {
+                    return redirect()->intended('/dashboardmahasiswa');
+                }
             } else if (auth()->user()->level == "admin") {
                 return redirect()->intended('/dashboardadmin');
             } else if (auth()->user()->level == "dosen") {

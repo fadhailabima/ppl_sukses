@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('nim')->unique()->nullable();
-            $table->string('jurusan')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('nim')->unique();
             $table->integer('angkatan')->nullable();
             $table->string('alamat')->nullable();
+            $table->string('kotakab')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('jalurmasuk')->nullable();
             $table->bigInteger('nomortlp')->nullable();
             $table->string('photo',128)->nullable();
             $table->timestamp('email_verified_at')->nullable();

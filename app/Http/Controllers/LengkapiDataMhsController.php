@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class EditMhsController extends Controller
+class LengkapiDataMhsController extends Controller
 {
     //
 
 
     public function index()
     {
-        return view('mahasiswa.editprofileMhs', [
-            'title' => 'Profile Mahasiswa'
+        return view('LengkapiData', [
+            'title' => 'Lengkapi Data Mahasiswa'
         ]);
     }
 
@@ -27,14 +27,17 @@ class EditMhsController extends Controller
     public function update(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'nullable|max:255',
+            'name' => 'required|max:255',
+            'email' => 'required|max:255',
             'nim' => 'nullable|integer',
-            'jurusan' => 'nullable|string',
             'angkatan' => 'nullable|integer|digits:4',
-            'alamat' => 'nullable|string',
-            'nomortlp' => 'nullable|digits_between:8,12:',
+            'alamat' => 'required|string',
+            'kotakab' => 'required|string',
+            'provinsi' => 'required|string',
+            'jalurmasuk' => 'required|string',
+            'nomortlp' => 'required|digits_between:8,12:',
             'password' => 'nullable|min:5|max:255',
-            'photo' => 'nullable|file|image|mimes:png,jpg,jpeg'
+            'photo' => 'required|file|image|mimes:png,jpg,jpeg'
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);

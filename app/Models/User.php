@@ -25,6 +25,8 @@ class User extends Authenticatable
         'jurusan',
         'angkatan',
         'alamat',
+        'kotakab',
+        'jalurmasuk',
         'nomortlp',
         'photo',
         'level',

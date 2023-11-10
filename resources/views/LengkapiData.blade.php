@@ -48,16 +48,8 @@
     <div class="me-5 ms-5">
         
         <br>
-        <ul class="nav nav-pills justify-content-center text-dark">
-            <li class="nav-item"><a href="/dashboardmahasiswa" class="nav-link text-dark"><b>Home</b></a></li>
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page" style="background-color:#101E31"><b>Edit Profil</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiIRSMahasiswa" class="nav-link text-dark"><b>Data IRS</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiKHSMahasiswa" class="nav-link text-dark"><b>Data KHS</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiPKLMahasiswa" class="nav-link text-dark"><b>Data PKL</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiSkripsiMahasiswa" class="nav-link text-dark"><b>Data Skripsi</b></a></li>
-        </ul>
         <div class="container mt-4 flex justify-center items-center">
-            <h2 class="text-4xl text-center">Profile Mahasiswa</h2>
+            <h2 class="text-4xl text-center">Lengkapi Profil</h2>
         </div>
         @if (session()->has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -69,29 +61,9 @@
                 <div class="row">    
                     <div class="col-md-4 col-lg-2 col-sm-4 w-1/4 mt-4 text-center">
                         <img src="{{ asset('storage/photo/'.auth()->user()->photo) }}" class="rounded-circle img-thumbnail" style="height: 130px; width: 130px; position: absolute; margin: auto auto; left: 0; right: 475px">
-
-                        {{-- <br>
-                        <form method="POST"  action="/dashboardmahasiswa/profile/edit" enctype="multipart/form-data">
-                            @method('put')
-                            @csrf
-                            <input type="hidden" name="id_mhs" value="">
-                            <div>
-                                <label for="photo" class="block text-sm font-medium text-gray-700">Input Foto Profil :</label>
-                                <input type="file" name="photo" id="photo" class="form-control @error('photo')
-                                is-invalid    
-                                @enderror  mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                    value="{{ old('photo', auth()->user()->photo) }}">
-                                @error('nomortlp')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                            <button type="submit" class="bg-black text-white text-center py-2 px-4 mt-2 rounded" name="submit" value="submit">Simpan</button>
-                        </form> --}}
                     </div>
                     <div class="col-md-8 col-lg-10 col-sm-8 w-3/4">
-                        <form class="user" method="POST" action="/dashboardmahasiswa/profile/edit" enctype="multipart/form-data">
+                        <form class="user" method="POST" action="/lengkapidata" enctype="multipart/form-data">
                             @method('put')
                             @csrf
                             <div class="mb-3 row mt-4">
@@ -137,7 +109,7 @@
                                     is-invalid    
                                     @enderror"
                                         id="jurusan" name="jurusan" 
-                                        value="{{ old('jurusan', auth()->user()->jurusan) }}">
+                                        required value="{{ old('jurusan', auth()->user()->jurusan) }}">
                                     @error('jurusan')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -171,7 +143,7 @@
                                     is-invalid    
                                     @enderror"
                                         id="alamat" name="alamat" 
-                                        value="{{ old('alamat', auth()->user()->alamat) }}">
+                                        required value="{{ old('alamat', auth()->user()->alamat) }}">
                                     @error('alamat')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -188,7 +160,7 @@
                                     is-invalid    
                                     @enderror"
                                         id="nomortlp" name="nomortlp" 
-                                        value="{{ old('nomortlp', auth()->user()->nomortlp) }}">
+                                        required value="{{ old('nomortlp', auth()->user()->nomortlp) }}">
                                     @error('nomortlp')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -219,7 +191,7 @@
                                     <input type="file" name="photo" id="photo" class="form-control @error('photo')
                                     is-invalid    
                                     @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                        value="{{ old('photo', auth()->user()->photo) }}">
+                                        required value="{{ old('photo', auth()->user()->photo) }}">
                                     @error('photo')
                                         <div class="invalid-feedback">
                                             {{ $message }}

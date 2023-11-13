@@ -27,7 +27,7 @@ class LengkapiDataMhsController extends Controller
     public function update(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:255',
+            'name' => 'nullable|max:255',
             'email' => 'required|max:255',
             'nim' => 'nullable|integer',
             'angkatan' => 'nullable|integer|digits:4',
@@ -35,7 +35,7 @@ class LengkapiDataMhsController extends Controller
             'kotakab' => 'required|string',
             'provinsi' => 'required|string',
             'jalurmasuk' => 'required|string',
-            'nomortlp' => 'required|digits_between:8,12:',
+            'nomortlp' => 'required|string|max-length:12',
             'password' => 'nullable|min:5|max:255',
             'photo' => 'required|file|image|mimes:png,jpg,jpeg'
         ]);

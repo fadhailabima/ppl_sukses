@@ -80,7 +80,7 @@
                         <div class="col-9 ml-5" style="margin-top: 235px;">
                             <div class="ms-3" style="font-weight: bolder; font-size: 20px;">{{ auth()->user()->name }}</div>
                             <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->nim }}</div>
-                            <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->jurusan }}</div>
+                            <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->email }}</div>
                             <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->angkatan }}</div>
                             <br>
                             <br><br>

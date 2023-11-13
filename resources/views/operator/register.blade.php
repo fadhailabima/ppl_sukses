@@ -74,7 +74,7 @@
                             <label for="name" class="col-sm-4 col-form-label">Nama <sup
                                     class="text-danger">*</sup></label>
                             <div class="form-group col-sm-8">
-                                <input type="text" name="name"
+                                <input type="text" name="name" autocomplete="off"
                                     class="form-control mb-2  @error('name') is-invalid @enderror" id="name"
                                     placeholder="Your name" required value="{{ old('name') }}">
                                 @error('name')

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('kotakab')->nullable();
             $table->string('provinsi')->nullable();
             $table->string('jalurmasuk')->nullable();
-            $table->bigInteger('nomortlp')->nullable();
+            $table->string('nomortlp')->nullable();
             $table->string('photo',128)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

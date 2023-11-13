@@ -28,11 +28,14 @@ class EditMhsController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'nullable|max:255',
+            'email' => 'nullable|max:255',
             'nim' => 'nullable|integer',
-            'jurusan' => 'nullable|string',
             'angkatan' => 'nullable|integer|digits:4',
             'alamat' => 'nullable|string',
-            'nomortlp' => 'nullable|digits_between:8,12:',
+            'kotakab' => 'nullable|string',
+            'provinsi' => 'nullable|string',
+            'jalurmasuk' => 'nullable|string',
+            'nomortlp' => 'nullable|string|regex:/^[0-9]+$/|between:10,12',
             'password' => 'nullable|min:5|max:255',
             'photo' => 'nullable|file|image|mimes:png,jpg,jpeg'
         ]);

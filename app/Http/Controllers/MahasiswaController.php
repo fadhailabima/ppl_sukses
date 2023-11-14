@@ -12,18 +12,19 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $irs = IRS::query()
-            ->where('userid', '=', auth()->user()->id)
-            ->get();
-        $k_h_s = KHS::query()
-            ->where('userid', '=', auth()->user()->id)
-            ->get();
+        $irs = IRS::where('userid', auth()->user()->id)
+            ->orderBy('semester', 'desc')
+            ->first();
+        $k_h_s = KHS::where('userid', auth()->user()->id)
+            ->orderBy('semester', 'desc')
+            ->first();
         $p_k_l_s = PKL::query()
             ->where('userid', '=', auth()->user()->id)
             ->get();
         $skripsis = Skripsi::query()
             ->where('userid', '=', auth()->user()->id)
-            ->get();;
+            ->get();
+        ;
 
         return view('mahasiswa.dashboardMhs', compact('irs', 'k_h_s', 'p_k_l_s', 'skripsis'));
     }

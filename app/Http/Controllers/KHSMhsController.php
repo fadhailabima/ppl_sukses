@@ -26,21 +26,53 @@ class KHSMhsController extends Controller
             'scankhs' => 'required|file|mimes:pdf'
         ]);
         $validatedata['userid'] = auth()->user()->id;
-        $validatedata['scankhs'] = $nameimg = $request->file('scankhs')->getClientOriginalName();
-        if (DB::table('k_h_s')->where('userid',  auth()->user()->id)->count() > 1) {
-            return redirect('/dashboardmahasiswa/IsiKHSMahasiswa')->with('gagal', 'Anda Sudah memasukan data KHS');
-        } else {
-            $request->file('scankhs')->storeAs('public/post-scankhs/', $nameimg);
-            KHS::create($validatedata);
-            return redirect('/dashboardmahasiswa/IsiKHSMahasiswa')->with('success', 'Data berhasil di masukkan');
-            // return $request;
+        $validatedata['scankhs'] = $request->file('scankhs')->getClientOriginalName();
+        $semester = $validatedata['semester'];
+
+        // Cek apakah ada KHS sebelumnya yang belum disetujui
+        $previousSemester = $semester - 1;
+        $previousKHS = KHS::where('userid', auth()->user()->id)
+            ->where('semester', $previousSemester)
+            ->where('isverified', 0)
+            ->first();
+
+        if ($previousKHS) {
+            return redirect('/dashboardmahasiswa/IsiKHSMahasiswa')->with('gagal', 'Anda harus menunggu persetujuan KHS semester sebelumnya.');
         }
-    }
-    public function show()
-    {
-        $data = KHS::query()
-            ->where('userid', '=', auth()->user()->id)
-            ->get();
-        return view('mahasiswa.IsiKhsMhs', compact('data'));
+
+        // Dapatkan semester terakhir yang telah diisi oleh mahasiswa
+        $latestSemester = KHS::where('userid', auth()->user()->id)
+            ->max('semester');
+
+        // Tentukan semester berikutnya yang seharusnya diisi
+        $expectedSemester = $latestSemester + 1;
+
+        // Jika semester yang akan diisi tidak sesuai dengan yang seharusnya, beri pesan kesalahan
+        if ($semester != $expectedSemester) {
+            return redirect('/dashboardmahasiswa/IsiKHSMahasiswa')->with('gagal', 'Anda hanya dapat mengisi KHS untuk semester ' . $expectedSemester);
+        }
+
+        // Cek apakah ada KHS yang lebih tinggi dari semester yang akan diisi
+        $nextKHS = KHS::where('userid', auth()->user()->id)
+            ->where('semester', '>', $semester)
+            ->exists();
+
+        if ($nextKHS) {
+            return redirect('/dashboardmahasiswa/IsiKHSMahasiswa')->with('gagal', 'Anda harus mengisi KHS semester sebelumnya terlebih dahulu.');
+        }
+
+        // Cek apakah sudah ada KHS untuk semester yang akan diisi
+        $existingKHS = KHS::where('userid', auth()->user()->id)
+            ->where('semester', $semester)
+            ->exists();
+
+        if ($existingKHS) {
+            return redirect('/dashboardmahasiswa/IsiKHSMahasiswa')->with('gagal', 'Anda sudah mengisi KHS untuk semester ini.');
+        }
+
+        $request->file('scankhs')->storeAs('public/post-scankhs/', $validatedata['scankhs']);
+        KHS::create($validatedata);
+
+        return redirect('/dashboardmahasiswa/IsiKHSMahasiswa')->with('success', 'Data berhasil dimasukkan');
     }
 }

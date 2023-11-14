@@ -44,20 +44,20 @@ Route::get('/dashboardmahasiswa', [MahasiswaController::class, 'index'])->middle
 //ISI IRS
 Route::post('/dashboardmahasiswa/IsiIRSMahasiswa', [IRSMhsController::class, 'store'])->middleware('mhs');
 Route::get('/dashboardmahasiswa/IsiIRSMahasiswa', [IRSMhsController::class, 'index'])->middleware('mhs');
-Route::get('/dashboardmahasiswa/IsiIRSMahasiswa', [IRSMhsController::class, 'show'])->middleware('mhs');
+// Route::get('/dashboardmahasiswa/IsiIRSMahasiswa', [IRSMhsController::class, 'show'])->middleware('mhs');
 // //ISI KHS
 Route::get('/dashboardmahasiswa/IsiKHSMahasiswa', [KHSMhsController::class, 'index'])->middleware('mhs');
 Route::post('/dashboardmahasiswa/IsiKHSMahasiswa', [KHSMhsController::class, 'store'])->middleware('mhs');
-Route::get('/dashboardmahasiswa/IsiKHSMahasiswa', [KHSMhsController::class, 'show'])->middleware('mhs');
+// Route::get('/dashboardmahasiswa/IsiKHSMahasiswa', [KHSMhsController::class, 'show'])->middleware('mhs');
 // //ISI PKL
 Route::post('/dashboardmahasiswa/IsiPKLMahasiswa', [PKLMhsController::class, 'store'])->middleware('mhs');
 Route::get('/dashboardmahasiswa/IsiPKLMahasiswa', [PKLMhsController::class, 'index'])->middleware('mhs');
-Route::get('/dashboardmahasiswa/IsiPKLMahasiswa', [PKLMhsController::class, 'show'])->middleware('mhs');
+// Route::get('/dashboardmahasiswa/IsiPKLMahasiswa', [PKLMhsController::class, 'show'])->middleware('mhs');
 
 // //ISI SKRIPSI
 Route::get('/dashboardmahasiswa/IsiSkripsiMahasiswa', [SkripsiMhsController::class, 'index'])->middleware('mhs');
 Route::post('/dashboardmahasiswa/IsiSkripsiMahasiswa', [SkripsiMhsController::class, 'store'])->middleware('mhs');
-Route::get('/dashboardmahasiswa/IsiSkripsiMahasiswa', [SkripsiMhsController::class, 'show'])->middleware('mhs');
+// Route::get('/dashboardmahasiswa/IsiSkripsiMahasiswa', [SkripsiMhsController::class, 'show'])->middleware('mhs');
 // //edit
 Route::get('/dashboardmahasiswa/profile/edit', [EditMhsController::class, 'index'])->middleware('mhs');
 Route::put('/dashboardmahasiswa/profile/edit', [EditMhsController::class, 'update'])->middleware('mhs');

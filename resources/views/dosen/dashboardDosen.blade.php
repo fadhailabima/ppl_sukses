@@ -115,9 +115,9 @@
                                     <!-- Your IRS content here -->
                                 </div>
                                 <div class="mt-4 mb-4 ml-4">
-                                    {{-- <a href="/dashboarddosen/irs"
+                                    <a href=""
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">IRS
-                                        Mahasiswa</a> --}}
+                                        Mahasiswa</a>
                                 </div>
                             </div>
                         </div>
@@ -127,9 +127,9 @@
                                     <!-- Your KHS content here -->
                                 </div>
                                 <div class="mt-4 mb-4 ml-4">
-                                    {{-- <a href="/dashboarddosen/khs"
+                                    <a href=""
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">KHS
-                                        Mahasiswa</a> --}}
+                                        Mahasiswa</a>
                                 </div>
                             </div>
                         </div>
@@ -144,9 +144,9 @@
                                     <!-- Your IRS content here -->
                                 </div>
                                 <div class="mt-4 mb-4 ml-4">
-                                    {{-- <a href="/dashboarddosen/pkl"
+                                    <a href=""
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">PKL
-                                        Mahasiswa</a> --}}
+                                        Mahasiswa</a>
                                 </div>
                             </div>
                         </div>
@@ -156,9 +156,9 @@
                                     <!-- Your KHS content here -->
                                 </div>
                                 <div class="mt-4 mb-4 ml-4">
-                                    {{-- <a href="/dashboarddosen/khs"
+                                    <a href=""
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Skripsi
-                                        Mahasiswa</a> --}}
+                                        Mahasiswa</a>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +180,7 @@
                     ['Task', 'Hours per Day'],
                     ['Belum Disetujui', {{ $irscountnotverified }}],
                     ['Sudah Disetujui', {{ $irscountverified }}],
-                    ['Belum mengisi', {{ $irsbelum }}],
+                    ['Belum mengisi', {{ max(0, $irsbelum) }}],
                 ]);
 
                 var options = {

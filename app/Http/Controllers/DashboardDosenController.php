@@ -14,37 +14,50 @@ class DashboardDosenController extends Controller
 {
     public function index()
     {
-
-
         $jmlmhs = User::query()
             ->where('dosenwali', '=', auth()->user()->name)
             ->count();
 
-        //IRS
-        $irscountnotverified = DB::table('irs')
+        $irsData = DB::table('irs')
             ->join('users', 'irs.userid', '=', 'users.id')
             ->where('dosenwali', '=', auth()->user()->name)
-            ->where('isverified', '=', '0')
-            ->count();
-        $irscountverified = DB::table('irs')
-            ->join('users', 'irs.userid', '=', 'users.id')
-            ->where('dosenwali', '=', auth()->user()->name)
-            ->where('isverified', '=', '1')
-            ->count();
-        $irsbelum = $jmlmhs - $irscountnotverified - $irscountverified;
+            ->select(
+                'users.id as user_id',
+                'irs.semester',
+                'irs.isverified'
+            )
+            ->get();
 
+        $uniqueUsers = $irsData->groupBy('user_id');
+
+        $irscountnotverified = $uniqueUsers->flatMap(function ($group) {
+            return $group->where('isverified', '=', 0)->pluck('user_id')->unique();
+        })->count();
+
+        $irscountverified = $uniqueUsers->flatMap(function ($group) {
+            return $group->where('isverified', '=', 1)->pluck('user_id')->unique();
+        })->count();
+        $irsbelum = max(0, $jmlmhs - $irscountnotverified - $irscountverified);
         //KHS
-        $khscountnotverified = DB::table('k_h_s')
+        $khsData = DB::table('k_h_s')
             ->join('users', 'k_h_s.userid', '=', 'users.id')
             ->where('dosenwali', '=', auth()->user()->name)
-            ->where('isverified', '=', '0')
-            ->count();
-        $khscountverified = DB::table('k_h_s')
-            ->join('users', 'k_h_s.userid', '=', 'users.id')
-            ->where('dosenwali', '=', auth()->user()->name)
-            ->where('isverified', '=', '1')
-            ->count();
-        $khsbelum = $jmlmhs - $khscountnotverified - $khscountverified;
+            ->select(
+                'users.id as user_id',
+                'k_h_s.semester',
+                'k_h_s.isverified'
+            )
+            ->get();
+
+        $uniqueUsers = $khsData->groupBy('user_id');
+        $khscountnotverified = $uniqueUsers->flatMap(function ($group) {
+            return $group->where('isverified', '=', 0)->pluck('user_id')->unique();
+        })->count();
+
+        $khscountverified = $uniqueUsers->flatMap(function ($group) {
+            return $group->where('isverified', '=', 1)->pluck('user_id')->unique();
+        })->count();
+        $khsbelum = max(0, $jmlmhs - $khscountnotverified - $khscountverified);
 
         //PKL
         $pklcountnotverified = DB::table('p_k_l_s')
@@ -72,20 +85,24 @@ class DashboardDosenController extends Controller
             ->count();
         $skripsibelum = $jmlmhs - $skripsicountnotverified - $skripsicountverified;
 
-        return view('dosen.dashboardDosen', compact(
-            'jmlmhs',
-            'irscountverified',
-            'irscountnotverified',
-            'irsbelum',
-            'khscountnotverified',
-            'khscountverified',
-            'khsbelum',
-            'pklcountnotverified',
-            'pklcountverified',
-            'pklbelum',
-            'skripsicountnotverified',
-            'skripsicountverified',
-            'skripsibelum'
-        ));
+        return view(
+            'dosen.dashboardDosen',
+            compact(
+                'jmlmhs',
+                // 'semester',
+                'irscountverified',
+                'irscountnotverified',
+                'irsbelum',
+                'khscountnotverified',
+                'khscountverified',
+                'khsbelum',
+                'pklcountnotverified',
+                'pklcountverified',
+                'pklbelum',
+                'skripsicountnotverified',
+                'skripsicountverified',
+                'skripsibelum'
+            )
+        );
     }
 }

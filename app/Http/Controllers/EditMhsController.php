@@ -34,7 +34,6 @@ class EditMhsController extends Controller
             'alamat' => 'nullable|string',
             'kotakab' => 'nullable|string',
             'provinsi' => 'nullable|string',
-            'jalurmasuk' => 'nullable|string',
             'nomortlp' => 'nullable|string|regex:/^[0-9]+$/|between:10,12',
             'password' => 'nullable|min:5|max:255',
             'photo' => 'nullable|file|image|mimes:png,jpg,jpeg'

@@ -35,7 +35,7 @@ class LengkapiDataMhsController extends Controller
             'kotakab' => 'required|string',
             'provinsi' => 'required|string',
             'jalurmasuk' => 'required|string',
-            'nomortlp' => 'required|string|max-length:12',
+            'nomortlp' => 'nullable|string|regex:/^[0-9]+$/|between:10,12',
             'password' => 'nullable|min:5|max:255',
             'photo' => 'required|file|image|mimes:png,jpg,jpeg'
         ]);

@@ -73,10 +73,14 @@
             <li class="nav-item"><a href="/dashboardmahasiswa" class="nav-link text-dark"><b>Home</b></a></li>
             <li class="nav-item"><a href="/dashboardmahasiswa/profile/edit" class="nav-link text-dark"><b>Edit
                         Profil</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiIRSMahasiswa" class="nav-link text-dark"><b>Data IRS</b></a></li>
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page" style="background-color:#101E31"><b>Data KHS</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiPKLMahasiswa" class="nav-link text-dark"><b>Data PKL</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiSkripsiMahasiswa" class="nav-link text-dark"><b>Data Skripsi</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiIRSMahasiswa" class="nav-link text-dark"><b>Data
+                        IRS</b></a></li>
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
+                    style="background-color:#101E31"><b>Data KHS</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiPKLMahasiswa" class="nav-link text-dark"><b>Data
+                        PKL</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiSkripsiMahasiswa" class="nav-link text-dark"><b>Data
+                        Skripsi</b></a></li>
         </ul>
         <div class="container mt-4 flex justify-center items-center">
             <h2 class="text-4xl text-center">Isi Data KHS</h2>
@@ -243,38 +247,6 @@
             </div>
 
 
-        </div>
-        <div class="px-3">
-            <table class="table table-striped">
-                <thead>
-                    @foreach ($data as $item)
-                        <tr>
-                            <th scope="col">Semester</th>
-                            <th scope="col">{{ $item['semester'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">SKS Semester</th>
-                            <th scope="col">{{ $item['skssemester'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">IP Semester</th>
-                            <th scope="col">{{ $item['ipsemester'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">SKS Kumulatif</th>
-                            <th scope="col">{{ $item['skskumulatif'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">IP Kumulatif</th>
-                            <th scope="col">{{ $item['ipkumulatif'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Scan KHS</th>
-                            <th scope="col">{{ $item['scankhs'] }}</th>
-                        </tr>
-                    @endforeach
-                </thead>
-            </table>
         </div>
         {{-- <script>
             function previewImage() {

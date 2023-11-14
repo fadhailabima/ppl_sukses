@@ -124,11 +124,6 @@
                                         Jumlah SKS
                                     </th>
 
-                                    {{-- <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Scan SKS
-                                    </th> --}}
-
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Status
@@ -146,7 +141,6 @@
                                         <td class="px-4 py-4">{{ $item->name }}</td>
                                         <td class="px-4 py-4">{{ $item->semester }}</td>
                                         <td class="px-4 py-4">{{ $item->jmlsks }}</td>
-                                        {{-- <td class="px-4 py-4">{{ $item->scansks }}</td> --}}
                                         <td>
                                             @if ($item->isverified == 1)
                                                 <a href="/dashboarddosen/irs/unverify/{{ $item->id }}"
@@ -156,7 +150,6 @@
                                                     class="btn btn-success">Setujui</a>
                                             @endif
                                         </td>
-                                        {{-- <!-- <td class="px-4 py-4">{{ $item->level }}</td> --}}
                                         <td><a href="/dashboarddosen/irs/download/{{ $item->id }}"
                                                 class="btn btn-facebook">Download</a>
                                         </td>

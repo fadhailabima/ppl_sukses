@@ -75,10 +75,12 @@
                         Profil</b></a></li>
             <li class="nav-item"><a href="/dashboardmahasiswa/IsiIRSMahasiswa" class="nav-link text-dark"><b>Data
                         IRS</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiKHSMahasiswa" class="nav-link text-dark"><b>Data KHS</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiKHSMahasiswa" class="nav-link text-dark"><b>Data
+                        KHS</b></a></li>
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
-                style="background-color:#101E31"><b>Data PKL</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiSkripsiMahasiswa" class="nav-link text-dark"><b>Data Skripsi</b></a></li>
+                    style="background-color:#101E31"><b>Data PKL</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiSkripsiMahasiswa" class="nav-link text-dark"><b>Data
+                        Skripsi</b></a></li>
         </ul>
         <div class="container mt-4 flex justify-center items-center">
             <h2 class="text-4xl text-center">Isi Data KHS</h2>
@@ -219,26 +221,6 @@
             </div>
 
 
-        </div>
-        <div class="px-3">
-            <table class="table table-striped">
-                <thead>
-                    @foreach ($data as $item)
-                        <tr>
-                            <th scope="col">Semester</th>
-                            <th scope="col">{{ $item['semester'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Instansi</th>
-                            <th scope="col">{{ $item['instansi'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Dosen Pengampu</th>
-                            <th scope="col">{{ $item['dosenpengampu'] }}</th>
-                        </tr>
-                    @endforeach
-                </thead>
-            </table>
         </div>
         {{-- <script>
             function previewImage() {

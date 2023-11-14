@@ -75,9 +75,12 @@
                         Profil</b></a></li>
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
                     style="background-color:#101E31"><b>Data IRS</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiKHSMahasiswa" class="nav-link text-dark"><b>Data KHS</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiPKLMahasiswa" class="nav-link text-dark"><b>Data PKL</b></a></li>
-            <li class="nav-item"><a href="/dashboardmahasiswa/IsiSkripsiMahasiswa" class="nav-link text-dark"><b>Data Skripsi</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiKHSMahasiswa" class="nav-link text-dark"><b>Data
+                        KHS</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiPKLMahasiswa" class="nav-link text-dark"><b>Data
+                        PKL</b></a></li>
+            <li class="nav-item"><a href="/dashboardmahasiswa/IsiSkripsiMahasiswa" class="nav-link text-dark"><b>Data
+                        Skripsi</b></a></li>
         </ul>
         <div class="container mt-4 flex justify-center items-center">
             <h2 class="text-4xl text-center">Isi Data IRS</h2>
@@ -194,40 +197,6 @@
 
 
         </div>
-        <div class="px-3">
-            <table class="table table-striped">
-                <thead>
-                    @foreach ($data as $item)
-                        <tr>
-                            <th scope="col">Semester</th>
-                            <th scope="col">{{ $item['semester'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Jumlah SKS</th>
-                            <th scope="col">{{ $item['jmlsks'] }}</th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Scan SKS</th>
-                            <th scope="col">{{ $item['scansks'] }}</th>
-                        </tr>
-                    @endforeach
-                </thead>
-            </table>
-        </div>
-        {{-- <script>
-            function previewImage() {
-                const image = document.querySelector('#scansks');
-                const imgPreview = document.querySelector('.img-preview');
-
-                imgPreview.style.display = 'block';
-
-                const file = fileInput.files[0];
-                const objectURL = URL.createObjectURL(file);
-
-                pdfPreview.setAttribute('data', objectURL);
-            }
-        </script> --}}
-
 
 
 </body>

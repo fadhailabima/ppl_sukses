@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\MHS;
-// use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -34,6 +34,7 @@ class LengkapiDataMhsController extends Controller
             'email' => 'required|max:255',
             'jalur_masuk' => 'required|in:SNMPTN,SBMPTN,MANDIRI',
             'handphone' => 'required|string|regex:/^[0-9]+$/|between:10,12',
+            'new_password' => 'nullable|min:5|max:255',
             'foto_mahasiswa' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -55,6 +56,11 @@ class LengkapiDataMhsController extends Controller
             $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/photo/', $fileName);
             $mahasiswa->foto_mahasiswa = $fileName;
+        }
+        if ($validatedData['new_password']) {
+            $user = User::find($user_id);
+            $user->password = Hash::make($validatedData['new_password']);
+            $user->save();
         }
 
         $mahasiswa->save();

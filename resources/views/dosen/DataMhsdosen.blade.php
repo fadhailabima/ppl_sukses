@@ -89,7 +89,7 @@
                                     d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                             </svg>
                         </span>
-                        <form action="/dashboarddosen/irs" method="GET">
+                        <form action="/dashboarddosen/daftarmahasiswa" method="GET">
                             <input type="search" placeholder="Cari Nama Mahasiswa" name="search" id="search"
                                 class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
 
@@ -129,12 +129,12 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                @foreach ($datauser as $item)
+                                @foreach ($mahasiswa as $item)
                                     <tr>
                                         <td class="px-4 py-4">{{ $item->nama }}</td>
                                         <td class="px-4 py-4">{{ $item->nim }}</td>
                                         <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                        <td><a href="/dashboarddosen/detaildaftarmahasiswa"
+                                        <td><a href="/dashboarddosen/detaildaftarmahasiswa/{{ $item->nim }}"
                                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Detail</a>
                                         </td>
                                     </tr>

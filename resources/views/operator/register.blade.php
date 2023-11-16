@@ -54,6 +54,14 @@
         </div>
     </nav>
     <br>
+    @if (session('success'))
+        <div class="position-absolute top-0 start-50 translate-middle-x mt-3" style="z-index: 1050;">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
     <ul class="nav nav-pills justify-content-center text-dark">
         <li class="nav-item"><a href="/dashboardadmin" class="nav-link text-dark"><b>Home</b></a></li>
         <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
@@ -85,7 +93,8 @@
                             </div>
                         </div>
                         <div class="mb-1 row">
-                            <label for="nim" class="col-sm-4 col-form-label">NIM <sup class="text-danger">*</sup>
+                            <label for="nim" class="col-sm-4 col-form-label">NIM <sup
+                                    class="text-danger">*</sup>
                             </label>
                             <div class="form-group col-sm-8">
                                 <input type="text" name="nim" autocomplete="username"

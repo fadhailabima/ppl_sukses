@@ -27,27 +27,16 @@ class DaftarMHSdosenController extends Controller
         return view('dosen.DataMhsdosen', compact('mahasiswa'));
     }
 
-    public function showuser(Request $request)
+    public function detail(Request $request, $nim)
     {
-        if ($request->has('search')) {
-            $datauser = DB::table('mahasiswas')
-                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip) // Filter hanya level user
-                ->where(function ($query) use ($request) {
-                    $query->where('nama', 'LIKE', '%' . $request->search . '%')
-                        ->orWhere('nim', 'LIKE', '%' . $request->search . '%')
-                        ->orWhere('angkatan', 'LIKE', '%' . $request->search . '%');
-                })
-                ->paginate(10);
-        } else {
-            $datauser = DB::table('mahasiswas')
-                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip) // Filter hanya level user
-                ->paginate(10);
-        }
-        return view('dosen.DataMhsdosen', compact('datauser'));
+    $mahasiswa = MHS::where('nim', $nim)
+        ->where('dosen_wali', auth()->user()->dosenWali->nip)
+        ->first();
+
+    if (!$mahasiswa) {
+        return redirect()->back()->with('error', 'Mahasiswa tidak ditemukan atau tidak terkait dengan perwalian Anda.');
     }
 
-    public function detail(Request $request)
-    {
-        return view('dosen.detailDataMHS');
+    return view('dosen.detailDataMHS', compact('mahasiswa'));
     }
 }

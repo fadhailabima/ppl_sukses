@@ -73,8 +73,7 @@
                             style="height: 130px; width: 130px; position: absolute; margin: auto auto; left: 0; right: 475px">
                     </div>
                     <div class="col-md-8 col-lg-10 col-sm-8 w-3/4">
-                        <form class="user" method="POST"
-                            action="{{ url('/lengkapidata') }}"
+                        <form class="user" method="POST" action="{{ url('/lengkapidata') }}"
                             enctype="multipart/form-data">
                             @method('put')
                             @csrf
@@ -86,7 +85,8 @@
                                         @error('nama')
                                     is-invalid    
                                     @enderror"
-                                        id="nama" name="nama" autocomplete="off" value="{{ $mahasiswa->nama ?? old('nama') }}">
+                                        id="nama" name="nama" autocomplete="off"
+                                        value="{{ $mahasiswa->nama ?? old('nama') }}">
                                     @error('nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -102,7 +102,8 @@
                                     @error('nim')
                                     is-invalid    
                                     @enderror"
-                                        id="nim" name="nim" value="{{ $mahasiswa->nim ?? old('nim') }}" disabled>
+                                        id="nim" name="nim" autocomplete="username"
+                                        value="{{ $mahasiswa->nim ?? old('nim') }}" disabled>
                                     @error('nim')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -135,7 +136,8 @@
                                         @error('angkatan')
                                     is-invalid    
                                     @enderror"
-                                        id="angkatan" name="angkatan" value="{{ $mahasiswa->angkatan ?? old('angkatan') }}" disabled>
+                                        id="angkatan" name="angkatan"
+                                        value="{{ $mahasiswa->angkatan ?? old('angkatan') }}" disabled>
                                     @error('angkatan')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -228,6 +230,40 @@
                                         </option>
                                     </select>
                                     @error('jalur_masuk')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="new_password" class="col-sm-4 col-form-label">Password Baru:</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="password"
+                                        class="form-control 
+                                        @error('new_password')
+                                            is-invalid    
+                                        @enderror"
+                                        id="new_password" name="new_password" autocomplete="off" required>
+                                    @error('new_password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="mb-3 row">
+                                <label for="confirm_password" class="col-sm-4 col-form-label">Konfirmasi Password
+                                    Baru:</label>
+                                <div class="form-group col-sm-6">
+                                    <input type="password"
+                                        class="form-control 
+                                        @error('confirm_password')
+                                            is-invalid    
+                                        @enderror"
+                                        id="confirm_password" name="confirm_password" autocomplete="off" required>
+                                    @error('confirm_password')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

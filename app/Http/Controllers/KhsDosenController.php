@@ -12,9 +12,9 @@ class KhsDosenController extends Controller
     {
         if ($request->has('search')) {
             $datakhs = DB::table('k_h_s')
-                ->join('users', 'k_h_s.userid', '=', 'users.id')
+                ->join('mahasiswas', 'k_h_s.mahasiswa_id', '=', 'mahasiswas.nim')
                 ->select(
-                    'users.name',
+                    'mahasiswas.nama',
                     'k_h_s.id',
                     'k_h_s.semester',
                     'k_h_s.skssemester',
@@ -24,12 +24,12 @@ class KhsDosenController extends Controller
                     'k_h_s.scankhs',
                     'k_h_s.isverified'
                 )
-                ->where('name', 'LIKE', '%' . $request->search . '%')->paginate(10);
+                ->where('nama', 'LIKE', '%' . $request->search . '%')->paginate(10);
         } else {
             $datakhs = DB::table('k_h_s')
-                ->join('users', 'k_h_s.userid', '=', 'users.id')
+                ->join('mahasiswas', 'k_h_s.mahasiswa_id', '=', 'mahasiswas.nim')
                 ->select(
-                    'users.name',
+                    'mahasiswas.nama',
                     'k_h_s.id',
                     'k_h_s.semester',
                     'k_h_s.skssemester',

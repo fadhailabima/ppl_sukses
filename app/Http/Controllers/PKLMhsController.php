@@ -31,9 +31,9 @@ class PKLMhsController extends Controller
             'scanpkl' => 'required|file|mimes:pdf'
         ]);
 
-        $validatedata['userid'] = auth()->user()->id;
+        $validatedata['mahasiswa_id'] = auth()->user()->mahasiswa->nim;
         $validatedata['scanpkl'] = $nameimg = $request->file('scanpkl')->getClientOriginalName();
-        if (DB::table('p_k_l_s')->where('userid',  auth()->user()->id)->count() >= 1) {
+        if (DB::table('p_k_l_s')->where('mahasiswa_id',  auth()->user()->mahasiswa->nim)->count() >= 1) {
             return redirect('/dashboardmahasiswa/IsiPKLMahasiswa')->with('gagal', 'Anda Sudah memasukan data PKL');
         } else {
             $request->file('scanpkl')->storeAs('public/post-scanpkl/', $nameimg);
@@ -42,11 +42,11 @@ class PKLMhsController extends Controller
         }
     }
 
-    public function show()
-    {
-        $data = PKL::query()
-            ->where('userid', '=', auth()->user()->id)
-            ->get();
-        return view('mahasiswa.IsiPklMhs', compact('data'));
-    }
+    // public function show()
+    // {
+    //     $data = PKL::query()
+    //         ->where('userid', '=', auth()->user()->id)
+    //         ->get();
+    //     return view('mahasiswa.IsiPklMhs', compact('data'));
+    // }
 }

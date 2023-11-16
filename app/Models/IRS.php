@@ -10,15 +10,15 @@ class IRS extends Model
     protected $table = 'irs';
 
     protected $fillable = [
-        'userid',
+        'mahasiswa_id',
         'semester',
         'jmlsks',
         'scansks',
         'isverified'
     ];
 
-    public function User()
+    public function mahasiswa()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(MHS::class, 'mahasiswa_id', 'nim');
     }
 }

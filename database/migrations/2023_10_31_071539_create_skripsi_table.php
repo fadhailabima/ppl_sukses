@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('skripsis', function (Blueprint $table) {
             $table->id();
-            $table->string('userid');
+            $table->string('mahasiswa_id');
             $table->string('semester');
             $table->date('tglsidang');
             $table->string('dosenpembimbing');
             $table->string('scansidang')->nullable();
             $table->boolean('isverified')->default('0');
             $table->timestamps();
+            $table->foreign('mahasiswa_id')->references('nim')->on('mahasiswas');
         });
     }
 
@@ -32,6 +33,9 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('skripsis', function (Blueprint $table) {
+            $table->dropForeign(['mahasiswa_id']);
+        });
         Schema::dropIfExists('Skripsi');
     }
 };

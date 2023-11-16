@@ -16,7 +16,7 @@ class IsMahasiswa
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check() || auth()->user()->level != "user") {
+        if (!auth()->check() || auth()->user()->level != "mahasiswa") {
             abort(403);
         }
         return $next($request);

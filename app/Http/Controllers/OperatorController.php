@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\MHS;
 use Illuminate\Http\Request;
 
 class OperatorController extends Controller
@@ -10,26 +11,26 @@ class OperatorController extends Controller
     public function index()
     {
         //status
-        $useractivecount = User::query()
+        $useractivecount = MHS::query()
             ->where('status', '=', 'Aktif')
             ->count();
-        $userMangkircount = User::query()
+        $userMangkircount = MHS::query()
             ->where('status', '=', 'Mangkir')
             ->count();
-        $userCuticount = User::query()
+        $userCuticount = MHS::query()
             ->where('status', '=', 'Cuti')
             ->count();
-        $userDropoutcount = User::query()
-            ->where('status', '=', 'Dropout')
+        $userDropoutcount = MHS::query()
+            ->where('status', '=', 'DO')
             ->count();
-        $userOperatorcount = User::query()
-            ->where('status', '=', 'Operator')
+        $userLuluscount = MHS::query()
+            ->where('status', '=', 'Lulus')
             ->count();
 
 
         //level
         $mahasiswa = User::query()
-            ->where('level', '=', 'user')
+            ->where('level', '=', 'mahasiswa')
             ->count();
         $dosen = User::query()
             ->where('level', '=', 'dosen')
@@ -37,8 +38,8 @@ class OperatorController extends Controller
         $department = User::query()
             ->where('level', '=', 'department')
             ->count();
-        $admin = User::query()
-            ->where('level', '=', 'admin')
+        $operator = User::query()
+            ->where('level', '=', 'operator')
             ->count();
 
 
@@ -48,11 +49,11 @@ class OperatorController extends Controller
             'mahasiswa',
             'dosen',
             'department',
-            'admin',
+            'operator',
             'userMangkircount',
             'userCuticount',
             'userDropoutcount',
-            'userOperatorcount'
+            'userLuluscount'
         ));
     }
 }

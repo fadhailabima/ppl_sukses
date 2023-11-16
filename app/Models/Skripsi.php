@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Skripsi extends Model
 {
     protected $fillable = [
-        'userid',
+        'mahasiswa_id',
         'semester',
         'tglsidang',
         'dosenpembimbing',
@@ -16,8 +16,8 @@ class Skripsi extends Model
         'isverified'
     ];
 
-    public function User()
+    public function mahasiswa()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(MHS::class, 'mahasiswa_id', 'nim');
     }
 }

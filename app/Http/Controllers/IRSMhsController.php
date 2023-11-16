@@ -18,12 +18,12 @@ class IRSMhsController extends Controller
     }
     public function store(Request $request)
     {
-        $user_id = auth()->user()->id;
+        $user_id = auth()->user()->mahasiswa->nim;
         $semester = $request->input('semester');
 
         // Cek apakah ada IRS sebelumnya yang belum disetujui
         $previousSemester = $semester - 1;
-        $previousIRS = IRS::where('userid', $user_id)
+        $previousIRS = IRS::where('mahasiswa_id', $user_id)
             ->where('semester', $previousSemester)
             ->where('isverified', 0)
             ->first();
@@ -33,7 +33,7 @@ class IRSMhsController extends Controller
         }
 
         // Dapatkan semester terakhir yang telah diisi oleh mahasiswa
-        $latestSemester = IRS::where('userid', $user_id)
+        $latestSemester = IRS::where('mahasiswa_id', $user_id)
             ->max('semester');
 
         // Tentukan semester berikutnya yang seharusnya diisi
@@ -45,7 +45,7 @@ class IRSMhsController extends Controller
         }
 
         // Cek apakah ada IRS yang lebih tinggi dari semester yang akan diisi
-        $nextIRS = IRS::where('userid', $user_id)
+        $nextIRS = IRS::where('mahasiswa_id', $user_id)
             ->where('semester', '>', $semester)
             ->exists();
 
@@ -54,7 +54,7 @@ class IRSMhsController extends Controller
         }
 
         // Cek apakah sudah ada IRS untuk semester yang akan diisi
-        $existingIRS = IRS::where('userid', $user_id)
+        $existingIRS = IRS::where('mahasiswa_id', $user_id)
             ->where('semester', $semester)
             ->exists();
 
@@ -68,7 +68,7 @@ class IRSMhsController extends Controller
             'scansks' => 'required|file|mimes:pdf'
         ]);
 
-        $validatedata['userid'] = $user_id;
+        $validatedata['mahasiswa_id'] = $user_id;
         $validatedata['scansks'] = $request->file('scansks')->getClientOriginalName();
 
         $request->file('scansks')->storeAs('public/post-scansks/', $validatedata['scansks']);

@@ -71,13 +71,13 @@
                     <form action="/dashboardadmin/register" method="POST">
                         @csrf
                         <div class="mb-1 row mt-3">
-                            <label for="name" class="col-sm-4 col-form-label">Nama <sup
+                            <label for="nama" class="col-sm-4 col-form-label">Nama <sup
                                     class="text-danger">*</sup></label>
                             <div class="form-group col-sm-8">
-                                <input type="text" name="name" autocomplete="off"
-                                    class="form-control mb-2  @error('name') is-invalid @enderror" id="name"
-                                    placeholder="Your name" required value="{{ old('name') }}">
-                                @error('name')
+                                <input type="text" name="nama" autocomplete="off"
+                                    class="form-control mb-2  @error('nama') is-invalid @enderror" id="nama"
+                                    placeholder="Your nama" required value="{{ old('nama') }}">
+                                @error('nama')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -113,24 +113,20 @@
                             </div>
                         </div>
                         <div class="mb-1 row">
-                            <label for="dosenwali" class="col-sm-4 col-form-label">Dosen Wali<sup
+                            <label for="dosen_wali_nama" class="col-sm-4 col-form-label">Dosen Wali<sup
                                     class="text-danger">*</sup></label>
                             <div class="form-group col-sm-8 mt-2">
                                 <select
-                                    class="form-control mb-2  @error('dosenwali')
+                                    class="form-control mb-2  @error('dosen_wali_nama')
                                         is-invalid    
                                         @enderror"
-                                    name="dosenwali" id="dosenwali" required>
+                                    name="dosen_wali_nama" id="dosen_wali_nama" required>
                                     <option selected disabled>Dosen Wali</option>
-                                    <option value="Nurdin Bahtiar">Nurdin Bahtiar</option>
-                                    <option value="Adi Wibowo">Adi Wibowo</option>
-                                    <option value="Aris Puji">Aris Puji</option>
-                                    <option value="Prajanto Wahyu">Prajanto Wahyu</option>
-                                    <option value="Beta Noranita">Beta Noranita</option>
-                                    <option value="Adhe Setya">Adhe Setya</option>
-                                    <option value="Malik Hakim">Malik Hakim</option>
+                                    @foreach ($dosens as $dosen)
+                                        <option value="{{ $dosen->nama }}">{{ $dosen->nama }}</option>
+                                    @endforeach
                                 </select>
-                                @error('dosenwali')
+                                @error('dosen_wali_nama')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -144,7 +140,7 @@
                                 <select class="form-control mb-2 @error('level') is-invalid @enderror" name="level"
                                     id="level" required>
                                     <option selected disabled>Level User</option>
-                                    <option value="user">Mahasiswa</option>
+                                    <option value="mahasiswa">Mahasiswa</option>
                                 </select>
                                 @error('level')
                                     <div class="invalid-feedback">

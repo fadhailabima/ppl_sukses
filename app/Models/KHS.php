@@ -10,7 +10,7 @@ class KHS extends Model
     protected $table = 'k_h_s';
 
     protected $fillable = [
-        'userid',
+        'mahasiswa_id',
         'semester',
         'skssemester',
         'skskumulatif',
@@ -20,8 +20,8 @@ class KHS extends Model
         'isverified'
     ];
 
-    public function User()
+    public function mahasiswa()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(MHS::class, 'mahasiswa_id', 'nim');
     }
 }

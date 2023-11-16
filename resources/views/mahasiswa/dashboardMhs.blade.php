@@ -48,7 +48,7 @@
                     d="m226.53 56.41l-96-32a8 8 0 0 0-5.06 0l-96 32A8 8 0 0 0 24 64v80a8 8 0 0 0 16 0V75.1l33.59 11.19a64 64 0 0 0 20.65 88.05c-18 7.06-33.56 19.83-44.94 37.29a8 8 0 1 0 13.4 8.74C77.77 197.25 101.57 184 128 184s50.23 13.25 65.3 36.37a8 8 0 0 0 13.4-8.74c-11.38-17.46-27-30.23-44.94-37.29a64 64 0 0 0 20.65-88l44.12-14.7a8 8 0 0 0 0-15.18ZM176 120a48 48 0 1 1-86.65-28.45l36.12 12a8 8 0 0 0 5.06 0l36.12-12A47.89 47.89 0 0 1 176 120Zm-48-32.43L57.3 64L128 40.43L198.7 64Z" />
             </svg>
             <!-- <li class="nav-item"><a href="profil-mahasiswa.php" class="nav-pills-link justify-content-center text-light"><h5>Mahasiswa</h5></a></li> -->
-            <h5>{{ auth()->user()->name }}</h5>
+            <h5>{{ auth()->user()->mahasiswa->nama }}</h5>
         </div>
     </nav>
     <!--form-->
@@ -76,18 +76,18 @@
                 <div class="col-7" style="margin-top: 60px;">
                     <div class="row">
                         <div class="col-6">
-                            <img src="{{ asset('storage/photo/' . auth()->user()->photo) }}"
+                            <img src="{{ asset('storage/photo/' . auth()->user()->mahasiswa->foto_mahasiswa) }}"
                                 class="rounded-circle img-thumbnail ml-8 mt-3"
                                 style="position: absolute; margin: auto auto; left: 0; right: 300px; height: 200px; width: 200px;">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-9 ml-5" style="margin-top: 235px;">
-                            <div class="ms-3" style="font-weight: bolder; font-size: 20px;">{{ auth()->user()->name }}
+                            <div class="ms-3" style="font-weight: bolder; font-size: 20px;">{{ auth()->user()->mahasiswa->nama }}
                             </div>
-                            <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->nim }}</div>
-                            <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->email }}</div>
-                            <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->angkatan }}</div>
+                            <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->mahasiswa->nim }}</div>
+                            <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->mahasiswa->email }}</div>
+                            <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->mahasiswa->angkatan }}</div>
                             <br>
                             <br><br>
                         </div>

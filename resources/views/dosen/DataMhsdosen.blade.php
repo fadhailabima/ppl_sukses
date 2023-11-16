@@ -54,24 +54,20 @@
         <br>
         <ul class="nav nav-pills justify-content-center text-dark">
             <li class="nav-item"><a href="/dashboarddosen" class="nav-link text-dark"><b>Home</b></a></li>
-            <li class="nav-item"><a href="/dashboarddosen/irs" class="nav-link text-dark"><b> Data IRS
+            <li class="nav-item"><a href="/dashboarddosen/irs" class="nav-link text-dark" ><b> Data IRS
                         Mahasiswa</b></a></li>
-            <li class="nav-item"><a href="/dashboarddosen/khs" class="nav-link active" aria-current="page"
-                    style="background-color:#101E31"><b> Data KHS
+            <li class="nav-item"><a href="/dashboarddosen/khs" class="nav-link text-dark"><b> Data KHS
                         Mahasiswa</b></a></li>
             <li class="nav-item"><a href="/dashboarddosen/pkl" class="nav-link text-dark"><b>Data Mahasiswa PKL</b></a>
             </li>
             <li class="nav-item"><a href="/dashboarddosen/skripsi" class="nav-link text-dark"><b>Data Mahasiswa
                         Skripsi</b></a></li>
-            <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link text-dark"><b>Data
-                        Mahasiswa</b></a></li>
+            <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link active" aria-current="page"
+                style="background-color:#101E31"><b>Data Mahasiswa</b></a></li>
         </ul>
 
         <br><br>
         <div class="flex flex-col mt-6">
-            {{-- <div class="container justify-content-center text-center text-bold">
-                <h6>Kartu Hasil Studi (KHS) Mahasiswa Perwalian</h6>
-            </div> --}}
             @if (session()->has('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -93,7 +89,7 @@
                                     d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                             </svg>
                         </span>
-                        <form action="/dashboarddosen/khs" method="GET">
+                        <form action="/dashboarddosen/daftarmahasiswa" method="GET">
                             <input type="search" placeholder="Cari Nama Mahasiswa" name="search" id="search"
                                 class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
 
@@ -118,72 +114,34 @@
 
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Semester
+                                        NIM
                                     </th>
 
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        SKS Semester
+                                        Angkatan
                                     </th>
-
+                            
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        SKS Kumulatif
-                                    </th>
-
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        IP Semester
-                                    </th>
-
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        IP Kumulatif
-                                    </th>
-
-                                    {{-- <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Scan KHS
-                                    </th> --}}
-
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Status
-                                    </th>
-
-                                    <th scope="col"
-                                        class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Download
+                                        Action
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                @foreach ($datakhs as $item)
+                                @foreach ($datauser as $item)
                                     <tr>
                                         <td class="px-4 py-4">{{ $item->name }}</td>
-                                        <td class="px-4 py-4">{{ $item->semester }}</td>
-                                        <td class="px-4 py-4">{{ $item->skssemester }}</td>
-                                        <td class="px-4 py-4">{{ $item->skskumulatif }}</td>
-                                        <td class="px-4 py-4">{{ $item->ipsemester }}</td>
-                                        <td class="px-4 py-4">{{ $item->ipkumulatif }}</td>
-                                        {{-- <td class="px-4 py-4">{{ $item->scankhs }}</td> --}}
-                                        <td>
-                                            @if ($item->isverified == 1)
-                                                <a href="/dashboarddosen/khs/unverify/{{ $item->id }}"
-                                                    class="btn btn-danger">Batal</a>
-                                            @else
-                                                <a href="/dashboarddosen/khs/verify/{{ $item->id }}"
-                                                    class="btn btn-success">Setujui</a>
-                                            @endif
-                                        </td>
-                                        {{-- <!-- <td class="px-4 py-4">{{ $item->level }}</td> --}}
-                                        <td><a href="/dashboarddosen/khs/download/{{ $item->id }}"
-                                                class="btn btn-facebook">Download</a>
+                                        <td class="px-4 py-4">{{ $item->nim }}</td>
+                                        <td class="px-4 py-4">{{ $item->angkatan }}</td>
+                                        <td><a href="/dashboarddosen/irs/detailsrs8/{{ $item->id }}"
+                                                class="btn btn-facebook">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $datauser->links() }}
                     </div>
                 </div>
             </div>

@@ -63,15 +63,15 @@
                             @csrf
                             <tr>
                                 <td style="width: 150px; font-family: 'Poppins';">
-                                    <b>NIM / NIP</b>
+                                    <b>Username</b>
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <input type="text" name="nim" style="font-family: 'Poppins';" class="form-control mb-2"
-                                            class="form-control form-control-user @error('nim') is-invalid @enderror"
-                                            id="nim" placeholder="NIM / NIP " required
-                                            value="{{ old('nim') }}" autofocus>
-                                        @error('nim')
+                                        <input type="text" name="username" style="font-family: 'Poppins';" class="form-control mb-2"
+                                            class="form-control form-control-user @error('username') is-invalid @enderror"
+                                            id="username" placeholder="Username " required
+                                            value="{{ old('username') }}" autofocus>
+                                        @error('username')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                     </div>

@@ -18,19 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
-        'nim',
-        'angkatan',
-        'alamat',
-        'kotakab',
-        'jalurmasuk',
-        'nomortlp',
-        'photo',
-        'level',
-        'status',
-        'dosenwali',
     ];
 
     /**
@@ -52,23 +41,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function IRS()
+    public function mahasiswa()
     {
-        return $this->belongsTo(IRS::class);
+        return $this->hasOne(MHS::class, 'user_id');
     }
 
-    public function KHS()
+    // Relasi ke tabel 'DosenWali'
+    public function dosenWali()
     {
-        return $this->belongsTo(KHS::class);
+        return $this->hasOne(DosenWali::class, 'user_id');
     }
 
-    public function PKL()
+    // Relasi ke tabel 'Operator'
+    public function operator()
     {
-        return $this->belongsTo(PKL::class);
+        return $this->hasOne(Operator::class, 'user_id');
     }
 
-    public function Skrpsi()
+    public function departemen()
     {
-        return $this->belongsTo(Skripsi::class);
+        return $this->hasOne(Department::class, 'user_id');
     }
 }

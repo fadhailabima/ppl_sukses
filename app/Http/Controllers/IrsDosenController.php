@@ -13,13 +13,13 @@ class IrsDosenController extends Controller
     {
         if ($request->has('search')) {
             $datairs = DB::table('irs')
-                ->join('users', 'irs.userid', '=', 'users.id')
-                ->select('users.name', 'irs.id', 'irs.semester', 'irs.jmlsks', 'irs.scansks', 'irs.isverified')
-                ->where('name', 'LIKE', '%' . $request->search . '%')->paginate(10);
+                ->join('mahasiswas', 'irs.mahasiswa_id', '=', 'mahasiswas.nim')
+                ->select('mahasiswas.nama', 'irs.id', 'irs.semester', 'irs.jmlsks', 'irs.scansks', 'irs.isverified')
+                ->where('nama', 'LIKE', '%' . $request->search . '%')->paginate(10);
         } else {
             $datairs = DB::table('irs')
-                ->join('users', 'irs.userid', '=', 'users.id')
-                ->select('users.name', 'irs.id', 'irs.semester', 'irs.jmlsks', 'irs.scansks', 'irs.isverified')
+                ->join('mahasiswas', 'irs.mahasiswa_id', '=', 'mahasiswas.nim')
+                ->select('mahasiswas.nama', 'irs.id', 'irs.semester', 'irs.jmlsks', 'irs.scansks', 'irs.isverified')
                 ->paginate(10);
         }
 

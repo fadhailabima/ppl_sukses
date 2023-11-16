@@ -61,8 +61,10 @@
             <li class="nav-item"><a href="/dashboarddosen/pkl" class="nav-link text-dark"><b>Data Mahasiswa PKL</b></a>
             </li>
             <li class="nav-item"><a href="/dashboarddosen/skripsi" class="nav-link active" aria-current="page"
-                style="background-color:#101E31"><b>Data Mahasiswa
+                    style="background-color:#101E31"><b>Data Mahasiswa
                         Skripsi</b></a></li>
+            <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link text-dark"><b>Data
+                        Mahasiswa</b></a></li>
         </ul>
 
         <br><br>

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('k_h_S', function (Blueprint $table) {
             $table->id();
-            $table->string('userid');
+            $table->string('mahasiswa_id');
             $table->string('semester');
             $table->integer('skssemester');
             $table->integer('skskumulatif');
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('scankhs')->nullable();
             $table->boolean('isverified')->default('0');
             $table->timestamps();
+            $table->foreign('mahasiswa_id')->references('nim')->on('mahasiswas');
         });
     }
 
@@ -34,6 +35,10 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('k_h_s', function (Blueprint $table) {
+            $table->dropForeign(['mahasiswa_id']);
+        });
+
         Schema::dropIfExists('KHS');
     }
 };

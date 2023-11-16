@@ -25,13 +25,13 @@ class KHSMhsController extends Controller
             'ipkumulatif' => 'required|regex:/^\d+(\.\d{1,2})?$/|lte:4',
             'scankhs' => 'required|file|mimes:pdf'
         ]);
-        $validatedata['userid'] = auth()->user()->id;
+        $validatedata['mahasiswa_id'] = auth()->user()->mahasiswa->nim;
         $validatedata['scankhs'] = $request->file('scankhs')->getClientOriginalName();
         $semester = $validatedata['semester'];
 
         // Cek apakah ada KHS sebelumnya yang belum disetujui
         $previousSemester = $semester - 1;
-        $previousKHS = KHS::where('userid', auth()->user()->id)
+        $previousKHS = KHS::where('mahasiswa_id', auth()->user()->mahasiswa->nim)
             ->where('semester', $previousSemester)
             ->where('isverified', 0)
             ->first();
@@ -41,7 +41,7 @@ class KHSMhsController extends Controller
         }
 
         // Dapatkan semester terakhir yang telah diisi oleh mahasiswa
-        $latestSemester = KHS::where('userid', auth()->user()->id)
+        $latestSemester = KHS::where('mahasiswa_id', auth()->user()->mahasiswa->nim)
             ->max('semester');
 
         // Tentukan semester berikutnya yang seharusnya diisi
@@ -53,7 +53,7 @@ class KHSMhsController extends Controller
         }
 
         // Cek apakah ada KHS yang lebih tinggi dari semester yang akan diisi
-        $nextKHS = KHS::where('userid', auth()->user()->id)
+        $nextKHS = KHS::where('mahasiswa_id', auth()->user()->mahasiswa->nim)
             ->where('semester', '>', $semester)
             ->exists();
 
@@ -62,7 +62,7 @@ class KHSMhsController extends Controller
         }
 
         // Cek apakah sudah ada KHS untuk semester yang akan diisi
-        $existingKHS = KHS::where('userid', auth()->user()->id)
+        $existingKHS = KHS::where('mahasiswa_id', auth()->user()->mahasiswa->nim)
             ->where('semester', $semester)
             ->exists();
 

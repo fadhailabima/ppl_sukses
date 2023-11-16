@@ -15,6 +15,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SkripsiDosenController;
 use App\Http\Controllers\SkripsiMhsController;
 use App\Http\Controllers\DashboardDosenController;
+use App\Http\Controllers\DaftarMHSdosenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +38,7 @@ Route::post('/', [LoginController::class, 'authenticate']);
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
  // Lengkapi Data
  Route::get('/lengkapidata', [LengkapiDataMhsController::class, 'index'])->middleware('mhs');
- Route::put('/lengkapidata', [LengkapiDataMhsController::class, 'update'])->middleware('mhs');
+ Route::put('/lengkapidata', [LengkapiDataMhsController::class, 'update'])->middleware('mhs')->name('lengkapidata.update');
 
 // Mahasiswa
 Route::get('/dashboardmahasiswa', [MahasiswaController::class, 'index'])->middleware('mhs');
@@ -64,13 +65,14 @@ Route::put('/dashboardmahasiswa/profile/edit', [EditMhsController::class, 'updat
 
 // Operator
 // Dashboard
-Route::get('/dashboardadmin', [OperatorController::class, 'index'])->middleware('admin');
+Route::get('/dashboardadmin', [OperatorController::class, 'index'])->middleware('operator');
 // Register Akun
-Route::get('/dashboardadmin/register', [RegisterController::class, 'index'])->middleware('admin');
-Route::post('/dashboardadmin/register', [RegisterController::class, 'store'])->middleware('admin');
+Route::get('/dashboardadmin/register', [RegisterController::class, 'index'])->middleware('operator');
+Route::post('/dashboardadmin/register', [RegisterController::class, 'store'])->middleware('operator');
 
 //Dosen
 Route::get('/dashboarddosen', [DashboardDosenController::class, 'index'])->middleware('dosen');
+
 // //IRS
 Route::get('/dashboarddosen/irs', [IrsDosenController::class, 'index'])->middleware('dosen');
 Route::get('/dashboarddosen/irs/download/{id}', [IrsDosenController::class, 'download'])->middleware('dosen');
@@ -92,3 +94,7 @@ Route::get('/dashboarddosen/skripsi', [SkripsiDosenController::class, 'index'])-
 Route::get('/dashboarddosen/skripsi/download/{id}', [SkripsiDosenController::class, 'download'])->middleware('dosen');
 Route::get('/dashboarddosen/skripsi/verify/{id}', [SkripsiDosenController::class, 'changestatus'])->middleware('dosen');
 Route::get('/dashboarddosen/skripsi/unverify/{id}', [SkripsiDosenController::class, 'unchangestatus'])->middleware('dosen');
+
+//Daftar Mahasiswa
+Route::get('/dashboarddosen/daftarmahasiswa', [DaftarMHSdosenController::class, 'index'])->middleware('dosen');
+Route::get('/dashboarddosen/daftarmahasiswa', [DaftarMHSdosenController::class, 'showuser'])->middleware('dosen');

@@ -10,15 +10,15 @@ class PKL extends Model
     use HasFactory;
     protected $fillable = [
         'semester',
-        'userid',
+        'mahasiswa_id',
         'instansi',
         'dosenpengampu',
         'scanpkl',
         'isverified'
     ];
 
-    public function User()
+    public function mahasiswa()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(MHS::class, 'mahasiswa_id', 'nim');
     }
 }

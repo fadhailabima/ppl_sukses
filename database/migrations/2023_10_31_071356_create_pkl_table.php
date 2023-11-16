@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('p_k_l_s', function (Blueprint $table) {
             $table->id();
-            $table->string('userid');
+            $table->string('mahasiswa_id');
             $table->string('semester');
             $table->string('instansi');
             $table->string('dosenpengampu');
             $table->string('scanpkl')->nullable();
             $table->boolean('isverified')->default('0');
             $table->timestamps();
+            $table->foreign('mahasiswa_id')->references('nim')->on('mahasiswas');
         });
     }
 
@@ -32,6 +33,9 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('p_k_l_s', function (Blueprint $table) {
+            $table->dropForeign(['mahasiswa_id']);
+        });
         Schema::dropIfExists('PKL');
     }
 };

@@ -59,10 +59,12 @@
             <li class="nav-item"><a href="/dashboarddosen/khs" class="nav-link text-dark"><b> Data KHS
                         Mahasiswa</b></a></li>
             <li class="nav-item"><a href="/dashboarddosen/pkl" class="nav-link active" aria-current="page"
-                style="background-color:#101E31"><b>Data Mahasiswa PKL</b></a>
+                    style="background-color:#101E31"><b>Data Mahasiswa PKL</b></a>
             </li>
             <li class="nav-item"><a href="/dashboarddosen/skripsi" class="nav-link text-dark"><b>Data Mahasiswa
                         Skripsi</b></a></li>
+            <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link text-dark"><b>Data
+                        Mahasiswa</b></a></li>
         </ul>
 
         <br><br>
@@ -128,7 +130,7 @@
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Dosen Pengampu
                                     </th>
-{{-- 
+                                    {{-- 
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Scan PKL

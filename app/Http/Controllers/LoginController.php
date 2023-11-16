@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\MHS;
+use App\Models\DosenWali;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -18,23 +20,20 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'nim' => 'required',
+            'username' => 'required',
             'password' => 'required'
         ]);
-
-        // $credentials = [
-        //     'email' => $request->input('email'),
-        //     'password' => $request->input('password'),
-        // ];
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            if (auth()->user()->level == "user") {
-                if (empty(auth()->user()->photo)) {
+            if (auth()->user()->level == "mahasiswa") {
+                $mahasiswa = auth()->user()->mahasiswa; // Mengambil data mahasiswa yang terkait dengan pengguna
+
+                if (empty($mahasiswa->foto_mahasiswa)) {
                     return redirect('/lengkapidata')->with('datablmLengkap','Lengkapi Data Terlebih Dahulu');
                 } else {
                     return redirect()->intended('/dashboardmahasiswa');
                 }
-            } else if (auth()->user()->level == "admin") {
+            } else if (auth()->user()->level == "operator") {
                 return redirect()->intended('/dashboardadmin');
             } else if (auth()->user()->level == "dosen") {
                 return redirect()->intended('/dashboarddosen');

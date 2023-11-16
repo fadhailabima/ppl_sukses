@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\MHS;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class EditMhsController extends Controller
@@ -12,47 +15,48 @@ class EditMhsController extends Controller
 
     public function index()
     {
-        return view('mahasiswa.editprofileMhs', [
-            'title' => 'Profile Mahasiswa'
-        ]);
+        $user_id = Auth::id();
+        $mahasiswa = MHS::where('user_id', $user_id)->firstOrFail();
+
+        return view('mahasiswa.editprofileMhs', compact('mahasiswa'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'nullable|max:255',
-            'email' => 'nullable|max:255',
-            'nim' => 'nullable|integer',
-            'angkatan' => 'nullable|integer|digits:4',
+            'nama' => 'nullable|max:255',
             'alamat' => 'nullable|string',
-            'kotakab' => 'nullable|string',
-            'provinsi' => 'nullable|string',
-            'nomortlp' => 'nullable|string|regex:/^[0-9]+$/|between:10,12',
-            'password' => 'nullable|min:5|max:255',
-            'photo' => 'nullable|file|image|mimes:png,jpg,jpeg'
+            'kab_kota' => 'nullable|string',
+            'propinsi' => 'nullable|string',
+            'email' => 'nullable|max:255',
+            // 'jalur_masuk' => 'nullable|in:SNMPTN,SBMPTN,MANDIRI',
+            'handphone' => 'nullable|string|regex:/^[0-9]+$/|between:10,12',
+            'foto_mahasiswa' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $validatedData['password'] = bcrypt($validatedData['password']);
+        $user_id = Auth::id(); // Mendapatkan ID pengguna yang sedang login
+        $mahasiswa = MHS::where('user_id', $user_id)->firstOrFail();
 
-        // Check if a file was uploaded
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            $fileName = uniqid() . '.' . $file->getClientOriginalName();
+        $mahasiswa->nama = $validatedData['nama'];
+        $mahasiswa->alamat = $validatedData['alamat'];
+        $mahasiswa->kab_kota = $validatedData['kab_kota'];
+        $mahasiswa->propinsi = $validatedData['propinsi'];
+        $mahasiswa->email = $validatedData['email'];
+        // if (array_key_exists('jalur_masuk', $validatedData)) {
+        //     $mahasiswa->jalur_masuk = $validatedData['jalur_masuk'];
+        // }
+        $mahasiswa->handphone = $validatedData['handphone'];
+
+        if ($request->hasFile('foto_mahasiswa')) {
+            $file = $request->file('foto_mahasiswa');
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/photo/', $fileName);
-            $validatedData['photo'] = $fileName;
+            $mahasiswa->foto_mahasiswa = $fileName;
         }
 
-        // Update the user's data
-        User::where('id', auth()->user()->id)->update($validatedData);
+        $mahasiswa->save();
 
-        return redirect('/dashboardmahasiswa')->with('success', 'Data berhasil di Perbarui');
+        return redirect('/dashboardmahasiswa')->with('success', 'Data berhasil diperbarui');
     }
 
 }

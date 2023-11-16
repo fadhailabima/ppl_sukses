@@ -48,7 +48,7 @@
                     d="m226.53 56.41l-96-32a8 8 0 0 0-5.06 0l-96 32A8 8 0 0 0 24 64v80a8 8 0 0 0 16 0V75.1l33.59 11.19a64 64 0 0 0 20.65 88.05c-18 7.06-33.56 19.83-44.94 37.29a8 8 0 1 0 13.4 8.74C77.77 197.25 101.57 184 128 184s50.23 13.25 65.3 36.37a8 8 0 0 0 13.4-8.74c-11.38-17.46-27-30.23-44.94-37.29a64 64 0 0 0 20.65-88l44.12-14.7a8 8 0 0 0 0-15.18ZM176 120a48 48 0 1 1-86.65-28.45l36.12 12a8 8 0 0 0 5.06 0l36.12-12A47.89 47.89 0 0 1 176 120Zm-48-32.43L57.3 64L128 40.43L198.7 64Z" />
             </svg>
             <!-- <li class="nav-item"><a href="profil-mahasiswa.php" class="nav-pills-link justify-content-center text-light"><h5>Mahasiswa</h5></a></li> -->
-            <h5>{{ auth()->user()->name }}</h5>
+            <h5>{{ auth()->user()->mahasiswa->nama }}</h5>
         </div>
     </nav>
 
@@ -68,25 +68,26 @@
             <div class="flex justify-center">
                 <div class="row">
                     <div class="col-md-4 col-lg-2 col-sm-4 w-1/4 mt-4 text-center">
-                        <img src="{{ asset('storage/photo/' . auth()->user()->photo) }}"
+                        <img src="{{ asset('storage/photo/' . auth()->user()->mahasiswa->foto_mahasiswa) }}"
                             class="rounded-circle img-thumbnail"
                             style="height: 130px; width: 130px; position: absolute; margin: auto auto; left: 0; right: 475px">
                     </div>
                     <div class="col-md-8 col-lg-10 col-sm-8 w-3/4">
-                        <form class="user" method="POST" action="/lengkapidata" enctype="multipart/form-data">
+                        <form class="user" method="POST"
+                            action="{{ url('/lengkapidata') }}"
+                            enctype="multipart/form-data">
                             @method('put')
                             @csrf
                             <div class="mb-3 row mt-4">
-                                <label for="name" class="col-sm-4 col-form-label">Nama :</label>
+                                <label for="nama" class="col-sm-4 col-form-label">Nama :</label>
                                 <div class="form-group col-sm-6">
                                     <input type="text"
                                         class="form-control 
-                                        @error('name')
+                                        @error('nama')
                                     is-invalid    
                                     @enderror"
-                                        id="name" name="name" autocomplete="off"
-                                        value="{{ old('name', auth()->user()->name) }}">
-                                    @error('name')
+                                        id="nama" name="nama" autocomplete="off" value="{{ $mahasiswa->nama ?? old('nama') }}">
+                                    @error('nama')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -101,8 +102,7 @@
                                     @error('nim')
                                     is-invalid    
                                     @enderror"
-                                        id="nim" name="nim" value="{{ old('nim', auth()->user()->nim) }}"
-                                        disabled>
+                                        id="nim" name="nim" value="{{ $mahasiswa->nim ?? old('nim') }}" disabled>
                                     @error('nim')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -119,7 +119,7 @@
                                     is-invalid    
                                     @enderror"
                                         id="email" name="email" autocomplete="off" required
-                                        value="{{ old('email', auth()->user()->email) }}">
+                                        value="{{ $mahasiswa->email ?? old('email') }}">
                                     @error('email')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -135,8 +135,7 @@
                                         @error('angkatan')
                                     is-invalid    
                                     @enderror"
-                                        id="angkatan" name="angkatan"
-                                        value="{{ old('angkatan', auth()->user()->angkatan) }}" disabled>
+                                        id="angkatan" name="angkatan" value="{{ $mahasiswa->angkatan ?? old('angkatan') }}" disabled>
                                     @error('angkatan')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -153,7 +152,7 @@
                                     is-invalid    
                                     @enderror"
                                         id="alamat" name="alamat" autocomplete="off" required
-                                        value="{{ old('alamat', auth()->user()->alamat) }}">
+                                        value="{{ $mahasiswa->alamat ?? old('alamat') }}">
                                     @error('alamat')
                                         <div class="invalid-feedback">
                                             {{ $message }}
@@ -162,16 +161,16 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="kotakab" class="col-sm-4 col-form-label">Kota / Kab :</label>
+                                <label for="kab_kota" class="col-sm-4 col-form-label">Kota / Kab :</label>
                                 <div class="form-group col-sm-6">
                                     <input type="text"
                                         class="form-control 
-                                        @error('kotakab')
+                                        @error('kab_kota')
                                     is-invalid    
                                     @enderror"
-                                        id="kotakab" name="kotakab" autocomplete="off" required
-                                        value="{{ old('kotakab', auth()->user()->kotakab) }}">
-                                    @error('kotakab')
+                                        id="kab_kota" name="kab_kota" autocomplete="off" required
+                                        value="{{ $mahasiswa->kab_kota ?? old('kab_kota') }}">
+                                    @error('kab_kota')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -179,16 +178,16 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="provinsi" class="col-sm-4 col-form-label">Provinsi :</label>
+                                <label for="propinsi" class="col-sm-4 col-form-label">Provinsi :</label>
                                 <div class="form-group col-sm-6">
                                     <input type="text"
                                         class="form-control 
-                                        @error('provinsi')
+                                        @error('propinsi')
                                     is-invalid    
                                     @enderror"
-                                        id="provinsi" name="provinsi" autocomplete="off" required
-                                        value="{{ old('provinsi', auth()->user()->provinsi) }}">
-                                    @error('provinsi')
+                                        id="propinsi" name="propinsi" autocomplete="off" required
+                                        value="{{ $mahasiswa->propinsi ?? old('propinsi') }}">
+                                    @error('propinsi')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -196,16 +195,16 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="nomortlp" class="col-sm-4 col-form-label">Nomor Telepon :</label>
+                                <label for="handphone" class="col-sm-4 col-form-label">Nomor Telepon :</label>
                                 <div class="form-group col-sm-6">
                                     <input type="text"
                                         class="form-control 
-                                        @error('nomortlp')
+                                        @error('handphone')
                                     is-invalid    
                                     @enderror"
-                                        id="nomortlp" name="nomortlp" autocomplete="off" required
-                                        value="{{ old('nomortlp', auth()->user()->nomortlp) }}">
-                                    @error('nomortlp')
+                                        id="handphone" name="handphone" autocomplete="off" required
+                                        value="{{ $mahasiswa->handphone ?? old('handphone') }}">
+                                    @error('handphone')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -213,16 +212,22 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="jalurmasuk" class="col-sm-4 col-form-label">Jalur Masuk :</label>
+                                <label for="jalur_masuk" class="col-sm-4 col-form-label">Jalur Masuk :</label>
                                 <div class="form-group col-sm-6">
-                                    <select class="form-control  @error('jalurmasuk') is-invalid @enderror"
-                                        name="jalurmasuk" id="level" required>
-                                        <option selected disabled>Jalur Masuk</option>
-                                        <option value="user">SNMPTN</option>
-                                        <option value="user">SBMPTN</option>
-                                        <option value="user">MANDIRI</option>
+                                    <select class="form-control  @error('jalur_masuk') is-invalid @enderror"
+                                        name="jalur_masuk" id="jalur_masuk" required>
+                                        <option disabled>Jalur Masuk</option>
+                                        <option value="SNMPTN"
+                                            {{ $mahasiswa->jalur_masuk === 'SNMPTN' ? 'selected' : '' }}>SNMPTN
+                                        </option>
+                                        <option value="SBMPTN"
+                                            {{ $mahasiswa->jalur_masuk === 'SBMPTN' ? 'selected' : '' }}>SBMPTN
+                                        </option>
+                                        <option value="MANDIRI"
+                                            {{ $mahasiswa->jalur_masuk === 'MANDIRI' ? 'selected' : '' }}>MANDIRI
+                                        </option>
                                     </select>
-                                    @error('level')
+                                    @error('jalur_masuk')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>
@@ -230,31 +235,15 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="password" class="col-sm-4 col-form-label">Password :</label>
+                                <label for="foto_mahasiswa" class="col-sm-4 col-form-label">Input Foto Profil
+                                    :</label>
                                 <div class="form-group col-sm-6">
-                                    <input type="password"
-                                        class="form-control 
-                                        @error('password')
-                                    is-invalid    
-                                    @enderror"
-                                        id="password" name="password" autocomplete="off"
-                                        value="{{ old('password', auth()->user()->password) }}">
-                                    @error('password')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <label for="photo" class="col-sm-4 col-form-label">Input Foto Profil :</label>
-                                <div class="form-group col-sm-6">
-                                    <input type="file" name="photo" id="photo"
-                                        class="form-control @error('photo')
+                                    <input type="file" name="foto_mahasiswa" id="foto_mahasiswa"
+                                        class="form-control @error('foto_mahasiswa')
                                     is-invalid    
                                     @enderror mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                                        required value="{{ old('photo', auth()->user()->photo) }}">
-                                    @error('photo')
+                                        required value="{{ $mahasiswa->foto_mahasiswa ?? old('foto_mahasiswa') }}">
+                                    @error('foto_mahasiswa')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

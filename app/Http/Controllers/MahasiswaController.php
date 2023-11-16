@@ -12,17 +12,17 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $irs = IRS::where('userid', auth()->user()->id)
+        $irs = IRS::where('mahasiswa_id', auth()->user()->mahasiswa->nim)
             ->orderBy('semester', 'desc')
             ->first();
-        $k_h_s = KHS::where('userid', auth()->user()->id)
+        $k_h_s = KHS::where('mahasiswa_id', auth()->user()->mahasiswa->nim)
             ->orderBy('semester', 'desc')
             ->first();
         $p_k_l_s = PKL::query()
-            ->where('userid', '=', auth()->user()->id)
+            ->where('mahasiswa_id', '=', auth()->user()->mahasiswa->nim)
             ->get();
         $skripsis = Skripsi::query()
-            ->where('userid', '=', auth()->user()->id)
+            ->where('mahasiswa_id', '=', auth()->user()->mahasiswa->nim)
             ->get();
         ;
 

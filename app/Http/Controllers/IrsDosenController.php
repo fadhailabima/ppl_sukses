@@ -15,10 +15,12 @@ class IrsDosenController extends Controller
             $datairs = DB::table('irs')
                 ->join('mahasiswas', 'irs.mahasiswa_id', '=', 'mahasiswas.nim')
                 ->select('mahasiswas.nama', 'irs.id', 'irs.semester', 'irs.jmlsks', 'irs.scansks', 'irs.isverified')
+                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
                 ->where('nama', 'LIKE', '%' . $request->search . '%')->paginate(10);
         } else {
             $datairs = DB::table('irs')
                 ->join('mahasiswas', 'irs.mahasiswa_id', '=', 'mahasiswas.nim')
+                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
                 ->select('mahasiswas.nama', 'irs.id', 'irs.semester', 'irs.jmlsks', 'irs.scansks', 'irs.isverified')
                 ->paginate(10);
         }

@@ -83,7 +83,7 @@
                     <div class="col-md-4 col-lg-2 col-sm-4 w-1/4 mt-4 text-center">
                         <img src="{{ asset('storage/photo/' . auth()->user()->mahasiswa->foto_mahasiswa) }}"
                             class="rounded-circle img-thumbnail"
-                            style="height: 130px; width: 130px; position: absolute; margin: auto auto; left: 0; right: 475px">
+                            style="height: 130px; width: 130px; position: absolute; margin: auto auto; left: 0; right: 490px">
                     </div>
                     <div class="col-md-8 col-lg-10 col-sm-8 w-3/4">
                         <form class="user" method="POST" action="{{ url('/dashboardmahasiswa/profile/edit') }}"
@@ -226,7 +226,6 @@
                                     @enderror
                                 </div>
                             </div>
-                            </div>
                             <div class="mb-3 row">
                                 <label for="foto_mahasiswa" class="col-sm-4 col-form-label">Input Foto Profil
                                     :</label>
@@ -249,11 +248,12 @@
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
                                 </div>
                             </div>
-                        </form>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 

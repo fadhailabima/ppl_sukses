@@ -24,10 +24,12 @@ class KhsDosenController extends Controller
                     'k_h_s.scankhs',
                     'k_h_s.isverified'
                 )
+                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
                 ->where('nama', 'LIKE', '%' . $request->search . '%')->paginate(10);
         } else {
             $datakhs = DB::table('k_h_s')
                 ->join('mahasiswas', 'k_h_s.mahasiswa_id', '=', 'mahasiswas.nim')
+                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
                 ->select(
                     'mahasiswas.nama',
                     'k_h_s.id',

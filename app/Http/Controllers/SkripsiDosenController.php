@@ -12,14 +12,16 @@ class SkripsiDosenController extends Controller
     {
         if ($request->has('search')) {
             $dataskripsi = DB::table('skripsis')
-                ->join('users', 'skripsis.userid', '=', 'users.id')
-                ->select('users.name', 'skripsis.id', 'skripsis.semester', 'skripsis.tglsidang', 'skripsis.dosenpembimbing', 'skripsis.scansidang', 'skripsis.isverified')
-                ->where('name', 'LIKE', '%' . $request->search . '%')
+                ->join('mahasiswas', 'skripsis.mahasiswa_id', '=', 'mahasiswas.nim')
+                ->select('mahasiswas.nama', 'skripsis.id', 'skripsis.semester', 'skripsis.tglsidang', 'skripsis.dosenpembimbing', 'skripsis.scansidang', 'skripsis.isverified')
+                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
+                ->where('nama', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('dosenpembimbing', 'LIKE', '%' . $request->search . '%')->paginate(10);
         } else {
             $dataskripsi = DB::table('skripsis')
-                ->join('users', 'skripsis.userid', '=', 'users.id')
-                ->select('users.name', 'skripsis.id', 'skripsis.semester', 'skripsis.tglsidang', 'skripsis.dosenpembimbing', 'skripsis.scansidang', 'skripsis.isverified')
+                ->join('mahasiswas', 'skripsis.mahasiswa_id', '=', 'mahasiswas.nim')
+                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
+                ->select('mahasiswas.nama', 'skripsis.id', 'skripsis.semester', 'skripsis.tglsidang', 'skripsis.dosenpembimbing', 'skripsis.scansidang', 'skripsis.isverified')
                 ->paginate(10);
         }
 

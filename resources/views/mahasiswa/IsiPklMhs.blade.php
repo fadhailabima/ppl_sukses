@@ -83,7 +83,7 @@
                         Skripsi</b></a></li>
         </ul>
         <div class="container mt-4 flex justify-center items-center">
-            <h2 class="text-4xl text-center">Isi Data KHS</h2>
+            <h2 class="text-4xl text-center">Isi Data PKL</h2>
         </div>
 
         <br>

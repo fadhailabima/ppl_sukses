@@ -27,9 +27,9 @@ class SkripsiMhsController extends Controller
             'dosenpembimbing' => 'required|string',
             'scansidang' => 'required|file|mimes:pdf'
         ]);
-        $validatedata['userid'] = auth()->user()->id;
+        $validatedata['mahasiswa_id'] = auth()->user()->mahasiswa->nim;
         $validatedata['scansidang'] = $nameimg = $request->file('scansidang')->getClientOriginalName();
-        if (DB::table('Skripsis')->where('userid',  auth()->user()->id)->count() >= 1) {
+        if (DB::table('Skripsis')->where('mahasiswa_id',  auth()->user()->mahasiswa->nim)->count() >= 1) {
             return redirect('/dashboardmahasiswa/IsiSkripsiMahasiswa')->with('gagal', 'Anda Sudah memasukan data Skripsi');
         } else {
             $request->file('scansidang')->storeAs('public/post-scansidang/', $nameimg);
@@ -38,11 +38,11 @@ class SkripsiMhsController extends Controller
             // return $request;
         }
     }
-    public function show()
-    {
-        $data = Skripsi::query()
-            ->where('userid', '=', auth()->user()->id)
-            ->get();
-        return view('mahasiswa.IsiSkripsiMhs', compact('data'));
-    }
+    // public function show()
+    // {
+    //     $data = Skripsi::query()
+    //         ->where('userid', '=', auth()->user()->id)
+    //         ->get();
+    //     return view('mahasiswa.IsiSkripsiMhs', compact('data'));
+    // }
 }

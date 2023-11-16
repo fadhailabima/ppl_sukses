@@ -46,7 +46,7 @@
                 <path fill="currentColor"
                     d="M4 6v2h22v16H12v2h18v-2h-2V6H4zm4.002 3A4.016 4.016 0 0 0 4 13c0 2.199 1.804 4 4.002 4A4.014 4.014 0 0 0 12 13c0-2.197-1.802-4-3.998-4zM14 10v2h5v-2h-5zm7 0v2h3v-2h-3zM8.002 11C9.116 11 10 11.883 10 13c0 1.12-.883 2-1.998 2C6.882 15 6 14.12 6 13c0-1.117.883-2 2.002-2zM14 14v2h10v-2H14zM4 18v8h2v-6h3v6h2v-5.342l2.064 1.092c.585.31 1.288.309 1.872 0v.002l3.53-1.867l-.933-1.77l-3.531 1.867l-3.096-1.634A3.005 3.005 0 0 0 9.504 18H4z" />
             </svg>
-            <h5>{{ auth()->user()->name }}</h5>
+            <h5>{{ auth()->user()->dosenWali->nama }}</h5>
         </div>
     </nav>
     <!--form-->
@@ -54,7 +54,7 @@
         <br>
         <ul class="nav nav-pills justify-content-center text-dark">
             <li class="nav-item"><a href="/dashboarddosen" class="nav-link text-dark"><b>Home</b></a></li>
-            <li class="nav-item"><a href="/dashboarddosen/irs" class="nav-link text-dark" ><b> Data IRS
+            <li class="nav-item"><a href="/dashboarddosen/irs" class="nav-link text-dark"><b> Data IRS
                         Mahasiswa</b></a></li>
             <li class="nav-item"><a href="/dashboarddosen/khs" class="nav-link text-dark"><b> Data KHS
                         Mahasiswa</b></a></li>
@@ -63,7 +63,7 @@
             <li class="nav-item"><a href="/dashboarddosen/skripsi" class="nav-link text-dark"><b>Data Mahasiswa
                         Skripsi</b></a></li>
             <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link active" aria-current="page"
-                style="background-color:#101E31"><b>Data Mahasiswa</b></a></li>
+                    style="background-color:#101E31"><b>Data Mahasiswa</b></a></li>
         </ul>
 
         <br><br>
@@ -89,7 +89,7 @@
                                     d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                             </svg>
                         </span>
-                        <form action="/dashboarddosen/daftarmahasiswa" method="GET">
+                        <form action="/dashboarddosen/irs" method="GET">
                             <input type="search" placeholder="Cari Nama Mahasiswa" name="search" id="search"
                                 class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
 
@@ -121,7 +121,7 @@
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Angkatan
                                     </th>
-                            
+
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Action
@@ -131,17 +131,16 @@
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 @foreach ($datauser as $item)
                                     <tr>
-                                        <td class="px-4 py-4">{{ $item->name }}</td>
+                                        <td class="px-4 py-4">{{ $item->nama }}</td>
                                         <td class="px-4 py-4">{{ $item->nim }}</td>
                                         <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                        <td><a href="/dashboarddosen/irs/detailsrs8/{{ $item->id }}"
-                                                class="btn btn-facebook">Detail</a>
+                                        <td><a href="/dashboarddosen/detaildaftarmahasiswa"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $datauser->links() }}
                     </div>
                 </div>
             </div>

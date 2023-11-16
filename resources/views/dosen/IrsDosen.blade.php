@@ -65,6 +65,8 @@
                         Skripsi</b></a></li>
             <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link text-dark"><b>Data
                         Mahasiswa</b></a></li>
+            <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link text-dark"><b>Data
+                        Mahasiswa</b></a></li>
         </ul>
 
         <br><br>

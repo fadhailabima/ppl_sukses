@@ -12,14 +12,16 @@ class PklDosenController extends Controller
     {
         if ($request->has('search')) {
             $datapkl = DB::table('p_k_l_s')
-                ->join('users', 'p_k_l_s.userid', '=', 'users.id')
-                ->select('users.name', 'p_k_l_s.id', 'p_k_l_s.semester', 'p_k_l_s.instansi', 'p_k_l_s.dosenpengampu', 'p_k_l_s.scanpkl', 'p_k_l_s.isverified')
-                ->where('name', 'LIKE', '%' . $request->search . '%')
+                ->join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
+                ->select('mahasiswas.nama', 'p_k_l_s.id', 'p_k_l_s.semester', 'p_k_l_s.instansi', 'p_k_l_s.dosenpengampu', 'p_k_l_s.scanpkl', 'p_k_l_s.isverified')
+                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
+                ->where('nama', 'LIKE', '%' . $request->search . '%')
                 ->orWhere('dosenpengampu', 'LIKE', '%' . $request->search . '%')->paginate(10);
         } else {
             $datapkl = DB::table('p_k_l_s')
-                ->join('users', 'p_k_l_s.userid', '=', 'users.id')
-                ->select('users.name', 'p_k_l_s.id', 'p_k_l_s.semester', 'p_k_l_s.instansi', 'p_k_l_s.dosenpengampu', 'p_k_l_s.scanpkl', 'p_k_l_s.isverified')
+                ->join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
+                ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
+                ->select('mahasiswas.nama', 'p_k_l_s.id', 'p_k_l_s.semester', 'p_k_l_s.instansi', 'p_k_l_s.dosenpengampu', 'p_k_l_s.scanpkl', 'p_k_l_s.isverified')
                 ->paginate(10);
         }
 

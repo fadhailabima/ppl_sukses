@@ -43,11 +43,10 @@
             </div>
         </div>
         <div class="me-4 align-items-center flex justify-center text-light" style="text-align:center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 256 256">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 32 32">
                 <path fill="currentColor"
-                    d="m226.53 56.41l-96-32a8 8 0 0 0-5.06 0l-96 32A8 8 0 0 0 24 64v80a8 8 0 0 0 16 0V75.1l33.59 11.19a64 64 0 0 0 20.65 88.05c-18 7.06-33.56 19.83-44.94 37.29a8 8 0 1 0 13.4 8.74C77.77 197.25 101.57 184 128 184s50.23 13.25 65.3 36.37a8 8 0 0 0 13.4-8.74c-11.38-17.46-27-30.23-44.94-37.29a64 64 0 0 0 20.65-88l44.12-14.7a8 8 0 0 0 0-15.18ZM176 120a48 48 0 1 1-86.65-28.45l36.12 12a8 8 0 0 0 5.06 0l36.12-12A47.89 47.89 0 0 1 176 120Zm-48-32.43L57.3 64L128 40.43L198.7 64Z" />
+                    d="M4 6v2h22v16H12v2h18v-2h-2V6H4zm4.002 3A4.016 4.016 0 0 0 4 13c0 2.199 1.804 4 4.002 4A4.014 4.014 0 0 0 12 13c0-2.197-1.802-4-3.998-4zM14 10v2h5v-2h-5zm7 0v2h3v-2h-3zM8.002 11C9.116 11 10 11.883 10 13c0 1.12-.883 2-1.998 2C6.882 15 6 14.12 6 13c0-1.117.883-2 2.002-2zM14 14v2h10v-2H14zM4 18v8h2v-6h3v6h2v-5.342l2.064 1.092c.585.31 1.288.309 1.872 0v.002l3.53-1.867l-.933-1.77l-3.531 1.867l-3.096-1.634A3.005 3.005 0 0 0 9.504 18H4z" />
             </svg>
-            <!-- <li class="nav-item"><a href="profil-mahasiswa.php" class="nav-pills-link justify-content-center text-light"><h5>Mahasiswa</h5></a></li> -->
             <h5>{{ auth()->user()->dosenWali->nama }}</h5>
         </div>
     </nav>
@@ -57,148 +56,124 @@
         <br>
         <div class="container bg-white rounded-2xl max-w-screen-xl" style="width: 600px">
             <div class="row">
-                <div class="col-7" style="margin-top: 32px;">
-                    <div class="row">
-                        <div class="col-6">
-                            <img src="{{ asset('storage/photo/' . $mahasiswa->foto_mahasiswa) }}"
-                                class="rounded-circle img-thumbnail ml-8 mt-3"
-                                style="position: absolute; margin: auto auto; left: 0; right: 300px; height: 120px; width: 120px;">
+                <div class="container bg-white rounded-2xl max-w-screen-xl" style="width: 600px; position: relative;">
+                    <a href="/dashboarddosen/daftarmahasiswa"
+                        class="btn btn-secondary btn-sm rounded-lg mb-3 mt-2 ml-2 position-absolute top-0 start-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-arrow-left" viewBox="0 0 16 16">
+                            <path
+                                d="M11 8a.5.5 0 0 1 .5.5V14a.5.5 0 0 1-1 0V9.707L6.354 14.354a.5.5 0 1 1-.708-.708L9.293 8.5l-3.647-3.646a.5.5 0 1 1 .708-.708L9 7.293V2.5a.5.5 0 0 1 1 0V8z" />
+                        </svg>
+                        Back
+                    </a>
+                    <div class="col-7" style="margin-top: 32px;">
 
-                        </div>
-                        <div class="col-6 ml-52 mt-4">
-                            <table style="font-size: 16px;">
-                                <tr>
-                                    <td>{{ $mahasiswa->nama }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ $mahasiswa->nim }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ $mahasiswa->angkatan }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ $mahasiswa->email }}</td>
-                                </tr>
-                            </table>
+                        <div class="row">
+                            <div class="col-6">
+                                <img src="{{ asset('storage/photo/' . $mahasiswa->foto_mahasiswa) }}"
+                                    class="rounded-circle img-thumbnail ml-8 mt-3"
+                                    style="position: absolute; margin: auto auto; left: 0; right: 300px; height: 120px; width: 120px;">
+
+                            </div>
+                            <div class="col-6 ml-52 mt-4">
+                                <table style="font-size: 16px;">
+                                    <tr>
+                                        <td>{{ $mahasiswa->nama }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ $mahasiswa->nim }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ $mahasiswa->angkatan }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ $mahasiswa->email }}</td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div style="margin-top: 32x;">
-                    <div class="row">
-                        <div class="text-center mt-4">
-                            <div class="font-semibold text-lg">Semester</div>
+                    <div style="margin-top: 32x;">
+                        <div class="row">
+                            <div class="text-center mt-4">
+                                <div class="font-semibold text-lg">Semester</div>
+                                <br>
+                            </div>
+                            <div class="text-center mt-2">
+                                <div class="grid grid-cols-7 gap-2">
+                                    @for ($semester = 1; $semester <= 14; $semester++)
+                                        @php
+                                            $status = $semesterStatus[$semester];
+                                            $buttonClass = '';
+
+                                            // Menentukan kelas tambahan berdasarkan status
+                                            if ($status === 'blue') {
+                                                $buttonClass = 'btn-primary'; // Warna biru
+                                            } elseif ($status === 'yellow') {
+                                                $buttonClass = 'btn-warning'; // Warna kuning
+                                            } elseif ($status === 'green') {
+                                                $buttonClass = 'btn-success'; // Warna hijau
+                                            } else {
+                                                $buttonClass = 'btn-danger'; // Warna merah
+                                            }
+                                        @endphp
+
+                                        <div class="mr-1">
+                                            <a class="btn rounded-sm border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md inline-block {{ $buttonClass }}"
+                                                href="#">{{ $semester }}</a>
+                                        </div>
+                                    @endfor
+                                </div>
+                            </div>
                             <br>
                         </div>
-                        <div class="text-center">
-                            <ul class="grid grid-cols-7 gap-2 place-content-center">
-                                <li class=" mr-1">
-                                    <a class="rounded-sm bg-blue-700 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">1</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-blue-700 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">2</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-blue-700 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">3</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-blue-700 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">4</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-blue-700 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">5</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-yellow-300 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">6</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-blue-700 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">7</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <br>
-                        <div class="text-center mt-2">
-                            <ul class="grid grid-cols-7 gap-2 place-content-center">
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-green-800 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">8</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-red-600 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">9</a>
-                                </li>
-                                <li class=" mr-1">
-                                    <a class="rounded-sm bg-red-600 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">10</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-red-600 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">11</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-red-600 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">12</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-red-600 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">13</a>
-                                </li>
-                                <li class="mr-1">
-                                    <a class="rounded-sm bg-red-600 inline-block border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md"
-                                        href="#">14</a>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
-                </div>
-                <div style="margin-top: 32px; margin-bottom: 32px;">
-                    <div class="row">
-                        <div class="text-left mt-4">
-                            <div class="font-medium text-base">
-                                Keterangan :</div>
-                            <div class="font-medium text-base flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none"
-                                    stroke="red" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    viewBox="0 0 24 24">
-                                    <rect width="18" height="18" x="3" y="3" fill="red" rx="4" />
-                                </svg>
-                                <span class="align-middle">Belum Diisikan (IRS dan KHS) atau tidak digunakan</span>
-                            </div>
-                            <div class="font-medium text-base flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none"
-                                    stroke="blue" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    viewBox="0 0 24 24">
-                                    <rect width="18" height="18" x="3" y="3" fill="blue" rx="4" />
-                                </svg>
-                                <span class="align-middle">Sudah Diisikan (IRS dan KHS)</span>
-                            </div>
-                            <div class="font-medium text-base flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none"
-                                    stroke="yellow" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    viewBox="0 0 24 24">
-                                    <rect width="18" height="18" x="3" y="3" fill="yellow" rx="4" />
-                                </svg>
-                                <span class="align-middle">Sudah Lulus PKL (IRS, KHS, dan PKL)</span>
-                            </div>
-                            <div class="font-medium text-base flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none"
-                                    stroke="green" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    viewBox="0 0 24 24">
-                                    <rect width="18" height="18" x="3" y="3" fill="green" rx="4" />
-                                </svg>
-                                <span class="align-middle">Sudah Lulus Skripsi</span>
+                    <div style="margin-top: 32px; margin-bottom: 32px;">
+                        <div class="row">
+                            <div class="text-left mt-4">
+                                <div class="font-medium text-base">
+                                    Keterangan :</div>
+                                <div class="font-medium text-base flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none"
+                                        stroke="red" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        viewBox="0 0 24 24">
+                                        <rect width="18" height="18" x="3" y="3" fill="red" rx="4" />
+                                    </svg>
+                                    <span class="align-middle">Belum Diisikan (IRS dan KHS) atau tidak digunakan</span>
+                                </div>
+                                <div class="font-medium text-base flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none"
+                                        stroke="blue" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <rect width="18" height="18" x="3" y="3" fill="blue"
+                                            rx="4" />
+                                    </svg>
+                                    <span class="align-middle">Sudah Diisikan (IRS dan KHS)</span>
+                                </div>
+                                <div class="font-medium text-base flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none"
+                                        stroke="yellow" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <rect width="18" height="18" x="3" y="3" fill="yellow"
+                                            rx="4" />
+                                    </svg>
+                                    <span class="align-middle">Sudah Lulus PKL (IRS, KHS, dan PKL)</span>
+                                </div>
+                                <div class="font-medium text-base flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none"
+                                        stroke="green" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <rect width="18" height="18" x="3" y="3" fill="green"
+                                            rx="4" />
+                                    </svg>
+                                    <span class="align-middle">Sudah Lulus Skripsi</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

@@ -65,8 +65,6 @@
                         Skripsi</b></a></li>
             <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link text-dark"><b>Data
                         Mahasiswa</b></a></li>
-            <li class="nav-item"><a href="/dashboarddosen/daftarmahasiswa" class="nav-link text-dark"><b>Data
-                        Mahasiswa</b></a></li>
         </ul>
 
         <br><br>
@@ -97,7 +95,7 @@
                         </span>
                         <form action="/dashboarddosen/irs" method="GET">
                             <input type="search" placeholder="Cari Nama Mahasiswa" name="search" id="search"
-                                class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                                class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-black-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
 
                     </div>
                     <button class="btn btn-outline-primary w-16 h-9" type="submit">Cari</button>

@@ -83,7 +83,8 @@
                     </div>
                     <div class="row">
                         <div class="col-9 ml-5" style="margin-top: 235px;">
-                            <div class="ms-3" style="font-weight: bolder; font-size: 20px;">{{ auth()->user()->mahasiswa->nama }}
+                            <div class="ms-3" style="font-weight: bolder; font-size: 20px;">
+                                {{ auth()->user()->mahasiswa->nama }}
                             </div>
                             <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->mahasiswa->nim }}</div>
                             <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->mahasiswa->email }}</div>
@@ -169,17 +170,23 @@
                                             <h5 class="card-title text-light text-center ms-5"></h5>
                                         </div>
                                     </div>
-                                    <div class="card-text">
-                                        @foreach ($p_k_l_s as $item)
-                                            @if ($item->isverified == 1)
-                                                <p>Semester : {{ $item->semester }}</p>
-                                                <p>Instansi : {{ $item->instansi }}</p>
-                                                <p>Dosen Pengampu : {{ $item->dosenpengampu }}</p>
-                                            @else
-                                                <p>Belum Disetujui</p>
-                                            @endif
+                                    @if ($p_k_l_s->isNotEmpty())
+                                        @foreach ($p_k_l_s as $pkl)
+                                            <div class="card-text">
+                                                @if ($pkl->isverified == 1)
+                                                    <p>Semester : {{ $pkl->semester }}</p>
+                                                    <p>Instansi : {{ $pkl->instansi }}</p>
+                                                    <p>Dosen Pengampu : {{ $pkl->dosenpengampu }}</p>
+                                                @else
+                                                    <p>Belum Disetujui</p>
+                                                @endif
+                                            </div>
                                         @endforeach
-                                    </div>
+                                    @else
+                                        <div class="card-text">
+                                            <p>Belum Mendaftar PKL</p>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -196,16 +203,22 @@
                                             <h5 class="card-title text-light text-center ms-5"></h5>
                                         </div>
                                     </div>
-                                    <div class="card-text">
-                                        @foreach ($skripsis as $item)
-                                            @if ($item->isverified == 1)
-                                                <p>Tanggal Sidang : {{ $item->tglsidang }}</p>
-                                                <p>Dosen Pembimbing : {{ $item->dosenpembimbing }}</p>
-                                            @else
-                                                <p>Belum Disetujui</p>
-                                            @endif
+                                    @if ($skripsis->isNotEmpty())
+                                        @foreach ($skripsis as $skripsi)
+                                            <div class="card-text">
+                                                @if ($skripsi->isverified == 1)
+                                                    <p>Tanggal Sidang : {{ $skripsi->tglsidang }}</p>
+                                                    <p>Dosen Pembimbing : {{ $skripsi->dosenpembimbing }}</p>
+                                                @else
+                                                    <p>Belum Disetujui</p>
+                                                @endif
+                                            </div>
                                         @endforeach
-                                    </div>
+                                    @else
+                                        <div class="card-text">
+                                            <p>Belum Mendaftar Skripsi</p>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

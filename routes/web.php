@@ -98,3 +98,4 @@ Route::get('/dashboarddosen/skripsi/unverify/{id}', [SkripsiDosenController::cla
 //Daftar Mahasiswa
 Route::get('/dashboarddosen/daftarmahasiswa', [DaftarMHSdosenController::class, 'index'])->middleware('dosen');
 Route::get('/dashboarddosen/detaildaftarmahasiswa/{nim}', [DaftarMHSdosenController::class, 'detail'])->middleware('dosen');
+// Route::get('/dashboarddosen/detailAkademik/{nim}', [DaftarMHSdosenController::class, 'detailAkademik'])->middleware('dosen');

@@ -34,7 +34,7 @@ class LengkapiDataMhsController extends Controller
             'email' => 'required|max:255',
             'jalur_masuk' => 'required|in:SNMPTN,SBMPTN,MANDIRI',
             'handphone' => 'required|string|regex:/^[0-9]+$/|between:10,12',
-            'new_password' => 'nullable|min:5|max:255',
+            'new_password' => 'required|min:5|max:255',
             'foto_mahasiswa' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 

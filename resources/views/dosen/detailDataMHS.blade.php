@@ -144,15 +144,21 @@
                                             <div class="modal-body">
                                                 <!-- IRS content for semester {{ $semester }} -->
                                                 @php
-                                                    $irsData = $mahasiswa->irs->where('semester', $semester)->first();
-                                                    $khsData = $mahasiswa->khs->where('semester', $semester)->first();
+                                                    $irsData = $mahasiswa->irs ? $mahasiswa->irs->where('semester', $semester)->first() : null;
+                                                    $khsData = $mahasiswa->khs ? $mahasiswa->khs->where('semester', $semester)->first() : null;
+                                                    $pklData = $mahasiswa->pkl ? $mahasiswa->pkl->where('semester', $semester)->first() : null;
+                                                    $skripsiData = $mahasiswa->skripsi ? $mahasiswa->skripsi->where('semester', $semester)->first() : null;
                                                 @endphp
 
-                                                @if ($irsData && $khsData)
+                                                @if ($irsData && $khsData && $pklData)
                                                     <p>IRS Semester {{ $semester }}: {{ $irsData->jmlsks }} SKS
                                                     </p>
                                                     <p>KHS Semester {{ $semester }}: {{ $khsData->skssemester }}
                                                         SKS, IP Semester: {{ $khsData->ipsemester }}</p>
+                                                    <p>PKL Semester {{ $semester }}: <!-- display PKL data --></p>
+                                                @elseif ($skripsiData)
+                                                    <p>Skripsi Semester {{ $semester }}:
+                                                        <!-- display Skripsi data --></p>
                                                 @else
                                                     <p>Data tidak tersedia untuk semester ini.</p>
                                                 @endif
@@ -220,34 +226,54 @@
                 $('.semester-button').click(function() {
                     var semesterNumber = $(this).text();
 
-                    // Di sini Anda perlu mengakses data IRS dan KHS yang sesuai dengan semester yang dipilih
-                    // Misalkan, Anda memiliki data IRS dan KHS dalam variabel $irsData dan $khsData untuk semester yang dipilih
+                    // Di sini Anda perlu mengakses data IRS, KHS, PKL, dan Skripsi yang sesuai dengan semester yang dipilih
+                    // Misalkan, Anda memiliki data IRS, KHS, PKL, dan Skripsi dalam variabel $irsData, $khsData, $pklData, dan $skripsiData untuk semester yang dipilih
 
                     var $irsData = ""; // Isi dengan data IRS untuk semester yang dipilih
                     var $khsData = ""; // Isi dengan data KHS untuk semester yang dipilih
+                    var $pklData = ""; // Isi dengan data PKL untuk semester yang dipilih
+                    var $skripsiData = ""; // Isi dengan data Skripsi untuk semester yang dipilih
 
-                    // Update konten modal sesuai dengan data IRS dan KHS yang sesuai
-                    if ($irsData && $khsData) {
+                    // Update konten modal sesuai dengan data yang sesuai
+                    if ($irsData && $khsData && $pklData) {
                         $('#exampleModalLabel').text('Informasi Semester ' + semesterNumber);
                         $('#irsTab').html('<p>' + $irsData + '</p>');
                         $('#khsTab').html('<p>' + $khsData + '</p>');
+                        $('#pklTab').html('<p>' + $pklData + '</p>');
+                        $('#skripsiTab').html('<p>' + $skripsiData + '</p>');
                         $('#khsTabLink').show();
+                        $('#pklTabLink').show();
+                        $('#skripsiTabLink').show();
+                        $('#semesterModal').modal('show');
+                    } else if ($skripsiData) {
+                        $('#exampleModalLabel').text('Informasi Semester ' + semesterNumber);
+                        $('#skripsiTab').html('<p>' + $skripsiData + '</p>');
+                        $('#khsTabLink').hide();
+                        $('#pklTabLink').hide();
                         $('#semesterModal').modal('show');
                     } else {
                         $('#exampleModalLabel').text('Informasi Semester ' + semesterNumber);
                         $('#irsTab').html('<p>Tidak ada progress akademik</p>');
                         $('#khsTab').html('');
+                        $('#pklTab').html('');
+                        $('#skripsiTab').html('');
                         $('#khsTabLink').hide();
+                        $('#pklTabLink').hide();
+                        $('#skripsiTabLink').hide();
                         $('#semesterModal').modal('show');
                     }
                 });
 
                 $('#semesterTabs a').on('shown.bs.tab', function(e) {
-                    // Konten untuk tab IRS dan KHS saat tab ditampilkan
+                    // Konten untuk tab IRS, KHS, PKL, dan Skripsi saat tab ditampilkan
                     if (e.target.id === 'irsTabLink') {
                         // Konten untuk tab IRS
                     } else if (e.target.id === 'khsTabLink') {
                         // Konten untuk tab KHS
+                    } else if (e.target.id === 'pklTabLink') {
+                        // Konten untuk tab PKL
+                    } else if (e.target.id === 'skripsiTabLink') {
+                        // Konten untuk tab Skripsi
                     }
                 });
             });

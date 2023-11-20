@@ -82,22 +82,16 @@ class DaftarMHSdosenController extends Controller
 
     public function detailAkademik(Request $request, $nim)
     {
-        // $mahasiswa = MHS::with(['irs', 'k_h_s', 'p_k_l_s', 'skripsis'])
-        //     ->where('dosen_wali', auth()->user()->dosenWali->nip)
-        //     ->where('nim', $nim)
-        //     ->first();
+        $mahasiswa = MHS::where('nim', $nim)->first();
 
-        // if (!$mahasiswa) {
-        //     return redirect()->back()->with('error', 'Mahasiswa tidak ditemukan.');
-        // }
+    if (!$mahasiswa) {
+        // Handle ketika mahasiswa tidak ditemukan
+    }
 
-        // $semesterStatus = [];
-
-        // // Loop setiap semester yang diinginkan
-        // for ($i = 1; $i <= 14; $i++) { // Misalnya dari semester 1 sampai 8
-        //     $semesterStatus[$i] = 'red';
-        // }
-
-        // return view('dosen.detailAkademik');
+    // Ambil data terkait akademik mahasiswa ini menggunakan relasi
+    $irs = IRS::where('mahasiswa_id', $mahasiswa->id)->get();
+    $khs = KHS::where('mahasiswa_id', $mahasiswa->id)->get();
+    $pkl = PKL::where('mahasiswa_id', $mahasiswa->id)->get();
+    $skripsi = Skripsi::where('mahasiswa_id', $mahasiswa->id)->get();
     }
 }

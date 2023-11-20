@@ -29,14 +29,14 @@ class DashboardDosenController extends Controller
             ->get();
 
         $irsCollection = collect($irsData);
-        $uniqueUsersIRS = $irsCollection->groupBy('mahasiswaid');
+        $uniqueUsersIRS = $irsCollection->groupBy('mahasiswanim');
 
         $irsCountNotVerified = $uniqueUsersIRS->flatMap(function ($group) {
-            return $group->where('isverified', 0)->pluck('mahasiswaid')->unique();
+            return $group->where('isverified', 0)->pluck('mahasiswanim')->unique();
         })->count();
 
         $irsCountVerified = $uniqueUsersIRS->flatMap(function ($group) {
-            return $group->where('isverified', 1)->pluck('mahasiswaid')->unique();
+            return $group->where('isverified', 1)->pluck('mahasiswanim')->unique();
         })->count();
         $irsbelum = max(0, $jmlmhs - $irsCountNotVerified - $irsCountVerified);
 
@@ -48,14 +48,14 @@ class DashboardDosenController extends Controller
             ->get();
 
         $khsCollection = collect($khsData);
-        $uniqueUsersKHS = $khsCollection->groupBy('mahasiswaid');
+        $uniqueUsersKHS = $khsCollection->groupBy('mahasiswanim');
 
         $khsCountNotVerified = $uniqueUsersKHS->flatMap(function ($group) {
-            return $group->where('isverified', 0)->pluck('mahasiswaid')->unique();
+            return $group->where('isverified', 0)->pluck('mahasiswanim')->unique();
         })->count();
 
         $khsCountVerified = $uniqueUsersKHS->flatMap(function ($group) {
-            return $group->where('isverified', 1)->pluck('mahasiswaid')->unique();
+            return $group->where('isverified', 1)->pluck('mahasiswanim')->unique();
         })->count();
         $khsbelum = max(0, $jmlmhs - $khsCountNotVerified - $khsCountVerified);
 

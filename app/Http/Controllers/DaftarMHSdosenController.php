@@ -56,7 +56,6 @@ class DaftarMHSdosenController extends Controller
 
             // PKL
             $pklStatus = $mahasiswa->pkl ? $mahasiswa->pkl->where('semester', $i)->first() : null;
-            ;
 
             // Skripsi
             $skripsiStatus = $mahasiswa->skripsi ? $mahasiswa->skripsi->where('semester', $i)->first() : null;
@@ -76,22 +75,13 @@ class DaftarMHSdosenController extends Controller
             }
         }
 
-        return view('dosen.detailDataMHS', compact('mahasiswa', 'semesterStatus'));
+        // Ambil data terkait akademik mahasiswa ini menggunakan relasi
+        $irs = IRS::where('mahasiswa_id', $mahasiswa->id)->get();
+        $khs = KHS::where('mahasiswa_id', $mahasiswa->id)->get();
+        $pkl = PKL::where('mahasiswa_id', $mahasiswa->id)->get();
+        $skripsi = Skripsi::where('mahasiswa_id', $mahasiswa->id)->get();
+
+        return view('dosen.detailDataMHS', compact('mahasiswa', 'semesterStatus', 'irs', 'khs', 'pkl', 'skripsi'));
     }
 
-
-    public function detailAkademik(Request $request, $nim)
-    {
-        $mahasiswa = MHS::where('nim', $nim)->first();
-
-    if (!$mahasiswa) {
-        // Handle ketika mahasiswa tidak ditemukan
-    }
-
-    // Ambil data terkait akademik mahasiswa ini menggunakan relasi
-    $irs = IRS::where('mahasiswa_id', $mahasiswa->id)->get();
-    $khs = KHS::where('mahasiswa_id', $mahasiswa->id)->get();
-    $pkl = PKL::where('mahasiswa_id', $mahasiswa->id)->get();
-    $skripsi = Skripsi::where('mahasiswa_id', $mahasiswa->id)->get();
-    }
 }

@@ -76,12 +76,12 @@ class DaftarMHSdosenController extends Controller
         }
 
         // Ambil data terkait akademik mahasiswa ini menggunakan relasi
-        $irs = IRS::where('mahasiswa_id', $mahasiswa->id)->get();
-        $khs = KHS::where('mahasiswa_id', $mahasiswa->id)->get();
-        $pkl = PKL::where('mahasiswa_id', $mahasiswa->id)->get();
-        $skripsi = Skripsi::where('mahasiswa_id', $mahasiswa->id)->get();
+        // $irs = IRS::where('mahasiswa_id', $mahasiswa->id)->get();
+        // $khs = KHS::where('mahasiswa_id', $mahasiswa->id)->get();
+        // $pkl = PKL::where('mahasiswa_id', $mahasiswa->id)->get();
+        // $skripsi = Skripsi::where('mahasiswa_id', $mahasiswa->id)->get();
 
-        return view('dosen.detailDataMHS', compact('mahasiswa', 'semesterStatus', 'irs', 'khs', 'pkl', 'skripsi'));
+        return view('dosen.detailDataMHS', compact('mahasiswa', 'semesterStatus'));
     }
 
 }

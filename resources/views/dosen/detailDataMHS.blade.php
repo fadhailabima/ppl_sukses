@@ -138,34 +138,119 @@
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel_{{ $semester }}">
                                                     Detail Semester {{ $semester }}</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <!-- IRS content for semester {{ $semester }} -->
                                                 @php
-                                                    $irsData = $mahasiswa->irs ? $mahasiswa->irs->where('semester', $semester)->first() : null;
-                                                    $khsData = $mahasiswa->khs ? $mahasiswa->khs->where('semester', $semester)->first() : null;
-                                                    $pklData = $mahasiswa->pkl ? $mahasiswa->pkl->where('semester', $semester)->first() : null;
-                                                    $skripsiData = $mahasiswa->skripsi ? $mahasiswa->skripsi->where('semester', $semester)->first() : null;
+                                                    $irsData = $mahasiswa->irs
+                                                        ? $mahasiswa->irs
+                                                            ->where('semester', $semester)
+                                                            ->where('isverified', true)
+                                                            ->first()
+                                                        : null;
+                                                    $khsData = $mahasiswa->khs
+                                                        ? $mahasiswa->khs
+                                                            ->where('semester', $semester)
+                                                            ->where('isverified', true)
+                                                            ->first()
+                                                        : null;
+                                                    $pklData = $mahasiswa->pkl
+                                                        ? $mahasiswa->pkl
+                                                            ->where('semester', $semester)
+                                                            ->where('isverified', true)
+                                                            ->first()
+                                                        : null;
+                                                    $skripsiData = $mahasiswa->skripsi
+                                                        ? $mahasiswa->skripsi
+                                                            ->where('semester', $semester)
+                                                            ->where('isverified', true)
+                                                            ->first()
+                                                        : null;
                                                 @endphp
+                                                <ul class="nav nav-tabs" id="semesterTabs">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="irsTabLink" data-bs-toggle="tab"
+                                                            href="#irsTab_{{ $semester }}">IRS</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="khsTabLink" data-bs-toggle="tab"
+                                                            href="#khsTab_{{ $semester }}">KHS</a>
+                                                    </li>
+                                                    @if ($pklData)
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="pklTabLink" data-bs-toggle="tab"
+                                                                href="#pklTab_{{ $semester }}">PKL</a>
+                                                        </li>
+                                                    @endif
+                                                    @if ($skripsiData)
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="skripsiTabLink"
+                                                                data-bs-toggle="tab"
+                                                                href="#skripsiTab_{{ $semester }}">Skripsi</a>
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                                <div class="tab-content" id="semesterTabsContent">
+                                                    @if ($irsData && $khsData)
+                                                        <div class="tab-pane fade show active"
+                                                            id="irsTab_{{ $semester }}" role="tabpanel">
+                                                            <p>Semester {{ $semester }}</p>
+                                                            <p>{{ $irsData->jmlsks }} SKS</p>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="khsTab_{{ $semester }}"
+                                                            role="tabpanel">
+                                                            <p>SKS Semester: {{ $khsData->skssemester }}</p>
+                                                            <p>IP Semester: {{ $khsData->ipsemester }}</p>
+                                                            <p>SKS Kumulatif: {{ $khsData->skskumulatif }}</p>
+                                                            <p>IP Kumulatif: {{ $khsData->ipkumulatif }}</p>
+                                                        </div>
+                                                    @else
+                                                        <p>Data tidak tersedia untuk semester ini.</p>
+                                                    @endif
 
-                                                @if ($irsData && $khsData && $pklData)
-                                                    <p>IRS Semester {{ $semester }}: {{ $irsData->jmlsks }} SKS
-                                                    </p>
-                                                    <p>KHS Semester {{ $semester }}: {{ $khsData->skssemester }}
-                                                        SKS, IP Semester: {{ $khsData->ipsemester }}</p>
-                                                    <p>PKL Semester {{ $semester }}: <!-- display PKL data --></p>
-                                                @elseif ($skripsiData)
-                                                    <p>Skripsi Semester {{ $semester }}:
-                                                        <!-- display Skripsi data --></p>
-                                                @else
-                                                    <p>Data tidak tersedia untuk semester ini.</p>
-                                                @endif
+                                                    <!-- Add the PKL tab content if there is PKL data -->
+                                                    @if ($irsData && $khsData && $pklData)
+                                                        <div class="tab-pane fade show active"
+                                                            id="irsTab_{{ $semester }}" role="tabpanel">
+                                                            <p>Semester {{ $semester }}</p>
+                                                            <p>{{ $irsData->jmlsks }} SKS</p>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="khsTab_{{ $semester }}"
+                                                            role="tabpanel">
+                                                            <p>SKS Semester: {{ $khsData->skssemester }}</p>
+                                                            <p>IP Semester: {{ $khsData->ipsemester }}</p>
+                                                            <p>SKS Kumulatif: {{ $khsData->skskumulatif }}</p>
+                                                            <p>IP Kumulatif: {{ $khsData->ipkumulatif }}</p>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="pklTab_{{ $semester }}"
+                                                            role="tabpanel">
+                                                            <!-- Display PKL information here -->
+                                                            <p>Semester: {{ $pklData->semester }}</p>
+                                                            <p>Instansi: {{ $pklData->instansi }}</p>
+                                                            <p>Dosen Pengampu: {{ $pklData->dosenpengampu }}</p>
+                                                            <!-- Add more information related to PKL if needed -->
+                                                        </div>
+                                                    @endif
+
+                                                    <!-- Add the Skripsi tab content if there is Skripsi data -->
+                                                    @if ($skripsiData)
+                                                        <div class="tab-pane fade"
+                                                            id="skripsiTab_{{ $semester }}" role="tabpanel">
+                                                            <!-- Display Skripsi information here -->
+                                                            <p>Semester: {{ $skripsiData->semester }}</p>
+                                                            <p>Tanggal Sidang: {{ $skripsiData->tglsidang }}</p>
+                                                            <p>Dosen Pembimbing: {{ $skripsiData->dosenpembimbing }}
+                                                            </p>
+                                                            <!-- Add more information related to Skripsi if needed -->
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                             <!-- Modal footer -->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-danger"
+                                                    style="color: white; background-color: #d9534f; border-color: #d9534f;"
+                                                    onmouseover="this.style.color='white'; this.style.backgroundColor='#c9302c'; this.style.borderColor='#ac2925';"
+                                                    onmouseout="this.style.color='white'; this.style.backgroundColor='#d9534f'; this.style.borderColor='#d9534f';"
                                                     data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
@@ -221,63 +306,6 @@
                 </div>
             </div>
         </div>
-        <script>
-            $(document).ready(function() {
-                $('.semester-button').click(function() {
-                    var semesterNumber = $(this).text();
-
-                    // Di sini Anda perlu mengakses data IRS, KHS, PKL, dan Skripsi yang sesuai dengan semester yang dipilih
-                    // Misalkan, Anda memiliki data IRS, KHS, PKL, dan Skripsi dalam variabel $irsData, $khsData, $pklData, dan $skripsiData untuk semester yang dipilih
-
-                    var $irsData = ""; // Isi dengan data IRS untuk semester yang dipilih
-                    var $khsData = ""; // Isi dengan data KHS untuk semester yang dipilih
-                    var $pklData = ""; // Isi dengan data PKL untuk semester yang dipilih
-                    var $skripsiData = ""; // Isi dengan data Skripsi untuk semester yang dipilih
-
-                    // Update konten modal sesuai dengan data yang sesuai
-                    if ($irsData && $khsData && $pklData) {
-                        $('#exampleModalLabel').text('Informasi Semester ' + semesterNumber);
-                        $('#irsTab').html('<p>' + $irsData + '</p>');
-                        $('#khsTab').html('<p>' + $khsData + '</p>');
-                        $('#pklTab').html('<p>' + $pklData + '</p>');
-                        $('#skripsiTab').html('<p>' + $skripsiData + '</p>');
-                        $('#khsTabLink').show();
-                        $('#pklTabLink').show();
-                        $('#skripsiTabLink').show();
-                        $('#semesterModal').modal('show');
-                    } else if ($skripsiData) {
-                        $('#exampleModalLabel').text('Informasi Semester ' + semesterNumber);
-                        $('#skripsiTab').html('<p>' + $skripsiData + '</p>');
-                        $('#khsTabLink').hide();
-                        $('#pklTabLink').hide();
-                        $('#semesterModal').modal('show');
-                    } else {
-                        $('#exampleModalLabel').text('Informasi Semester ' + semesterNumber);
-                        $('#irsTab').html('<p>Tidak ada progress akademik</p>');
-                        $('#khsTab').html('');
-                        $('#pklTab').html('');
-                        $('#skripsiTab').html('');
-                        $('#khsTabLink').hide();
-                        $('#pklTabLink').hide();
-                        $('#skripsiTabLink').hide();
-                        $('#semesterModal').modal('show');
-                    }
-                });
-
-                $('#semesterTabs a').on('shown.bs.tab', function(e) {
-                    // Konten untuk tab IRS, KHS, PKL, dan Skripsi saat tab ditampilkan
-                    if (e.target.id === 'irsTabLink') {
-                        // Konten untuk tab IRS
-                    } else if (e.target.id === 'khsTabLink') {
-                        // Konten untuk tab KHS
-                    } else if (e.target.id === 'pklTabLink') {
-                        // Konten untuk tab PKL
-                    } else if (e.target.id === 'skripsiTabLink') {
-                        // Konten untuk tab Skripsi
-                    }
-                });
-            });
-        </script>
 </body>
 
 </html>

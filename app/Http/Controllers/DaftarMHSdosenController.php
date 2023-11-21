@@ -60,18 +60,18 @@ class DaftarMHSdosenController extends Controller
             // Skripsi
             $skripsiStatus = $mahasiswa->skripsi ? $mahasiswa->skripsi->where('semester', $i)->first() : null;
 
-            if ($irsStatus && $irsStatus->isverified && $khsStatus && $khsStatus->isverified) {
-                $semesterStatus[$i] = 'blue';
-            } elseif ($irsStatus === null && $khsStatus === null) {
-                $semesterStatus[$i] = 'red'; // Jika IRS **dan** KHS disetujui, maka warna biru
-            } elseif ($irsStatus && $irsStatus->isverified && $khsStatus && $khsStatus->isverified && $pklStatus && $pklStatus->isverified) {
+            if ($irsStatus && $irsStatus->isverified && $khsStatus && $khsStatus->isverified && $pklStatus && $pklStatus->isverified) {
                 $semesterStatus[$i] = 'yellow';
             } elseif ($irsStatus === null && $khsStatus === null && $pklStatus === null) {
-                $semesterStatus[$i] = 'red'; // Jika PKL disetujui, maka warna kuning
-            } elseif ($skripsiStatus && $skripsiStatus->isverified) {
+                $semesterStatus[$i] = 'red'; // Jika IRS *dan* KHS disetujui, maka warna biru
+            } elseif ($irsStatus && $irsStatus->isverified && $khsStatus && $khsStatus->isverified && $skripsiStatus && $skripsiStatus->isverified) {
                 $semesterStatus[$i] = 'green'; // Jika Skripsi disetujui, maka warna hijau
-            } elseif ($skripsiStatus === null) {
+            } elseif ($irsStatus === null && $khsStatus === null && $skripsiStatus === null) {
                 $semesterStatus[$i] = 'red';
+            } elseif ($irsStatus && $irsStatus->isverified && $khsStatus && $khsStatus->isverified) {
+                $semesterStatus[$i] = 'blue';
+            } elseif ($irsStatus === null && $khsStatus === null) {
+                $semesterStatus[$i] = 'red'; // Jika PKL disetujui, maka warna kuning
             }
         }
 

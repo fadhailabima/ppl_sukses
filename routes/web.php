@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\IrsDosenController;
 use App\Http\Controllers\KhsDosenController;
 use App\Http\Controllers\LengkapiDataMhsController;
@@ -98,4 +99,8 @@ Route::get('/dashboarddosen/skripsi/unverify/{id}', [SkripsiDosenController::cla
 //Daftar Mahasiswa
 Route::get('/dashboarddosen/daftarmahasiswa', [DaftarMHSdosenController::class, 'index'])->middleware('dosen');
 Route::get('/dashboarddosen/detaildaftarmahasiswa/{nim}', [DaftarMHSdosenController::class, 'detail'])->middleware('dosen');
-// Route::get('/dashboarddosen/detailAkademik/{nim}', [DaftarMHSdosenController::class, 'detailAkademik'])->middleware('dosen');
+
+//Departments
+Route::get('/dashboarddepartment', [DepartmentsController::class, 'index'])->middleware('department');
+Route::get('/dashboarddepartment/daftarmahasiswa', [DepartmentsController::class, 'dataMHS'])->middleware('department');
+Route::get('/dashboarddepartment/detailmahasiswa/{nim}', [DepartmentsController::class, 'detailMHS'])->middleware('department');

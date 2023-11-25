@@ -48,7 +48,7 @@
                     d="m226.53 56.41l-96-32a8 8 0 0 0-5.06 0l-96 32A8 8 0 0 0 24 64v80a8 8 0 0 0 16 0V75.1l33.59 11.19a64 64 0 0 0 20.65 88.05c-18 7.06-33.56 19.83-44.94 37.29a8 8 0 1 0 13.4 8.74C77.77 197.25 101.57 184 128 184s50.23 13.25 65.3 36.37a8 8 0 0 0 13.4-8.74c-11.38-17.46-27-30.23-44.94-37.29a64 64 0 0 0 20.65-88l44.12-14.7a8 8 0 0 0 0-15.18ZM176 120a48 48 0 1 1-86.65-28.45l36.12 12a8 8 0 0 0 5.06 0l36.12-12A47.89 47.89 0 0 1 176 120Zm-48-32.43L57.3 64L128 40.43L198.7 64Z" />
             </svg>
             <!-- <li class="nav-item"><a href="profil-mahasiswa.php" class="nav-pills-link justify-content-center text-light"><h5>Mahasiswa</h5></a></li> -->
-            <h5>{{ auth()->user()->mahasiswa->nama }}</h5>
+            <h5>Nama MHS</h5>
         </div>
     </nav>
     <!--form-->
@@ -71,14 +71,14 @@
         </ul>
 
         <br>
-        <div class="container bg-white rounded-2xl max-w-screen-lg" style="width: 600px">
+        <div class="container bg-white rounded-2xl max-w-screen-lg" style="width: 900px">
             <div class="row">
-                <div class="col-7" style="margin-top: 60px;">
+                <div class="col-6" style="margin-top: 60px;">
                     <div class="row">
                         <div class="col-6">
                             <img src="{{ asset('storage/photo/' . auth()->user()->mahasiswa->foto_mahasiswa) }}"
                                 class="rounded-circle img-thumbnail ml-8 mt-3"
-                                style="position: absolute; margin: auto auto; left: 0; right: 300px; height: 200px; width: 200px;">
+                                style="position: absolute; margin: auto auto; left: 0; right: 600px; height: 200px; width: 200px;">
                         </div>
                     </div>
                     <div class="row">
@@ -90,13 +90,180 @@
                             <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->mahasiswa->email }}</div>
                             <div class="ms-3" style="font-size: 18px;">{{ auth()->user()->mahasiswa->angkatan }}</div>
                             <br>
-                            <br><br>
                         </div>
                     </div>
-                </div>
-                <div class="col-5 mt-3 text-white">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="text-center mt-1">
+                            <div class="font-semibold text-lg">Semester</div>
+                            <br>
+                        </div>
+                        <div class="text-center mt-2">
+                            <div class="grid grid-cols-7 gap-2">
+                                {{-- @foreach ($semesterStatus as $semesterStts) --}}
+                                    {{-- @if (isset($semesterStatus)) --}}
+                                    @for ($semester = 1; $semester <= 14; $semester++)
+                                        @php
+                                            $status = $semesterStatus[$semester];
+                                            $buttonClass = '';
+
+                                            // Menentukan kelas tambahan berdasarkan status
+                                            if ($status === 'blue') {
+                                                $buttonClass = 'btn-primary'; // Warna biru
+                                            } elseif ($status === 'yellow') {
+                                                $buttonClass = 'btn-warning'; // Warna kuning
+                                            } elseif ($status === 'green') {
+                                                $buttonClass = 'btn-success'; // Warna hijau
+                                            } else {
+                                                $buttonClass = 'btn-danger'; // Warna merah
+                                            }
+                                        @endphp
+
+
+                                        <div class="mr-1">
+                                            <button
+                                                class="btn rounded-sm border-l border-t border-r rounded-t py-2 px-4 text-white font-semibold shadow-md inline-block semester-button {{ $buttonClass }}"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#semesterModal_{{ $semester }}">{{ $semester }}</button>
+                                        </div>
+                                    @endfor
+                                {{-- @endforeach --}}
+                                {{-- @endif --}}
+                            </div>
+                        </div>
+                        <br>
+                        @for ($semester = 1; $semester <= 14; $semester++)
+                            <!-- Modal for semester {{ $semester }} -->
+                            <div class="modal fade" id="semesterModal_{{ $semester }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel_{{ $semester }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <!-- Modal content here -->
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel_{{ $semester }}">
+                                                Detail Semester {{ $semester }}</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            @php
+                                                $irsData = $mahasiswa->irs
+                                                    ? $mahasiswa->irs
+                                                        ->where('semester', $semester)
+                                                        ->where('isverified', true)
+                                                        ->first()
+                                                    : null;
+                                                $khsData = $mahasiswa->khs
+                                                    ? $mahasiswa->khs
+                                                        ->where('semester', $semester)
+                                                        ->where('isverified', true)
+                                                        ->first()
+                                                    : null;
+                                                $pklData = $mahasiswa->pkl
+                                                    ? $mahasiswa->pkl
+                                                        ->where('semester', $semester)
+                                                        ->where('isverified', true)
+                                                        ->first()
+                                                    : null;
+                                                $skripsiData = $mahasiswa->skripsi
+                                                    ? $mahasiswa->skripsi
+                                                        ->where('semester', $semester)
+                                                        ->where('isverified', true)
+                                                        ->first()
+                                                    : null;
+                                            @endphp
+                                            <ul class="nav nav-tabs" id="semesterTabs">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" id="irsTabLink" data-bs-toggle="tab"
+                                                        href="#irsTab_{{ $semester }}">IRS</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" id="khsTabLink" data-bs-toggle="tab"
+                                                        href="#khsTab_{{ $semester }}">KHS</a>
+                                                </li>
+                                                @if ($pklData)
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="pklTabLink" data-bs-toggle="tab"
+                                                            href="#pklTab_{{ $semester }}">PKL</a>
+                                                    </li>
+                                                @endif
+                                                @if ($skripsiData)
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="skripsiTabLink" data-bs-toggle="tab"
+                                                            href="#skripsiTab_{{ $semester }}">Skripsi</a>
+                                                    </li>
+                                                @endif
+                                            </ul>
+                                            <div class="tab-content" id="semesterTabsContent">
+                                                @if ($irsData && $khsData)
+                                                    <div class="tab-pane fade show active"
+                                                        id="irsTab_{{ $semester }}" role="tabpanel">
+                                                        <p>Semester {{ $semester }}</p>
+                                                        <p>{{ $irsData->jmlsks }} SKS</p>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="khsTab_{{ $semester }}"
+                                                        role="tabpanel">
+                                                        <p>SKS Semester: {{ $khsData->skssemester }}</p>
+                                                        <p>IP Semester: {{ $khsData->ipsemester }}</p>
+                                                        <p>SKS Kumulatif: {{ $khsData->skskumulatif }}</p>
+                                                        <p>IP Kumulatif: {{ $khsData->ipkumulatif }}</p>
+                                                    </div>
+                                                @else
+                                                    <p>Data tidak tersedia untuk semester ini.</p>
+                                                @endif
+
+                                                <!-- Add the PKL tab content if there is PKL data -->
+                                                @if ($irsData && $khsData && $pklData)
+                                                    <div class="tab-pane fade show active"
+                                                        id="irsTab_{{ $semester }}" role="tabpanel">
+                                                        <p>Semester {{ $semester }}</p>
+                                                        <p>{{ $irsData->jmlsks }} SKS</p>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="khsTab_{{ $semester }}"
+                                                        role="tabpanel">
+                                                        <p>SKS Semester: {{ $khsData->skssemester }}</p>
+                                                        <p>IP Semester: {{ $khsData->ipsemester }}</p>
+                                                        <p>SKS Kumulatif: {{ $khsData->skskumulatif }}</p>
+                                                        <p>IP Kumulatif: {{ $khsData->ipkumulatif }}</p>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="pklTab_{{ $semester }}"
+                                                        role="tabpanel">
+                                                        <!-- Display PKL information here -->
+                                                        <p>Semester: {{ $pklData->semester }}</p>
+                                                        <p>Instansi: {{ $pklData->instansi }}</p>
+                                                        <p>Dosen Pengampu: {{ $pklData->dosenpengampu }}</p>
+                                                        <!-- Add more information related to PKL if needed -->
+                                                    </div>
+                                                @endif
+
+                                                <!-- Add the Skripsi tab content if there is Skripsi data -->
+                                                @if ($skripsiData)
+                                                    <div class="tab-pane fade" id="skripsiTab_{{ $semester }}"
+                                                        role="tabpanel">
+                                                        <!-- Display Skripsi information here -->
+                                                        <p>Semester: {{ $skripsiData->semester }}</p>
+                                                        <p>Tanggal Sidang: {{ $skripsiData->tglsidang }}</p>
+                                                        <p>Dosen Pembimbing: {{ $skripsiData->dosenpembimbing }}
+                                                        </p>
+                                                        <!-- Add more information related to Skripsi if needed -->
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger"
+                                                style="color: white; background-color: #d9534f; border-color: #d9534f;"
+                                                onmouseover="this.style.color='white'; this.style.backgroundColor='#c9302c'; this.style.borderColor='#ac2925';"
+                                                onmouseout="this.style.color='white'; this.style.backgroundColor='#d9534f'; this.style.borderColor='#d9534f';"
+                                                data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endfor
+                    </div>
+                </div>
+                <div class="col-6 mt-3 text-white">
+                    <div class="row">
+                        <div class="col-8">
                             <div class="card mb-1 text-xs md:text-base w-96 h-24" style="background-color:#00b8ff;">
                                 <div class="card-body text-light">
                                     <div class="row">
@@ -126,7 +293,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-8">
                             <div class="card mb-1 text-xs md:text-base w-96 h-38" style="background-color:#009bd6;">
                                 <div class="card-body">
                                     <div class="row">
@@ -159,7 +326,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-8">
                             <div class="card mb-1 md:text-base w-96 h-29" style="background-color:#00719c;">
                                 <div class="card-body">
                                     <div class="row">
@@ -192,7 +359,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-8">
                             <div class="card mb-2 md:text-base w-96 h-40" style="background-color:#00415a;">
                                 <div class="card-body">
                                     <div class="row">

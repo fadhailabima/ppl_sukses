@@ -68,8 +68,9 @@ Route::put('/dashboardmahasiswa/profile/edit', [EditMhsController::class, 'updat
 // Dashboard
 Route::get('/dashboardadmin', [OperatorController::class, 'index'])->middleware('operator');
 // Register Akun
-Route::get('/dashboardadmin/register', [RegisterController::class, 'index'])->middleware('operator');
+Route::get('/dashboardadmin/register', [RegisterController::class, 'index'])->name('register.user')->middleware('operator');
 Route::post('/dashboardadmin/register', [RegisterController::class, 'store'])->middleware('operator');
+Route::post('/dashboardadmin/import', [RegisterController::class, 'import'])->name('user.import')->middleware('operator');
 
 //Dosen
 Route::get('/dashboarddosen', [DashboardDosenController::class, 'index'])->middleware('dosen');

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\MHS;
 use App\Models\DosenWali;
+use App\Imports\UserImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -55,5 +57,12 @@ class RegisterController extends Controller
 
 
         return redirect('/dashboardadmin/register')->with('success', 'Registrasi Berhasil');
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new UserImport(), $request->file('input_excel'));
+
+        return redirect()->route('register.user')->with('success', 'Akun Mahasiswa Berhasil Ditambahkan.');
     }
 }

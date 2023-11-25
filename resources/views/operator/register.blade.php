@@ -50,7 +50,7 @@
                 <path fill="none" d="M0 0h36v36H0z" />
             </svg>
             <!-- <li class="nav-item"><a href="profil-mahasiswa.php" class="nav-pills-link justify-content-center text-light"><h5>Mahasiswa</h5></a></li> -->
-            <h5>Operator</h5>
+            <h5>{{ auth()->user()->operator->nama }}</h5>
         </div>
     </nav>
     <br>
@@ -76,7 +76,7 @@
             </section>
             <div class="row col-sm-15 justify-content-center my-2">
                 <div class="col-md-auto" style="margin-bottom: 10px;">
-                    <form action="/dashboardadmin/register" method="POST">
+                    <form action="{{ route('register.user') }}" method="POST">
                         @csrf
                         <div class="mb-1 row mt-3">
                             <label for="nama" class="col-sm-4 col-form-label">Nama <sup
@@ -186,6 +186,23 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center my-3">
+                            <button type="submit" name="submit"
+                                class="btn btn-primary  ps-5 pe-5 pb-2 pt-2 text-center"
+                                style="background-color: #101E31;">Register</button>
+                        </div>
+                        <h1 class="text-center my-3">OR</h1>
+                    </form>
+                    <form action="{{ route('user.import') }}" method="POST" enctype="multipart/form-data">
+                        {{-- @method('post') --}}
+                        @csrf
+                        <div class="my-1 row">
+                            <label for="input_excel" class="col-sm-4 col-form-label">Upload CSV File</label>
+                            <div class="form-group col-sm-8">
+                                <input type="file" class="form-control mb-2" id="input_excel" name="input_excel">
+                                <small class="text-muted">Upload a CSV file for bulk registration.</small>
                             </div>
                         </div>
                         <div class="col-md-12 text-center my-3">

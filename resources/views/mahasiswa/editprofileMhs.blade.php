@@ -54,7 +54,7 @@
         <div>
             <img src="{{ asset('storage/photo/' . auth()->user()->mahasiswa->foto_mahasiswa) }}"
                 class="rounded-circle img-thumbnail mt-2"
-                style="height: 130px; width: 130px; position: absolute; margin: auto auto; left: 0; right: 325px;">
+                style="height: 130px; width: 130px; position: absolute; margin: auto auto; left: 0px; right: 500px;">
         </div>
         <form class="user justify-content-md-center flex-column align-items-center" method="POST" action="{{ url('/dashboardmahasiswa/profile/edit') }}"
             enctype="multipart/form-data">

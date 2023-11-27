@@ -66,6 +66,8 @@
         <li class="nav-item"><a href="/dashboardadmin" class="nav-link text-dark"><b>Home</b></a></li>
         <li class="nav-item"><a href="#" class="nav-link active" aria-current="page"
                 style="background-color:#101E31"><b>Register User</b></a></li>
+        <li class="nav-item"><a href="/dashboardadmin/daftarmahasiswa" class="nav-link text-dark"><b>Daftar
+                    Mahasiswa</b></a></li>
     </ul>
     <br>
     <div class="container d-flex justify-content-center">

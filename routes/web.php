@@ -71,6 +71,11 @@ Route::get('/dashboardadmin', [OperatorController::class, 'index'])->middleware(
 Route::get('/dashboardadmin/register', [RegisterController::class, 'index'])->name('register.user')->middleware('operator');
 Route::post('/dashboardadmin/register', [RegisterController::class, 'store'])->middleware('operator');
 Route::post('/dashboardadmin/import', [RegisterController::class, 'import'])->name('user.import')->middleware('operator');
+//Data MHS
+Route::get('/dashboardadmin/daftarmahasiswa', [OperatorController::class, 'dataMHS'])->middleware('operator');
+Route::get('/dashboardadmin/verify/{nim}', [OperatorController::class, 'ubahstatus'])->middleware('operator');
+Route::get('/dashboardadmin/unverify/{nim}', [OperatorController::class, 'nonubahstatus'])->middleware('operator');
+
 
 //Dosen
 Route::get('/dashboarddosen', [DashboardDosenController::class, 'index'])->middleware('dosen');

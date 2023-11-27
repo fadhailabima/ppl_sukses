@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IRS;
+use App\Models\KHS;
+use App\Models\PKL;
+use App\Models\Skripsi;
 use App\Models\User;
 use App\Models\MHS;
+use App\Models\DosenWali;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class OperatorController extends Controller
@@ -54,6 +60,45 @@ class OperatorController extends Controller
             'userCuticount',
             'userDropoutcount',
             'userLuluscount'
-        ));
+        )
+        );
+    }
+
+    public function dataMHS(Request $request)
+    {
+        if ($request->has('search')) {
+            $mahasiswa = DB::table('mahasiswas')
+                // ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
+                ->where(function ($query) use ($request) {
+                    $query->where('nama', 'LIKE', '%' . $request->search . '%')
+                        ->orWhere('nim', 'LIKE', '%' . $request->search . '%');
+                })
+                ->paginate(10);
+        } else {
+            $mahasiswa = DB::table('mahasiswas')
+                // ->where('dosen_wali', '=', auth()->user()->dosenWali->nip)
+                ->paginate(10);
+        }
+        return view('operator.dataMHSoperator', compact('mahasiswa'));
+    }
+
+    public function ubahstatus(Request $request)
+    {
+        $datamhs = MHS::find($request->nim);
+
+        $datamhs->status = 'Aktif'; // Mengubah status menjadi 'Aktif'
+        $datamhs->save(); // Simpan perubahan
+
+        return redirect('/dashboardadmin/daftarmahasiswa')->with('success', 'Status mahasiswa berhasil diaktifkan');
+    }
+
+    public function nonubahstatus(Request $request)
+    {
+        $datamhs = MHS::find($request->nim);
+
+        $datamhs->status = 'NON AKTIF'; // Mengubah status menjadi 'NON AKTIF'
+        $datamhs->save(); // Simpan perubahan
+
+        return redirect('/dashboardadmin/daftarmahasiswa')->with('success', 'Status mahasiswa berhasil di non aktifkan');
     }
 }

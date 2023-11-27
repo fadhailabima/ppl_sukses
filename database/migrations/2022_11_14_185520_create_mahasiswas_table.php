@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->enum('jalur_masuk', ['SNMPTN', 'SBMPTN', 'MANDIRI']);
             $table->string('email')->nullable();
             $table->string('handphone')->nullable();
-            $table->enum('status', ['Aktif', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia'])->default('Aktif');
+            $table->enum('status', ['Aktif', 'NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia'])->default('Aktif');
             $table->string('foto_mahasiswa')->nullable();
             $table->string('dosen_wali');
             $table->unsignedBigInteger('user_id');

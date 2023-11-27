@@ -30,6 +30,7 @@ class PKLMhsController extends Controller
             'semester' => 'required',
             'instansi' => 'required|string',
             'dosenpengampu' => 'required|string',
+            'nilai_pkl' => 'required|string',
             'scanpkl' => 'required|file|mimes:pdf'
         ]);
 
@@ -63,6 +64,7 @@ class PKLMhsController extends Controller
                     'semester' => $validatedData['semester'],
                     'instansi' => $validatedData['instansi'],
                     'dosenpengampu' => $validatedData['dosenpengampu'],
+                    'nilai_pkl' => $validatedData['nilai_pkl'],
                     'scanpkl' => $scanpklFileName
                 ];
 

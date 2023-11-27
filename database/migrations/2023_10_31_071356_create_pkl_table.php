@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('mahasiswa_id');
             $table->string('semester');
+            $table->string('nilai_pkl')->nullable();
             $table->string('instansi');
             $table->string('dosenpengampu');
             $table->string('scanpkl')->nullable();

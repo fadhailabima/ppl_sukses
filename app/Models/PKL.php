@@ -12,6 +12,7 @@ class PKL extends Model
         'semester',
         'mahasiswa_id',
         'instansi',
+        'nilai_pkl',
         'dosenpengampu',
         'scanpkl',
         'isverified'

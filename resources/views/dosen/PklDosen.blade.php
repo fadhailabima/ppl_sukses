@@ -130,11 +130,11 @@
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Dosen Pengampu
                                     </th>
-                                    {{-- 
+                                    
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        Scan PKL
-                                    </th> --}}
+                                        Nilai PKL
+                                    </th>
 
                                     <th scope="col"
                                         class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -154,7 +154,7 @@
                                         <td class="px-4 py-4">{{ $item->semester }}</td>
                                         <td class="px-4 py-4">{{ $item->instansi }}</td>
                                         <td class="px-4 py-4">{{ $item->dosenpengampu }}</td>
-                                        {{-- <td class="px-4 py-4">{{ $item->scanpkl }}</td> --}}
+                                        <td class="px-4 py-4">{{ $item->nilai_pkl }}</td>
                                         <td>
                                             @if ($item->isverified == 1)
                                                 <a href="/dashboarddosen/pkl/unverify/{{ $item->id }}"

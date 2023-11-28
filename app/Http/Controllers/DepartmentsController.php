@@ -183,28 +183,37 @@ class DepartmentsController extends Controller
             ->pluck('angkatan')
             ->toArray();
 
-        $jumlahAngkatan = count($tahun);
+        $minYear = 2017; // Tahun terkecil yang Anda inginkan
+        $maxYear = 2022; // Tahun terbesar yang Anda inginkan
 
-        $jumlahMahasiswaPKL = [];
-        $jumlahMahasiswaBLMPKL = [];
+        // Generate range tahun dari minYear sampai maxYear
+        $tahunRange = range($minYear, $maxYear);
 
-        foreach ($tahun as $year) {
-            $jumlahMahasiswaPKL[$year] = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
-                ->where('mahasiswas.angkatan', $year)
-                ->where('p_k_l_s.isverified', 1)
-                ->select(DB::raw('COUNT(DISTINCT mahasiswas.nim) as jumlah'))
-                ->count();
+        // Loop untuk setiap tahun dalam rentang yang Anda tentukan
+        foreach ($tahunRange as $year) {
+            // Jika tahun tidak ada dalam data dari database
+            if (!in_array($year, $tahun)) {
+                $jumlahMahasiswaPKL[$year] = 0;
+                $jumlahMahasiswaBlmPKL[$year] = 0;
+            } else {
+                // Hitung jumlah mahasiswa PKL dan belum PKL untuk tahun yang ada dalam database
+                $jumlahMahasiswaPKL[$year] = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
+                    ->where('mahasiswas.angkatan', $year)
+                    ->where('p_k_l_s.isverified', 1)
+                    ->select(DB::raw('COUNT(DISTINCT mahasiswas.nim) as jumlah'))
+                    ->count();
 
-            $jumlahMahasiswaBlmPKL[$year] = MHS::where('angkatan', $year)
-                ->where(function ($query) {
-                    $query->whereDoesntHave('pkl') // Memfilter mahasiswa yang tidak memiliki PKL
-                        ->orWhereHas('pkl', function ($query) {
-                            $query->where('isverified', 0); // Memfilter mahasiswa dengan PKL belum disetujui
-                        });
-                })
-                ->count();
+                $jumlahMahasiswaBlmPKL[$year] = MHS::where('angkatan', $year)
+                    ->where(function ($query) {
+                        $query->whereDoesntHave('pkl')
+                            ->orWhereHas('pkl', function ($query) {
+                                $query->where('isverified', 0);
+                            });
+                    })
+                    ->count();
+            }
         }
 
-        return view('department.rekapPKL', compact('jumlahMahasiswaPKL', 'jumlahMahasiswaBlmPKL', 'tahun', 'jumlahAngkatan'));
+        return view('department.rekapPKL', compact('jumlahMahasiswaPKL', 'jumlahMahasiswaBlmPKL', 'tahunRange', 'minYear', 'maxYear'));
     }
 }

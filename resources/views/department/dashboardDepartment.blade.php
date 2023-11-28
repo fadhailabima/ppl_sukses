@@ -14,37 +14,67 @@
 @endsection
 
 @section('sidebar')
-<a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
+<a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="/dashboarddepartment">
     <i class="fas fa-home mr-2"></i>Home
 </a>
 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="/dashboarddepartment/daftarmahasiswa">
     <i class="fas fa-file-alt mr-2"></i>Data Mahasiswa
 </a>
-<a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="/dashboarddepartment/rekapdata">
-    <i class="fas fa-file-alt mr-2"></i>Rekap Data
-</a>
+<button type="button" class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="/dashboarddepartment/rekap" id="rekapDropdown">
+    <i class="fas fa-users mr-2"></i>Rekap Data
+    <i class="fas fa-chevron-down text-xs"></i>
+</button>
+<div class="hidden absolute z-5 w-40 rounded-md bg-white ring-1 ring-black ring-opacity-5 shadow-lg" id="rekapDropdownContent">
+    <a href="/dashboarddepartment/rekappkl" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">PKL</a>
+    <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
+    <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the dropdown button and content
+        var dropdownButton = document.getElementById('rekapDropdown');
+        var dropdownContent = document.getElementById('rekapDropdownContent');
+
+        // Show/hide the dropdown content when the button is clicked
+        dropdownButton.addEventListener('click', function () {
+            dropdownContent.classList.toggle('hidden');
+        });
+
+        // Hide the dropdown content when clicking outside of it
+        document.addEventListener('click', function (event) {
+            if (!dropdownButton.contains(event.target) && !dropdownContent.contains(event.target)) {
+                dropdownContent.classList.add('hidden');
+            }
+        });
+    });
+</script>
 @endsection
+
 
 @section('konten')
 <div class="mt-2 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
-    <!-- Primer contenedor -->
-    <!-- Sección 1 - Gráfica de Usuarios -->
-    <div class="card border-left-primary shadow h-100 py-2">
-        <div class="card-body">
-            <div class="row no-gutters align-items-center">
-                <div class="col mr-h5">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Jumlah Mahasiswa</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jmlmhs }}
+    <div class="flex-5 bg-white p-2 shadow rounded-lg md:w-1/3">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-h5">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Jumlah Mahasiswa</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jmlmhs }}
+                        </div>
                     </div>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    <div class="col-auto">
+                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
+</div>
+<div class="mt-6 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
+    <!-- Primer contenedor -->
+    <!-- Sección 1 - Gráfica de Usuarios -->
+    
     <!-- Segundo contenedor -->
     <!-- Sección 2 - Gráfica de Comercios -->
     <div class="flex-1 bg-white p-2 shadow rounded-lg md:w-1/3">

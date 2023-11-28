@@ -172,4 +172,37 @@ class DepartmentsController extends Controller
 
         return view('department.detailMHS', compact('mahasiswa', 'semesterStatus'));
     }
+
+    public function rekapPKL()
+    {
+
+    $tahun = DB::table('mahasiswas')
+    ->select('angkatan')
+    ->distinct()
+    ->orderBy('angkatan', 'asc') 
+    ->pluck('angkatan')
+    ->toArray();
+
+    $jumlahAngkatan = count($tahun);
+
+    $jumlahMahasiswaPKL = [];
+    $jumlahMahasiswaBLMPKL = [];
+
+    foreach ($tahun as $year) {
+        $jumlahMahasiswaPKL[$year] = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
+        ->where('mahasiswas.angkatan', $year)
+        ->where('p_k_l_s.isverified', 1)
+        ->select(DB::raw('COUNT(DISTINCT mahasiswas.nim) as jumlah'))
+        ->count();
+
+        $jumlahMahasiswaBlmPKL[$year] = DB::table('mahasiswas')
+        ->leftJoin('p_k_l_s', 'mahasiswas.nim', '=', 'p_k_l_s.mahasiswa_id')
+        ->where('p_k_l_s.isverified', 0)
+        ->where('mahasiswas.angkatan', $year)
+        ->select(DB::raw('COUNT(DISTINCT mahasiswas.nim) as jumlah'))
+        ->count();
+    }
+
+    return view('department.rekapPKL', compact('operator', 'jumlahMahasiswaPKL', 'jumlahMahasiswaBlmPKL', 'tahun', 'jumlahAngkatan'));
+    }
 }

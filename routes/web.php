@@ -110,3 +110,4 @@ Route::get('/dashboarddosen/detaildaftarmahasiswa/{nim}', [DaftarMHSdosenControl
 Route::get('/dashboarddepartment', [DepartmentsController::class, 'index'])->middleware('department');
 Route::get('/dashboarddepartment/daftarmahasiswa', [DepartmentsController::class, 'dataMHS'])->middleware('department');
 Route::get('/dashboarddepartment/detailmahasiswa/{nim}', [DepartmentsController::class, 'detailMHS'])->middleware('department');
+Route::get('/dashboarddepartment/rekappkl', [DepartmentsController::class, 'rekapPKL'])->middleware('department');

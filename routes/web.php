@@ -112,3 +112,5 @@ Route::get('/dashboarddepartment/daftarmahasiswa', [DepartmentsController::class
 Route::get('/dashboarddepartment/detailmahasiswa/{nim}', [DepartmentsController::class, 'detailMHS'])->middleware('department');
 Route::get('/dashboarddepartment/rekappkl', [DepartmentsController::class, 'rekapPKL'])->middleware('department');
 Route::get('/dashboarddepartment/generatedrekapPkl', [DepartmentsController::class, 'generatedrekapPkl'])->name('rekapPKL.pdf')->middleware('department');
+Route::get('/dashboarddepartment/sudahpkl/{tahun}', [DepartmentsController::class, 'dataSudahPKL'])->name('sudahpkl')->middleware('department');
+Route::get('/dashboarddepartment/belumpkl/{tahun}', [DepartmentsController::class, 'dataBlmPKL'])->name('belumpkl')->middleware('department');

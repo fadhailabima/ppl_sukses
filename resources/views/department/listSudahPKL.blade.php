@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="mr-2 ">
-        <a href="/dashboardmahasiswa/profile/edit"
+        <a href="#"
             class="dark:hover:text-primary hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium dark:text-neutral-400/90 text-secondary-inverse">{{ auth()->user()->departemen->nama_department }}</a>
         <span
             class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">{{ auth()->user()->departemen->nip }}</span>
@@ -66,8 +66,12 @@
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
-                <a href="/dashboarddepartment/rekappkl" class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full" target="_blank">Kembali</a>
-                <a href="{{ route('rekapSudahPKL.pdf') }}" class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full" target="_blank">Cetak Rekap</a>
+                <a href="/dashboarddepartment/rekappkl"
+                    class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
+                    target="_blank">Kembali</a>
+                {{-- <a href="{{ route('rekapSudahPKL.pdf') }}"
+                    class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
+                    target="_blank">Cetak Rekap</a> --}}
                 <table class="min-w-full mt-3 divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
@@ -103,13 +107,15 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                        @foreach ($mahasiswa as $item)
+                        @foreach ($p_k_l_s as $item)
                             <tr>
+                                <td class="px-4 py-4">{{ $loop->iteration }}</td>
                                 <td class="px-4 py-4">{{ $item->nim }}</td>
                                 <td class="px-4 py-4">{{ $item->nama }}</td>
                                 <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                <td class="px-4 py-4">{{ $item->dosenwali }}</td>
-                                <td class="px-4 py-4">{{ $item->nilai }}</td>
+                                <td class="px-4 py-4">{{ $item->dosen_wali }}</td>
+                                <!-- Tambahkan kolom untuk menampilkan nilai jika ada -->
+                                <td class="px-4 py-4">{{ $item->nilai_pkl }}</td>
                             </tr>
                         @endforeach
                     </tbody>

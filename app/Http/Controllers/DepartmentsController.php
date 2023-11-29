@@ -218,19 +218,82 @@ class DepartmentsController extends Controller
         return view('department.rekapPKL', compact('jumlahMahasiswaPKL', 'jumlahMahasiswaBlmPKL', 'tahunRange', 'minYear', 'maxYear'));
     }
 
-    public function printPDF()
+    public function generatedrekapPkl()
     {
-        $minYear = 2017;
-        $maxYear = 2022;
-        
-        $tahunRange = range($minYear, $maxYear); // Pastikan $minYear dan $maxYear terdefinisi
+        $tahun = DB::table('mahasiswas')
+            ->select('angkatan')
+            ->distinct()
+            ->orderBy('angkatan', 'asc')
+            ->pluck('angkatan')
+            ->toArray();
 
-        $jumlahMahasiswaPKL = []; // Isi dengan data jumlah mahasiswa PKL
-        $jumlahMahasiswaBlmPKL = []; // Isi dengan data jumlah mahasiswa belum PKL
+        $minYear = 2017; // Tahun terkecil yang Anda inginkan
+        $maxYear = 2022; // Tahun terbesar yang Anda inginkan
 
-        $pdf = PDF::loadView('operator.rekapPKL', compact('jumlahMahasiswaPKL', 'jumlahMahasiswaBlmPKL', 'tahunRange'));
+        $tahunRange = range($minYear, $maxYear);
 
-        return $pdf->download('rekap_PKL.pdf');
+        $jumlahMahasiswaPKL = [];
+        $jumlahMahasiswaBlmPKL = [];
+
+        foreach ($tahunRange as $year) {
+            if (!in_array($year, $tahun)) {
+                $jumlahMahasiswaPKL[$year] = 0;
+                $jumlahMahasiswaBlmPKL[$year] = 0;
+            } else {
+                $jumlahMahasiswaPKL[$year] = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
+                    ->where('mahasiswas.angkatan', $year)
+                    ->where('p_k_l_s.isverified', 1)
+                    ->select(DB::raw('COUNT(DISTINCT mahasiswas.nim) as jumlah'))
+                    ->count();
+
+                $jumlahMahasiswaBlmPKL[$year] = MHS::where('angkatan', $year)
+                    ->where(function ($query) {
+                        $query->whereDoesntHave('pkl')
+                            ->orWhereHas('pkl', function ($query) {
+                                $query->where('isverified', 0);
+                            });
+                    })
+                    ->count();
+            }
+        }
+
+        $pdf = PDF::loadView('department.rekapPKL_pdf', compact('jumlahMahasiswaPKL', 'jumlahMahasiswaBlmPKL', 'tahunRange'))->setOptions(['defaultFont' => 'sans-serif']);
+
+        return $pdf->stream();
+    }
+
+    public function dataSudahPKL($tahun)
+    {
+
+
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->first();
+
+        $p_k_l_s = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->where('p_k_l_s.isverified', 1)
+            // ->where('PKL.persetujuan', 'Disetujui')
+            ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali')
+            ->get();
+
+        return view('department.listSudahPKL', compact('p_k_l_s', 'tahun', 'dosenwalis'));
+    }
+
+    public function dataBlmPKL($tahun)
+    {
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->first();
+
+        $belumPKL = MHS::where('angkatan', $tahun)
+            ->whereDoesntHave('pkl', function ($query) {
+                $query->where('isverified', 0);
+            })
+            ->orWhereDoesntHave('pkl')
+            ->get();
+
+        return view('department.listBelumPKL', compact('belumPKL', 'tahun', 'dosenwalis'));
     }
 
 }

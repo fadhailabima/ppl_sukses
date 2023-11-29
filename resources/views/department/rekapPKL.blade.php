@@ -6,13 +6,14 @@
         </div>
     </div>
     <div class="mr-2 ">
-        <a href="/dashboardmahasiswa/profile/edit"
+        <a href="#"
             class="dark:hover:text-primary hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium dark:text-neutral-400/90 text-secondary-inverse">{{ auth()->user()->departemen->nama_department }}</a>
         <span
-            class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">{{ auth()->user()->departemen->nama_departemen }}</span>
+            class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">{{ auth()->user()->departemen->nip }}</span>
         <span
-            class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">{{ auth()->user()->departemen->kode_department }}</span>
-        <span class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">{{ auth()->user()->departemen->email }}</span>
+            class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">{{ auth()->user()->departemen->email }}</span>
+        <span class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">Fakultas Sains dan
+            Matematika</span>
     </div>
 @endsection
 
@@ -65,7 +66,9 @@
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
-                <a href="{{ route('rekapPKL.pdf') }}" class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full" target="_blank">Cetak Rekap</a>
+                <a href="{{ route('rekapPKL.pdf') }}"
+                    class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
+                    target="_blank">Cetak Rekap</a>
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-3">
                     <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="text-center">
@@ -88,10 +91,11 @@
                         <tr class="text-center">
                             @foreach ($tahunRange as $year)
                                 <td class="py-2 text-blue-500 font-medium text-base text-center">
-                                    <a href="">{{ $jumlahMahasiswaPKL[$year] }}</a>
+                                    <a
+                                        href="{{ route('sudahpkl', ['tahun' => $year]) }}">{{ $jumlahMahasiswaPKL[$year] }}</a>
                                 </td>
                                 <td class="py-2 text-blue-500 font-medium text-base text-center">
-                                    <a href="">{{ $jumlahMahasiswaBlmPKL[$year] }}</a>
+                                    <a href="{{ route('belumpkl', ['tahun' => $year]) }}">{{ $jumlahMahasiswaBlmPKL[$year] }}</a>
                                 </td>
                             @endforeach
                         </tr>

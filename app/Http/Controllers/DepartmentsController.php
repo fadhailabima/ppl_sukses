@@ -271,13 +271,13 @@ class DepartmentsController extends Controller
             ->select('dosenwalis.nama') // Pilih kolom nama dosen
             ->first();
 
-        $namaDosenWali = $dosenwalis->nama;
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
 
         $p_k_l_s = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
             ->where('mahasiswas.angkatan', $tahun)
             ->where('p_k_l_s.isverified', 1)
             // ->where('PKL.persetujuan', 'Disetujui')
-            ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali')
+            ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali', 'p_k_l_s.nilai_pkl')
             ->get();
 
         return view('department.listSudahPKL', compact('p_k_l_s', 'tahun', 'dosenwalis', 'namaDosenWali'));
@@ -290,7 +290,7 @@ class DepartmentsController extends Controller
             ->select('dosenwalis.nama') // Pilih kolom nama dosen
             ->first();
 
-        $namaDosenWali = $dosenwalis->nama;
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
 
         $belumPKL = MHS::where('angkatan', $tahun)
             ->whereDoesntHave('pkl', function ($query) {
@@ -309,7 +309,7 @@ class DepartmentsController extends Controller
             ->select('dosenwalis.nama') // Pilih kolom nama dosen
             ->first();
 
-        $namaDosenWali = $dosenwalis->nama;
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
 
         $belumPKL = MHS::where('angkatan', $tahun)
             ->whereDoesntHave('pkl', function ($query) {
@@ -335,7 +335,7 @@ class DepartmentsController extends Controller
             ->select('dosenwalis.nama') // Pilih kolom nama dosen
             ->first();
 
-        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : 'Tidak ada dosen wali';
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
 
         $p_k_l_s = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
             ->where('mahasiswas.angkatan', $tahun)
@@ -346,6 +346,180 @@ class DepartmentsController extends Controller
         $pdf = PDF::loadView('department.listSudahPKL_pdf', compact('p_k_l_s', 'tahun', 'dosenwalis', 'namaDosenWali'))->setOptions(['defaultFont' => 'sans-serif']);
 
         return $pdf->stream('listSudahPKL.pdf');
+    }
+
+    public function rekapSkripsi()
+    {
+
+        $tahun = DB::table('mahasiswas')
+            ->select('angkatan')
+            ->distinct()
+            ->orderBy('angkatan', 'asc')
+            ->pluck('angkatan')
+            ->toArray();
+
+        $minYear = 2017; // Tahun terkecil yang Anda inginkan
+        $maxYear = 2022; // Tahun terbesar yang Anda inginkan
+
+        // Generate range tahun dari minYear sampai maxYear
+        $tahunRange = range($minYear, $maxYear);
+
+        // Loop untuk setiap tahun dalam rentang yang Anda tentukan
+        foreach ($tahunRange as $year) {
+            // Jika tahun tidak ada dalam data dari database
+            if (!in_array($year, $tahun)) {
+                $jumlahMahasiswaSkripsi[$year] = 0;
+                $jumlahMahasiswaBlmSkripsi[$year] = 0;
+            } else {
+                // Hitung jumlah mahasiswa PKL dan belum PKL untuk tahun yang ada dalam database
+                $jumlahMahasiswaSkripsi[$year] = Skripsi::join('mahasiswas', 'skripsis.mahasiswa_id', '=', 'mahasiswas.nim')
+                    ->where('mahasiswas.angkatan', $year)
+                    ->where('skripsis.isverified', 1)
+                    ->select(DB::raw('COUNT(DISTINCT mahasiswas.nim) as jumlah'))
+                    ->count();
+
+                $jumlahMahasiswaBlmSkripsi[$year] = MHS::where('angkatan', $year)
+                    ->where(function ($query) {
+                        $query->whereDoesntHave('skripsi')
+                            ->orWhereHas('skripsi', function ($query) {
+                                $query->where('isverified', 0);
+                            });
+                    })
+                    ->count();
+            }
+        }
+
+        return view('department.rekapSkripsi', compact('jumlahMahasiswaSkripsi', 'jumlahMahasiswaBlmSkripsi', 'tahunRange', 'minYear', 'maxYear'));
+    }
+
+    public function generatedrekapSkripsi()
+    {
+        $tahun = DB::table('mahasiswas')
+            ->select('angkatan')
+            ->distinct()
+            ->orderBy('angkatan', 'asc')
+            ->pluck('angkatan')
+            ->toArray();
+
+        $minYear = 2017; // Tahun terkecil yang Anda inginkan
+        $maxYear = 2022; // Tahun terbesar yang Anda inginkan
+
+        $tahunRange = range($minYear, $maxYear);
+
+        $jumlahMahasiswaSkripsi = [];
+        $jumlahMahasiswaBlmSkripsi = [];
+
+        foreach ($tahunRange as $year) {
+            if (!in_array($year, $tahun)) {
+                $jumlahMahasiswaSkripsi[$year] = 0;
+                $jumlahMahasiswaBlmSkripsi[$year] = 0;
+            } else {
+                $jumlahMahasiswaSkripsi[$year] = Skripsi::join('mahasiswas', 'skripsis.mahasiswa_id', '=', 'mahasiswas.nim')
+                    ->where('mahasiswas.angkatan', $year)
+                    ->where('skripsis.isverified', 1)
+                    ->select(DB::raw('COUNT(DISTINCT mahasiswas.nim) as jumlah'))
+                    ->count();
+
+                $jumlahMahasiswaBlmSkripsi[$year] = MHS::where('angkatan', $year)
+                    ->where(function ($query) {
+                        $query->whereDoesntHave('skripsi')
+                            ->orWhereHas('skripsi', function ($query) {
+                                $query->where('isverified', 0);
+                            });
+                    })
+                    ->count();
+            }
+        }
+
+        $pdf = PDF::loadView('department.rekapSkripsi_pdf', compact('jumlahMahasiswaSkripsi', 'jumlahMahasiswaBlmSkripsi', 'tahunRange'))->setOptions(['defaultFont' => 'sans-serif']);
+
+        return $pdf->stream();
+    }
+
+    public function dataBlmSkripsi($tahun)
+    {
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
+
+        $belumSkripsi = MHS::where('angkatan', $tahun)
+            ->whereDoesntHave('skripsi', function ($query) {
+                $query->where('isverified', 0);
+            })
+            ->orWhereDoesntHave('skripsi')
+            ->get();
+
+        return view('department.listBelumSkripsi', compact('belumSkripsi', 'tahun', 'dosenwalis', 'namaDosenWali'));
+    }
+
+    public function generatedlistBelumSkripsi($tahun)
+    {
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
+
+        $belumSkripsi = MHS::where('angkatan', $tahun)
+            ->whereDoesntHave('skripsi', function ($query) {
+                $query->where('isverified', 0);
+            })
+            ->orWhereDoesntHave('skripsi')
+            ->get();
+
+        // Load view dengan data yang ingin Anda cetak ke PDF
+        $pdf = PDF::loadView('department.listBelumSkripsi_pdf', compact('belumSkripsi', 'tahun', 'dosenwalis', 'namaDosenWali'));
+
+        // Menggunakan setOptions untuk mengatur font default jika diperlukan
+        $pdf->setOptions(['defaultFont' => 'sans-serif']);
+
+        // Menghasilkan PDF dan mengembalikannya sebagai respons untuk diunduh
+        return $pdf->stream('listBelum_Skripsi.pdf');
+    }
+
+    public function dataSudahSkripsi($tahun)
+    {
+
+
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
+
+        $skripsis = Skripsi::join('mahasiswas', 'skripsis.mahasiswa_id', '=', 'mahasiswas.nim')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->where('skripsis.isverified', 1)
+            // ->where('PKL.persetujuan', 'Disetujui')
+            ->select('skripsis.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali', 'skripsis.tglsidang', 'skripsis.dosenpembimbing')
+            ->get();
+
+        return view('department.listSudahSkripsi', compact('skripsis', 'tahun', 'dosenwalis', 'namaDosenWali'));
+    }
+
+    public function generatedlistSudahSkripsi($tahun)
+    {
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
+
+        $skripsis = Skripsi::join('mahasiswas', 'skripsis.mahasiswa_id', '=', 'mahasiswas.nim')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->where('skripsis.isverified', 1)
+            ->select('skripsis.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali', 'skripsis.tglsidang', 'skripsis.dosenpembimbing')
+            ->get();
+
+        $pdf = PDF::loadView('department.listSudahSkripsi_pdf', compact('skripsis', 'tahun', 'dosenwalis', 'namaDosenWali'))->setOptions(['defaultFont' => 'sans-serif']);
+
+        return $pdf->stream('listSudahSkripsi.pdf');
     }
 
 }

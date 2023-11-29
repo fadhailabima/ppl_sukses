@@ -35,7 +35,7 @@
     <div class="hidden absolute z-5 w-40 rounded-md bg-white ring-1 ring-black ring-opacity-5 shadow-lg"
         id="rekapDropdownContent">
         <a href="/dashboarddepartment/rekappkl" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">PKL</a>
-        <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
+        <a href="/dashboarddepartment/rekapskripsi" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
         <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
     </div>
     <script>
@@ -62,14 +62,14 @@
 @section('konten')
     <div class="mt-2 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
         <div class="flex-1 bg-white p-2 shadow rounded-lg md:w-1/3">
-            <h2 class="text-gray-500 text-lg font-semibold pb-1">Daftar Mahasiswa Belum Lulus PKL</h2>
+            <h2 class="text-gray-500 text-lg font-semibold pb-1">Daftar Mahasiswa Belum Lulus Skripsi</h2>
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
                 <a href="/dashboarddepartment/rekappkl"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Kembali</a>
-                <a href="{{ route('listBelumPKL.pdf', ['tahun' => $tahun]) }}"
+                <a href="{{ route('listBelumSkripsi.pdf', ['tahun' => $tahun]) }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="_blank">
                     Cetak Rekap
@@ -103,7 +103,7 @@
                             </th>
                         </tr>
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                        @foreach ($belumPKL as $item)
+                        @foreach ($belumSkripsi as $item)
                             <tr>
                                 {{-- <td class="px-4 py-4">{{ $loop->iteration }}</td> --}}
                                 <td class="px-4 py-4">{{ $item->nim }}</td>

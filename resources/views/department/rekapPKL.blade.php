@@ -35,7 +35,7 @@
     <div class="hidden absolute z-5 w-40 rounded-md bg-white ring-1 ring-black ring-opacity-5 shadow-lg"
         id="rekapDropdownContent">
         <a href="/dashboarddepartment/rekappkl" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">PKL</a>
-        <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
+        <a href="/dashboarddepartment/rekapskripsi" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
         <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
     </div>
     <script>

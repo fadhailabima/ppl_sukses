@@ -116,4 +116,10 @@ Route::get('/dashboarddepartment/sudahpkl/{tahun}', [DepartmentsController::clas
 Route::get('/dashboarddepartment/belumpkl/{tahun}', [DepartmentsController::class, 'dataBlmPKL'])->name('belumpkl')->middleware('department');
 Route::get('/dashboarddepartment/generatedlistbelumpkl/{tahun}', [DepartmentsController::class, 'generatedlistBelumPKL'])->name('listBelumPKL.pdf')->middleware('department');
 Route::get('/dashboarddepartment/generatedlistSudahPKL/{tahun}', [DepartmentsController::class, 'generatePDFSudahPKL'])->name('listSudahPKL.pdf')->middleware('department');
+Route::get('/dashboarddepartment/rekapskripsi', [DepartmentsController::class, 'rekapSkripsi'])->middleware('department');
+Route::get('/dashboarddepartment/generatedrekapSkripsi', [DepartmentsController::class, 'generatedrekapSkripsi'])->name('rekapSkripsi.pdf')->middleware('department');
+Route::get('/dashboarddepartment/sudahskripsi/{tahun}', [DepartmentsController::class, 'dataSudahSkripsi'])->name('sudahskripsi')->middleware('department');
+Route::get('/dashboarddepartment/belumskripsi/{tahun}', [DepartmentsController::class, 'dataBlmSkripsi'])->name('belumskripsi')->middleware('department');
+Route::get('/dashboarddepartment/generatedlistbelumskripsi/{tahun}', [DepartmentsController::class, 'generatedlistBelumSkripsi'])->name('listBelumSkripsi.pdf')->middleware('department');
+Route::get('/dashboarddepartment/generatedlistsudahskripsi/{tahun}', [DepartmentsController::class, 'generatedlistSudahSkripsi'])->name('listSudahSkripsi.pdf')->middleware('department');
 

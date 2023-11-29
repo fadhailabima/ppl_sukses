@@ -12,6 +12,10 @@
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
 </head>
 
 <body style="background-color:#bfdeeb">
@@ -131,13 +135,39 @@
                                         <td class="px-4 py-4">{{ $item->nim }}</td>
                                         <td class="px-4 py-4">{{ $item->angkatan }}</td>
                                         <td>
-                                            @if ($item->status == 'Aktif')
-                                                <a href="/dashboardadmin/unverify/{{ $item->nim }}"
-                                                    class="btn btn-danger">Non Aktif</a>
-                                            @else
-                                                <a href="/dashboardadmin/verify/{{ $item->nim }}"
-                                                    class="btn btn-success">Aktif</a>
-                                            @endif
+                                            <form id="changeStatus" action="/dashboardadmin/verify/{{ $item->nim }}"
+                                                method="POST" class="mt-3">
+                                                @csrf
+                                                @method('put')
+                                                <select name="status" onchange=selectChange(this.value)>
+                                                    <option value="Aktif"
+                                                        {{ $item->status === 'Aktif' ? 'selected' : '' }}>Aktif
+                                                    </option>
+                                                    <option value="NON AKTIF"
+                                                        {{ $item->status === 'NON AKTIF' ? 'selected' : '' }}>NON AKTIF
+                                                    </option>
+                                                    <option value="Cuti"
+                                                        {{ $item->status === 'Cuti' ? 'selected' : '' }}>Cuti
+                                                    </option>
+                                                    <option value="Mangkir"
+                                                        {{ $item->status === 'NON AKTIF' ? 'selected' : '' }}>Mangkir
+                                                    </option>
+                                                    <option value="DO"
+                                                        {{ $item->status === 'DO' ? 'selected' : '' }}>DO
+                                                    </option>
+                                                    <option value="Undur Diri"
+                                                        {{ $item->status === 'Undur Diri' ? 'selected' : '' }}>Undur Diri
+                                                    </option>
+                                                    <option value="Lulus"
+                                                        {{ $item->status === 'Lulus' ? 'selected' : '' }}>Lulus
+                                                    </option>
+                                                    <option value="Meninggal Dunia"
+                                                        {{ $item->status === 'Meninggal Dunia' ? 'selected' : '' }}>Meninggal Dunia
+                                                    </option>
+                                                    <!-- Tambahkan opsi lainnya sesuai dengan status yang ada -->
+                                                </select>
+                                                {{-- <button type="submit" class="btn btn-primary">Ubah Status</button> --}}
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -157,8 +187,14 @@
                 td.classList.add("px-12", "py-4");
                 rows[i].insertBefore(td, rows[i].firstChild);
             }
-        </script>
 
+            function selectChange(val) {
+                //Set the value of action in action attribute of form element.
+                //Submit the form
+                $('#changeStatus').submit();
+            }
+        </script>
+        
 </body>
 
 </html>

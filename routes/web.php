@@ -73,8 +73,8 @@ Route::post('/dashboardadmin/register', [RegisterController::class, 'store'])->m
 Route::post('/dashboardadmin/import', [RegisterController::class, 'import'])->name('user.import')->middleware('operator');
 //Data MHS
 Route::get('/dashboardadmin/daftarmahasiswa', [OperatorController::class, 'dataMHS'])->middleware('operator');
-Route::get('/dashboardadmin/verify/{nim}', [OperatorController::class, 'ubahstatus'])->middleware('operator');
-Route::get('/dashboardadmin/unverify/{nim}', [OperatorController::class, 'nonubahstatus'])->middleware('operator');
+Route::put('/dashboardadmin/verify/{nim}', [OperatorController::class, 'ubahstatus'])->middleware('operator');
+// Route::get('/dashboardadmin/unverify/{nim}', [OperatorController::class, 'nonubahstatus'])->middleware('operator');
 
 
 //Dosen
@@ -114,3 +114,6 @@ Route::get('/dashboarddepartment/rekappkl', [DepartmentsController::class, 'reka
 Route::get('/dashboarddepartment/generatedrekapPkl', [DepartmentsController::class, 'generatedrekapPkl'])->name('rekapPKL.pdf')->middleware('department');
 Route::get('/dashboarddepartment/sudahpkl/{tahun}', [DepartmentsController::class, 'dataSudahPKL'])->name('sudahpkl')->middleware('department');
 Route::get('/dashboarddepartment/belumpkl/{tahun}', [DepartmentsController::class, 'dataBlmPKL'])->name('belumpkl')->middleware('department');
+Route::get('/dashboarddepartment/generatedlistbelumpkl/{tahun}', [DepartmentsController::class, 'generatedlistBelumPKL'])->name('listBelumPKL.pdf')->middleware('department');
+Route::get('/dashboarddepartment/generatedlistSudahPKL/{tahun}', [DepartmentsController::class, 'generatePDFSudahPKL'])->name('listSudahPKL.pdf')->middleware('department');
+

@@ -50,17 +50,19 @@ class OperatorController extends Controller
 
 
 
-        return view('operator.dashboardoperator', compact(
-            'useractivecount',
-            'mahasiswa',
-            'dosen',
-            'department',
-            'operator',
-            'userMangkircount',
-            'userCuticount',
-            'userDropoutcount',
-            'userLuluscount'
-        )
+        return view(
+            'operator.dashboardoperator',
+            compact(
+                'useractivecount',
+                'mahasiswa',
+                'dosen',
+                'department',
+                'operator',
+                'userMangkircount',
+                'userCuticount',
+                'userDropoutcount',
+                'userLuluscount'
+            )
         );
     }
 
@@ -86,19 +88,23 @@ class OperatorController extends Controller
     {
         $datamhs = MHS::find($request->nim);
 
-        $datamhs->status = 'Aktif'; // Mengubah status menjadi 'Aktif'
-        $datamhs->save(); // Simpan perubahan
+        if (!$datamhs) {
+            return redirect('/dashboardadmin/daftarmahasiswa')->with('error', 'Mahasiswa tidak ditemukan');
+        }
 
-        return redirect('/dashboardadmin/daftarmahasiswa')->with('success', 'Status mahasiswa berhasil diaktifkan');
+        $datamhs->status = $request->status;
+        $datamhs->save();
+
+        return redirect('/dashboardadmin/daftarmahasiswa')->with('success', 'Status mahasiswa berhasil diubah');
     }
 
-    public function nonubahstatus(Request $request)
-    {
-        $datamhs = MHS::find($request->nim);
+    // public function nonubahstatus(Request $request)
+    // {
+    //     $datamhs = MHS::find($request->nim);
 
-        $datamhs->status = 'NON AKTIF'; // Mengubah status menjadi 'NON AKTIF'
-        $datamhs->save(); // Simpan perubahan
+    //     $datamhs->status = 'NON AKTIF'; // Mengubah status menjadi 'NON AKTIF'
+    //     $datamhs->save(); // Simpan perubahan
 
-        return redirect('/dashboardadmin/daftarmahasiswa')->with('success', 'Status mahasiswa berhasil di non aktifkan');
-    }
+    //     return redirect('/dashboardadmin/daftarmahasiswa')->with('success', 'Status mahasiswa berhasil di non aktifkan');
+    // }
 }

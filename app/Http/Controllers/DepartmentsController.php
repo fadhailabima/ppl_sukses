@@ -268,7 +268,10 @@ class DepartmentsController extends Controller
 
         $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
             ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
             ->first();
+
+        $namaDosenWali = $dosenwalis->nama;
 
         $p_k_l_s = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
             ->where('mahasiswas.angkatan', $tahun)
@@ -277,14 +280,17 @@ class DepartmentsController extends Controller
             ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali')
             ->get();
 
-        return view('department.listSudahPKL', compact('p_k_l_s', 'tahun', 'dosenwalis'));
+        return view('department.listSudahPKL', compact('p_k_l_s', 'tahun', 'dosenwalis', 'namaDosenWali'));
     }
 
     public function dataBlmPKL($tahun)
     {
         $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
             ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
             ->first();
+
+        $namaDosenWali = $dosenwalis->nama;
 
         $belumPKL = MHS::where('angkatan', $tahun)
             ->whereDoesntHave('pkl', function ($query) {
@@ -293,7 +299,53 @@ class DepartmentsController extends Controller
             ->orWhereDoesntHave('pkl')
             ->get();
 
-        return view('department.listBelumPKL', compact('belumPKL', 'tahun', 'dosenwalis'));
+        return view('department.listBelumPKL', compact('belumPKL', 'tahun', 'dosenwalis', 'namaDosenWali'));
+    }
+
+    public function generatedlistBelumPKL($tahun)
+    {
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis->nama;
+
+        $belumPKL = MHS::where('angkatan', $tahun)
+            ->whereDoesntHave('pkl', function ($query) {
+                $query->where('isverified', 0);
+            })
+            ->orWhereDoesntHave('pkl')
+            ->get();
+
+        // Load view dengan data yang ingin Anda cetak ke PDF
+        $pdf = PDF::loadView('department.listBelumPKL_pdf', compact('belumPKL', 'tahun', 'dosenwalis', 'namaDosenWali'));
+
+        // Menggunakan setOptions untuk mengatur font default jika diperlukan
+        $pdf->setOptions(['defaultFont' => 'sans-serif']);
+
+        // Menghasilkan PDF dan mengembalikannya sebagai respons untuk diunduh
+        return $pdf->stream('listBelum_pkl.pdf');
+    }
+
+    public function generatePDFSudahPKL($tahun)
+    {
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : 'Tidak ada dosen wali';
+
+        $p_k_l_s = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->where('p_k_l_s.isverified', 1)
+            ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali')
+            ->get();
+
+        $pdf = PDF::loadView('department.listSudahPKL_pdf', compact('p_k_l_s', 'tahun', 'dosenwalis', 'namaDosenWali'))->setOptions(['defaultFont' => 'sans-serif']);
+
+        return $pdf->stream('listSudahPKL.pdf');
     }
 
 }

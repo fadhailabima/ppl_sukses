@@ -68,10 +68,10 @@
             <div>
                 <a href="/dashboarddepartment/rekappkl"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
-                    target="_blank">Kembali</a>
-                {{-- <a href="{{ route('rekapSudahPKL.pdf') }}"
+                    target="">Kembali</a>
+                <a href="{{ route('listSudahPKL.pdf', ['tahun' => $tahun]) }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
-                    target="_blank">Cetak Rekap</a> --}}
+                    target="_blank">Cetak Rekap</a>
                 <table class="min-w-full mt-3 divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
@@ -109,11 +109,11 @@
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                         @foreach ($p_k_l_s as $item)
                             <tr>
-                                <td class="px-4 py-4">{{ $loop->iteration }}</td>
+                                {{-- <td class="px-4 py-4">{{ $loop->iteration }}</td> --}}
                                 <td class="px-4 py-4">{{ $item->nim }}</td>
                                 <td class="px-4 py-4">{{ $item->nama }}</td>
                                 <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                <td class="px-4 py-4">{{ $item->dosen_wali }}</td>
+                                <td class="px-4 py-4">{{ $namaDosenWali }}</td>
                                 <!-- Tambahkan kolom untuk menampilkan nilai jika ada -->
                                 <td class="px-4 py-4">{{ $item->nilai_pkl }}</td>
                             </tr>

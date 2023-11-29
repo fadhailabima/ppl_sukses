@@ -110,12 +110,14 @@ Route::get('/dashboarddosen/detaildaftarmahasiswa/{nim}', [DaftarMHSdosenControl
 Route::get('/dashboarddepartment', [DepartmentsController::class, 'index'])->middleware('department');
 Route::get('/dashboarddepartment/daftarmahasiswa', [DepartmentsController::class, 'dataMHS'])->middleware('department');
 Route::get('/dashboarddepartment/detailmahasiswa/{nim}', [DepartmentsController::class, 'detailMHS'])->middleware('department');
+//PKL
 Route::get('/dashboarddepartment/rekappkl', [DepartmentsController::class, 'rekapPKL'])->middleware('department');
 Route::get('/dashboarddepartment/generatedrekapPkl', [DepartmentsController::class, 'generatedrekapPkl'])->name('rekapPKL.pdf')->middleware('department');
 Route::get('/dashboarddepartment/sudahpkl/{tahun}', [DepartmentsController::class, 'dataSudahPKL'])->name('sudahpkl')->middleware('department');
 Route::get('/dashboarddepartment/belumpkl/{tahun}', [DepartmentsController::class, 'dataBlmPKL'])->name('belumpkl')->middleware('department');
 Route::get('/dashboarddepartment/generatedlistbelumpkl/{tahun}', [DepartmentsController::class, 'generatedlistBelumPKL'])->name('listBelumPKL.pdf')->middleware('department');
 Route::get('/dashboarddepartment/generatedlistSudahPKL/{tahun}', [DepartmentsController::class, 'generatePDFSudahPKL'])->name('listSudahPKL.pdf')->middleware('department');
+//Skripsi
 Route::get('/dashboarddepartment/rekapskripsi', [DepartmentsController::class, 'rekapSkripsi'])->middleware('department');
 Route::get('/dashboarddepartment/generatedrekapSkripsi', [DepartmentsController::class, 'generatedrekapSkripsi'])->name('rekapSkripsi.pdf')->middleware('department');
 Route::get('/dashboarddepartment/sudahskripsi/{tahun}', [DepartmentsController::class, 'dataSudahSkripsi'])->name('sudahskripsi')->middleware('department');

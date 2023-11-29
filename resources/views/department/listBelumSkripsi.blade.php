@@ -66,7 +66,7 @@
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
-                <a href="/dashboarddepartment/rekappkl"
+                <a href="/dashboarddepartment/rekapskripsi"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Kembali</a>
                 <a href="{{ route('listBelumSkripsi.pdf', ['tahun' => $tahun]) }}"

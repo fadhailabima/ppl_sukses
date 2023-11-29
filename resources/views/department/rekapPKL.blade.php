@@ -65,7 +65,8 @@
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-5">
+                <a href="{{ route('rekapPKL.pdf') }}" class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full" target="_blank">Cetak Rekap</a>
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-3">
                     <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="text-center">
                             <th scope="col" class="px-6 py-2 text-xl" colspan="{{ count($tahunRange) * 2 }}">Angkatan

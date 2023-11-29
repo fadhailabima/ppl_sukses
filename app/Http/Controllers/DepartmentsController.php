@@ -11,6 +11,7 @@ use App\Models\MHS;
 use App\Models\DosenWali;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class DepartmentsController extends Controller
 {
@@ -216,4 +217,20 @@ class DepartmentsController extends Controller
 
         return view('department.rekapPKL', compact('jumlahMahasiswaPKL', 'jumlahMahasiswaBlmPKL', 'tahunRange', 'minYear', 'maxYear'));
     }
+
+    public function printPDF()
+    {
+        $minYear = 2017;
+        $maxYear = 2022;
+        
+        $tahunRange = range($minYear, $maxYear); // Pastikan $minYear dan $maxYear terdefinisi
+
+        $jumlahMahasiswaPKL = []; // Isi dengan data jumlah mahasiswa PKL
+        $jumlahMahasiswaBlmPKL = []; // Isi dengan data jumlah mahasiswa belum PKL
+
+        $pdf = PDF::loadView('operator.rekapPKL', compact('jumlahMahasiswaPKL', 'jumlahMahasiswaBlmPKL', 'tahunRange'));
+
+        return $pdf->download('rekap_PKL.pdf');
+    }
+
 }

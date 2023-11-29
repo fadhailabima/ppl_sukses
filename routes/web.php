@@ -111,3 +111,4 @@ Route::get('/dashboarddepartment', [DepartmentsController::class, 'index'])->mid
 Route::get('/dashboarddepartment/daftarmahasiswa', [DepartmentsController::class, 'dataMHS'])->middleware('department');
 Route::get('/dashboarddepartment/detailmahasiswa/{nim}', [DepartmentsController::class, 'detailMHS'])->middleware('department');
 Route::get('/dashboarddepartment/rekappkl', [DepartmentsController::class, 'rekapPKL'])->middleware('department');
+Route::get('/dashboarddepartment/generatedrekapPkl', [DepartmentsController::class, 'generatedrekapPkl'])->name('rekapPKL.pdf')->middleware('department');

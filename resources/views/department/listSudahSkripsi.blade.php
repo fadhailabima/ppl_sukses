@@ -39,6 +39,9 @@
             class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
         <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
     </div>
+    <a class="block text-gray-500 py-2.5 px-4 my-2 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white mt-auto" href="{{ route('logout') }}">
+        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+    </a>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Get the dropdown button and content

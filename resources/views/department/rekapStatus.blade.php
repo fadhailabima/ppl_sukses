@@ -36,7 +36,7 @@
     id="rekapDropdownContent">
     <a href="/dashboarddepartment/rekappkl" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">PKL</a>
     <a href="/dashboarddepartment/rekapskripsi" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
-    <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
+    <a href="/dashboarddepartment/rekapstatus" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -65,7 +65,7 @@
 @section('konten')
     <div class="mt-2 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
         <div class="flex-1 bg-white p-2 shadow rounded-lg md:w-1/3">
-            <h2 class="text-gray-500 text-lg font-semibold pb-1">Rekap Data PKL</h2>
+            <h2 class="text-gray-500 text-lg font-semibold pb-1">Rekap Data Mahasiswa Berdasarkan Status</h2>
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
@@ -87,18 +87,18 @@
                     <tbody>
                         <tr class="text-center">
                             @for ($i = 0; $i < count($tahunRange); $i++)
-                                <td class="py-2 font-medium">Sudah PKL</td>
-                                <td class="py-2 font-medium">Belum PKL</td>
+                                <td class="py-2 font-medium">Aktif</td>
+                                <td class="py-2 font-medium">Nonaktif</td>
                             @endfor
                         </tr>
                         <tr class="text-center">
                             @foreach ($tahunRange as $year)
                                 <td class="py-2 text-blue-500 font-medium text-base text-center">
                                     <a
-                                        href="{{ route('sudahpkl', ['tahun' => $year]) }}">{{ $jumlahMahasiswaPKL[$year] }}</a>
+                                        href="{{ route('aktif', ['tahun' => $year]) }}">{{ $jumlahMahasiswaAktif[$year] }}</a>
                                 </td>
                                 <td class="py-2 text-blue-500 font-medium text-base text-center">
-                                    <a href="{{ route('belumpkl', ['tahun' => $year]) }}">{{ $jumlahMahasiswaBlmPKL[$year] }}</a>
+                                    <a href="{{ route('nonaktif', ['tahun' => $year]) }}">{{ $jumlahMahasiswaNonaktif[$year] }}</a>
                                 </td>
                             @endforeach
                         </tr>

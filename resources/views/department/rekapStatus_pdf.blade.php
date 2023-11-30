@@ -60,10 +60,10 @@
                         <tr class="text-center">
                             @foreach ($tahunRange as $year)
                                 <td class="py-2 text-blue-500 font-medium text-base text-center border">
-                                    <a href="">{{ $jumlahMahasiswaAKtif[$year] }}</a>
+                                    <a href="">{{ $jumlahMahasiswaAktif[$year] }}</a>
                                 </td>
                                 <td class="py-2 text-blue-500 font-medium text-base text-center border">
-                                    <a href="">{{ $jumlahMahasiswaNonaktif[$year] }}</a>
+                                    <a href="">{{ $jumlahMahasiswaNonAktif[$year] }}</a>
                                 </td>
                             @endforeach
                         </tr>

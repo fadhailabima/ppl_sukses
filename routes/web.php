@@ -124,4 +124,11 @@ Route::get('/dashboarddepartment/sudahskripsi/{tahun}', [DepartmentsController::
 Route::get('/dashboarddepartment/belumskripsi/{tahun}', [DepartmentsController::class, 'dataBlmSkripsi'])->name('belumskripsi')->middleware('department');
 Route::get('/dashboarddepartment/generatedlistbelumskripsi/{tahun}', [DepartmentsController::class, 'generatedlistBelumSkripsi'])->name('listBelumSkripsi.pdf')->middleware('department');
 Route::get('/dashboarddepartment/generatedlistsudahskripsi/{tahun}', [DepartmentsController::class, 'generatedlistSudahSkripsi'])->name('listSudahSkripsi.pdf')->middleware('department');
+//Status
+Route::get('/dashboarddepartment/rekapstatus', [DepartmentsController::class, 'rekapStatus'])->middleware('department');
+Route::get('/dashboarddepartment/generatedrekapStatus', [DepartmentsController::class, 'generatedrekapStatus'])->name('rekapStatus.pdf')->middleware('department');
+Route::get('/dashboarddepartment/aktif/{tahun}', [DepartmentsController::class, 'MhsAktif'])->name('MhsAktif')->middleware('department');
+Route::get('/dashboarddepartment/generatedlistaktif/{tahun}', [DepartmentsController::class, 'generatedlistMhsAktif'])->name('listMhsAktif.pdf')->middleware('department');
+Route::get('/dashboarddepartment/nonaktif/{tahun}', [DepartmentsController::class, 'MhsNonAktif'])->name('MhsNonAktif')->middleware('department');
+Route::get('/dashboarddepartment/generatedlistnonaktif/{tahun}', [DepartmentsController::class, 'generatedlistMhsNonAktif'])->name('listMhsNonAktif.pdf')->middleware('department');
 

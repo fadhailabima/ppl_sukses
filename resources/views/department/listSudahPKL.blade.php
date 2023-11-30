@@ -36,7 +36,7 @@
     id="rekapDropdownContent">
     <a href="/dashboarddepartment/rekappkl" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">PKL</a>
     <a href="/dashboarddepartment/rekapskripsi" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
-    <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
+    <a href="/dashboarddepartment/rekapstatus" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -100,7 +100,7 @@
 
                             <th scope="col"
                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                Dosen Wali
+                                Dosen Pengampu
                             </th>
 
                             <th scope="col"
@@ -116,7 +116,7 @@
                                 <td class="px-4 py-4">{{ $item->nim }}</td>
                                 <td class="px-4 py-4">{{ $item->nama }}</td>
                                 <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                <td class="px-4 py-4">{{ $namaDosenWali }}</td>
+                                <td class="px-4 py-4">{{ $item->dosenpengampu }}</td>
                                 <!-- Tambahkan kolom untuk menampilkan nilai jika ada -->
                                 <td class="px-4 py-4">{{ $item->nilai_pkl }}</td>
                             </tr>

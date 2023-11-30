@@ -73,13 +73,13 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                        @foreach ($status as $item)
+                        @foreach ($mahasiswaAktif as $item)
                             <tr>
-                                {{-- <td class="px-4 py-4">{{ $loop->iteration }}</td> --}}
+                                <td class="px-4 py-4">{{ $loop->iteration }}</td>
                                 <td class="px-4 py-4">{{ $item->nim }}</td>
                                 <td class="px-4 py-4">{{ $item->nama }}</td>
                                 <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                <td class="px-4 py-4">{{ $item->dosenwali }}</td>
+                                <td class="px-4 py-4">{{ $namaDosenWali }}</td>
                             </tr>
                         @endforeach
                     </tbody>

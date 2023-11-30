@@ -277,7 +277,7 @@ class DepartmentsController extends Controller
             ->where('mahasiswas.angkatan', $tahun)
             ->where('p_k_l_s.isverified', 1)
             // ->where('PKL.persetujuan', 'Disetujui')
-            ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali', 'p_k_l_s.nilai_pkl')
+            ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali', 'p_k_l_s.nilai_pkl', 'p_k_l_s.dosenpengampu')
             ->get();
 
         return view('department.listSudahPKL', compact('p_k_l_s', 'tahun', 'dosenwalis', 'namaDosenWali'));
@@ -340,7 +340,7 @@ class DepartmentsController extends Controller
         $p_k_l_s = PKL::join('mahasiswas', 'p_k_l_s.mahasiswa_id', '=', 'mahasiswas.nim')
             ->where('mahasiswas.angkatan', $tahun)
             ->where('p_k_l_s.isverified', 1)
-            ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali')
+            ->select('p_k_l_s.*', 'mahasiswas.nim as nim', 'mahasiswas.nama as nama', 'mahasiswas.angkatan as angkatan', 'mahasiswas.dosen_wali as dosen_wali', 'p_k_l_s.nilai_pkl', 'p_k_l_s.dosenpengampu')
             ->get();
 
         $pdf = PDF::loadView('department.listSudahPKL_pdf', compact('p_k_l_s', 'tahun', 'dosenwalis', 'namaDosenWali'))->setOptions(['defaultFont' => 'sans-serif']);
@@ -521,5 +521,170 @@ class DepartmentsController extends Controller
 
         return $pdf->stream('listSudahSkripsi.pdf');
     }
+
+    public function rekapStatus()
+    {
+        $tahun = DB::table('mahasiswas')
+            ->select('angkatan')
+            ->distinct()
+            ->orderBy('angkatan', 'asc')
+            ->pluck('angkatan')
+            ->toArray();
+
+        $minYear = 2017; // Tahun terkecil yang Anda inginkan
+        $maxYear = 2022; // Tahun terbesar yang Anda inginkan
+
+        // Generate range tahun dari minYear sampai maxYear
+        $tahunRange = range($minYear, $maxYear);
+
+        // Array untuk menyimpan hasil
+        $jumlahMahasiswaAktif = [];
+        $jumlahMahasiswaNonAktif = [];
+
+        // Loop untuk setiap tahun dalam rentang yang Anda tentukan
+        foreach ($tahunRange as $year) {
+            // Jika tahun tidak ada dalam data dari database
+            if (!in_array($year, $tahun)) {
+                $jumlahMahasiswaAktif[$year] = 0;
+                $jumlahMahasiswaNonAktif[$year] = 0;
+            } else {
+                // Hitung jumlah mahasiswa PKL dan belum PKL untuk tahun yang ada dalam database
+                $jumlahMahasiswaAktif[$year] = MHS::where('angkatan', $year)
+                    ->where('status', 'Aktif') // Ganti 'Aktif' dengan status yang diinginkan
+                    ->count();
+
+                $jumlahMahasiswaNonAktif[$year] = MHS::where('angkatan', $year)
+                    ->where(function ($query) {
+                        $query->whereIn('status', ['NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia']);
+                    })
+                    ->count();
+            }
+        }
+
+        // Lakukan apa yang diperlukan dengan hasil perhitungan
+        // ...
+
+        // Contoh mengirimkan hasil ke view
+        return view('department.rekapStatus', compact('jumlahMahasiswaAktif', 'jumlahMahasiswaNonAktif', 'tahunRange', 'minYear', 'maxYear'));
+    }
+
+    public function generatedrekapStatus()
+    {
+        $tahun = DB::table('mahasiswas')
+            ->select('angkatan')
+            ->distinct()
+            ->orderBy('angkatan', 'asc')
+            ->pluck('angkatan')
+            ->toArray();
+
+        $minYear = 2017; // Tahun terkecil yang Anda inginkan
+        $maxYear = 2022; // Tahun terbesar yang Anda inginkan
+
+        $tahunRange = range($minYear, $maxYear);
+
+        $jumlahMahasiswaSkripsi = [];
+        $jumlahMahasiswaBlmSkripsi = [];
+
+        foreach ($tahunRange as $year) {
+            // Jika tahun tidak ada dalam data dari database
+            if (!in_array($year, $tahun)) {
+                $jumlahMahasiswaAktif[$year] = 0;
+                $jumlahMahasiswaNonAktif[$year] = 0;
+            } else {
+                // Hitung jumlah mahasiswa PKL dan belum PKL untuk tahun yang ada dalam database
+                $jumlahMahasiswaAktif[$year] = MHS::where('angkatan', $year)
+                    ->where('status', 'Aktif') // Ganti 'Aktif' dengan status yang diinginkan
+                    ->count();
+
+                $jumlahMahasiswaNonAktif[$year] = MHS::where('angkatan', $year)
+                    ->where(function ($query) {
+                        $query->whereIn('status', ['NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia']);
+                    })
+                    ->count();
+            }
+        }
+
+        $pdf = PDF::loadView('department.rekapStatus_pdf', compact('jumlahMahasiswaAktif', 'jumlahMahasiswaNonAktif', 'tahunRange'))->setOptions(['defaultFont' => 'sans-serif']);
+
+        return $pdf->stream();
+    }
+
+    public function MhsAktif($tahun)
+    {
+
+
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
+
+        $mahasiswaAktif = MHS::where('angkatan', $tahun)
+            ->where('status', 'Aktif') // Ganti 'Aktif' dengan status yang diinginkan
+            ->select('nim', 'nama', 'angkatan', 'dosen_wali')
+            ->get();
+
+        return view('department.listStatusAktif', compact('mahasiswaAktif', 'tahun', 'dosenwalis', 'namaDosenWali'));
+    }
+
+    public function generatedlistMhsAktif($tahun)
+    {
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
+
+        $mahasiswaAktif = MHS::where('angkatan', $tahun)
+            ->where('status', 'Aktif') // Ganti 'Aktif' dengan status yang diinginkan
+            ->select('nim', 'nama', 'angkatan', 'dosen_wali')
+            ->get();
+
+        $pdf = PDF::loadView('department.listStatusAktif_pdf', compact('mahasiswaAktif', 'tahun', 'dosenwalis', 'namaDosenWali'))->setOptions(['defaultFont' => 'sans-serif']);
+
+        return $pdf->stream('listStatusAktif.pdf');
+    }
+
+    public function MhsNonAktif($tahun)
+    {
+
+
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
+
+        $status = MHS::where('angkatan', $tahun)
+            ->where('status', ['NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia']) // Ganti 'Aktif' dengan status yang diinginkan
+            ->select('nim', 'nama', 'angkatan', 'dosen_wali', 'status')
+            ->get();
+
+        return view('department.listStatusNonaktif', compact('status', 'tahun', 'dosenwalis', 'namaDosenWali'));
+    }
+
+    public function generatedlistMhsNonAktif($tahun)
+    {
+        $dosenwalis = DosenWali::join('mahasiswas', 'dosenwalis.nip', '=', 'mahasiswas.dosen_wali')
+            ->where('mahasiswas.angkatan', $tahun)
+            ->select('dosenwalis.nama') // Pilih kolom nama dosen
+            ->first();
+
+        $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
+
+        $status = MHS::where('angkatan', $tahun)
+            ->where('status', ['NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia']) // Ganti 'Aktif' dengan status yang diinginkan
+            ->select('nim', 'nama', 'angkatan', 'dosen_wali', 'status')
+            ->get();
+
+        $pdf = PDF::loadView('department.listStatusNonaktif_pdf', compact('status', 'tahun', 'dosenwalis', 'namaDosenWali'))->setOptions(['defaultFont' => 'sans-serif']);
+
+        return $pdf->stream('listStatusNonAktif.pdf');
+    }
+
+
 
 }

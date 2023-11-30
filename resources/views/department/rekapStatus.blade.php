@@ -69,9 +69,9 @@
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
-                <a href="{{ route('rekapPKL.pdf') }}"
+                <a href="{{ route('rekapStatus.pdf') }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
-                    target="_blank">Cetak Rekap</a>
+                    target="">Cetak Rekap</a>
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-3">
                     <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="text-center">
@@ -88,17 +88,17 @@
                         <tr class="text-center">
                             @for ($i = 0; $i < count($tahunRange); $i++)
                                 <td class="py-2 font-medium">Aktif</td>
-                                <td class="py-2 font-medium">Nonaktif</td>
+                                <td class="py-2 font-medium">Non Aktif</td>
                             @endfor
                         </tr>
                         <tr class="text-center">
                             @foreach ($tahunRange as $year)
                                 <td class="py-2 text-blue-500 font-medium text-base text-center">
                                     <a
-                                        href="{{ route('aktif', ['tahun' => $year]) }}">{{ $jumlahMahasiswaAktif[$year] }}</a>
+                                        href="{{ route('MhsAktif', ['tahun' => $year]) }}">{{ $jumlahMahasiswaAktif[$year] }}</a>
                                 </td>
                                 <td class="py-2 text-blue-500 font-medium text-base text-center">
-                                    <a href="{{ route('nonaktif', ['tahun' => $year]) }}">{{ $jumlahMahasiswaNonaktif[$year] }}</a>
+                                    <a href="{{ route('MhsNonAktif', ['tahun' => $year]) }}">{{ $jumlahMahasiswaNonAktif[$year] }}</a>
                                 </td>
                             @endforeach
                         </tr>

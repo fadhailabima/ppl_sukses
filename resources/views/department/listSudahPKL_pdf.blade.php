@@ -68,7 +68,7 @@
 
                             <th scope="col"
                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                Dosen Wali
+                                Dosen Pengampu
                             </th>
                             <th scope="col"
                                 class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -82,7 +82,7 @@
                                 <td class="px-4 py-4">{{ $item->nim }}</td>
                                 <td class="px-4 py-4">{{ $item->nama }}</td>
                                 <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                <td class="px-4 py-4">{{ $namaDosenWali }}</td>
+                                <td class="px-4 py-4">{{ $item->dosenpengampu }}</td>
                                 <!-- Tambahkan kolom untuk menampilkan nilai jika ada -->
                                 <td class="px-4 py-4">{{ $item->nilai_pkl }}</td>
                             </tr>

@@ -80,12 +80,12 @@
                     <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                         @foreach ($status as $item)
                             <tr>
-                                {{-- <td class="px-4 py-4">{{ $loop->iteration }}</td> --}}
+                                <td class="px-4 py-4">{{ $loop->iteration }}</td>
                                 <td class="px-4 py-4">{{ $item->nim }}</td>
                                 <td class="px-4 py-4">{{ $item->nama }}</td>
                                 <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                <td class="px-4 py-4">{{ $item->dosenwali }}</td>
-                                <td class="px-4 py-4">{{ $item->keterangan }}</td>
+                                <td class="px-4 py-4">{{ $namaDosenWali }}</td>
+                                <td class="px-4 py-4">{{ $item->status }}</td>
                             </tr>
                         @endforeach
                     </tbody>

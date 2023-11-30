@@ -36,7 +36,7 @@
     id="rekapDropdownContent">
     <a href="/dashboarddepartment/rekappkl" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">PKL</a>
     <a href="/dashboarddepartment/rekapskripsi" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Skripsi</a>
-    <a href="" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
+    <a href="/dashboarddepartment/rekapstatus" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Status</a>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -71,7 +71,7 @@
             <div>
                 <a href="{{ route('rekapPKL.pdf') }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
-                    target="_blank">Cetak Rekap</a>
+                    target="">Cetak Rekap</a>
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-3">
                     <thead class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr class="text-center">

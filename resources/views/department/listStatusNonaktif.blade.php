@@ -73,9 +73,9 @@
                 <a href="/dashboarddepartment/rekapstatus"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Kembali</a>
-                <a href="{{ route('listNonaktif.pdf', ['tahun' => $tahun]) }}"
+                <a href="{{ route('listMhsNonAktif.pdf', ['tahun' => $tahun]) }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
-                    target="_blank">Cetak Rekap</a>
+                    target="">Cetak Rekap</a>
                 <table class="min-w-full mt-3 divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
@@ -117,8 +117,8 @@
                                 <td class="px-4 py-4">{{ $item->nim }}</td>
                                 <td class="px-4 py-4">{{ $item->nama }}</td>
                                 <td class="px-4 py-4">{{ $item->angkatan }}</td>
-                                <td class="px-4 py-4">{{ $item->dosenwali }}</td>
-                                <td class="px-4 py-4">{{ $item->keterangan }}</td>
+                                <td class="px-4 py-4">{{ $namaDosenWali }}</td>
+                                <td class="px-4 py-4">{{ $item->status }}</td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -63,10 +63,10 @@
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
-                <a href="/dashboarddepartment/rekapstatus"
+                <a href="/dashboardadmin/rekapstatus"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Kembali</a>
-                <a href="{{ route('listMhsNonAktif.pdf', ['tahun' => $tahun]) }}"
+                <a href="{{ route('listMhsNonAktifoperator.pdf', ['tahun' => $tahun]) }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Cetak Rekap</a>
                 <table class="min-w-full mt-3 divide-y divide-gray-200 dark:divide-gray-700">

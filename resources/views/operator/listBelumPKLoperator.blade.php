@@ -66,7 +66,7 @@
                 <a href="/dashboardadmin/rekappkl"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Kembali</a>
-                <a href="{{ route('listBelumPKL.pdf', ['tahun' => $tahun]) }}"
+                <a href="{{ route('listBelumPKLoperator.pdf', ['tahun' => $tahun]) }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="_blank">
                     Cetak Rekap

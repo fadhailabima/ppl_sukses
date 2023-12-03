@@ -59,14 +59,14 @@
 @section('konten')
     <div class="mt-2 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
         <div class="flex-1 bg-white p-2 shadow rounded-lg md:w-1/3">
-            <h2 class="text-gray-500 text-lg font-semibold pb-1">Daftar Mahasiswa Aktif</h2>
+            <h2 class="text-gray-500 text-lg font-semibold pb-1">Daftar Mahasiswa Aktif Angkatan</h2>
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
-                <a href="/dashboarddepartment/rekapstatus"
+                <a href="/dashboardadmin/rekapstatus"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Kembali</a>
-                <a href="{{ route('listMhsAktif.pdf', ['tahun' => $tahun]) }}"
+                <a href="{{ route('listMhsAktifoperator.pdf', ['tahun' => $tahun]) }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="_blank">Cetak Rekap</a>
                 <table class="min-w-full mt-3 divide-y divide-gray-200 dark:divide-gray-700">

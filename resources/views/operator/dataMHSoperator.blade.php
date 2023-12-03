@@ -120,7 +120,7 @@
                                 <form id="changeStatus" action="/dashboardadmin/verify/{{ $item->nim }}"
                                     method="POST" class="mt-3">
                                     @csrf
-                                    @method('put')
+                                    @method('PUT')
                                     <select name="status" onchange=selectChange(this.value)>
                                         <option value="Aktif"
                                             {{ $item->status === 'Aktif' ? 'selected' : '' }}>Aktif
@@ -132,7 +132,7 @@
                                             {{ $item->status === 'Cuti' ? 'selected' : '' }}>Cuti
                                         </option>
                                         <option value="Mangkir"
-                                            {{ $item->status === 'NON AKTIF' ? 'selected' : '' }}>Mangkir
+                                            {{ $item->status === 'Mangkir' ? 'selected' : '' }}>Mangkir
                                         </option>
                                         <option value="DO"
                                             {{ $item->status === 'DO' ? 'selected' : '' }}>DO

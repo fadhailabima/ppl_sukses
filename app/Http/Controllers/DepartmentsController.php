@@ -685,6 +685,4 @@ class DepartmentsController extends Controller
         return $pdf->stream('listStatusNonAktif.pdf');
     }
 
-
-
 }

@@ -75,6 +75,27 @@ Route::post('/dashboardadmin/import', [RegisterController::class, 'import'])->na
 Route::get('/dashboardadmin/daftarmahasiswa', [OperatorController::class, 'dataMHS'])->middleware('operator');
 Route::put('/dashboardadmin/verify/{nim}', [OperatorController::class, 'ubahstatus'])->middleware('operator');
 // Route::get('/dashboardadmin/unverify/{nim}', [OperatorController::class, 'nonubahstatus'])->middleware('operator');
+//PKL
+Route::get('/dashboardadmin/rekappkl', [OperatorController::class, 'rekapPKL'])->middleware('operator');
+Route::get('/dashboardadmin/generatedrekapPkl', [OperatorController::class, 'generatedrekapPkl'])->name('rekapPKLoperator.pdf')->middleware('operator');
+Route::get('/dashboardadmin/sudahpkl/{tahun}', [OperatorController::class, 'dataSudahPKL'])->name('sudahpkloperator')->middleware('operator');
+Route::get('/dashboardadmin/belumpkl/{tahun}', [OperatorController::class, 'dataBlmPKL'])->name('belumpkloperator')->middleware('operator');
+Route::get('/dashboardadmin/generatedlistbelumpkl/{tahun}', [OperatorController::class, 'generatedlistBelumPKL'])->name('listBelumPKLoperator.pdf')->middleware('operator');
+Route::get('/dashboardadmin/generatedlistSudahPKL/{tahun}', [OperatorController::class, 'generatePDFSudahPKL'])->name('listSudahPKLoperator.pdf')->middleware('operator');
+//Skripsi
+Route::get('/dashboardadmin/rekapskripsi', [OperatorController::class, 'rekapSkripsi'])->middleware('operator');
+Route::get('/dashboardadmin/generatedrekapSkripsi', [OperatorController::class, 'generatedrekapSkripsi'])->name('rekapSkripsioperator.pdf')->middleware('operator');
+Route::get('/dashboardadmin/sudahskripsi/{tahun}', [OperatorController::class, 'dataSudahSkripsi'])->name('sudahskripsioperator')->middleware('operator');
+Route::get('/dashboardadmin/belumskripsi/{tahun}', [OperatorController::class, 'dataBlmSkripsi'])->name('belumskripsioperator')->middleware('operator');
+Route::get('/dashboardadmin/generatedlistbelumskripsi/{tahun}', [OperatorController::class, 'generatedlistBelumSkripsi'])->name('listBelumSkripsioperator.pdf')->middleware('operator');
+Route::get('/dashboardadmin/generatedlistsudahskripsi/{tahun}', [OperatorController::class, 'generatedlistSudahSkripsi'])->name('listSudahSkripsioperator.pdf')->middleware('operator');
+//Status
+Route::get('/dashboardadmin/rekapstatus', [OperatorController::class, 'rekapStatus'])->middleware('operator');
+Route::get('/dashboardadmin/generatedrekapStatus', [OperatorController::class, 'generatedrekapStatus'])->name('rekapStatusoperator.pdf')->middleware('operator');
+Route::get('/dashboardadmin/aktif/{tahun}', [OperatorController::class, 'MhsAktif'])->name('MhsAktifoperator')->middleware('operator');
+Route::get('/dashboardadmin/generatedlistaktif/{tahun}', [OperatorController::class, 'generatedlistMhsAktif'])->name('listMhsAktifoperator.pdf')->middleware('operator');
+Route::get('/dashboardadmin/nonaktif/{tahun}', [OperatorController::class, 'MhsNonAktif'])->name('MhsNonAktifoperator')->middleware('operator');
+Route::get('/dashboardadmin/generatedlistnonaktif/{tahun}', [OperatorController::class, 'generatedlistMhsNonAktif'])->name('listMhsNonAktifoperator.pdf')->middleware('operator');
 
 
 //Dosen

@@ -66,7 +66,7 @@
                 <a href="/dashboardadmin/rekapskripsi"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Kembali</a>
-                <a href="{{ route('listSudahSkripsi.pdf', ['tahun' => $tahun]) }}"
+                <a href="{{ route('listSudahSkripsioperator.pdf', ['tahun' => $tahun]) }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="_blank">Cetak Rekap</a>
                 <table class="min-w-full mt-3 divide-y divide-gray-200 dark:divide-gray-700">

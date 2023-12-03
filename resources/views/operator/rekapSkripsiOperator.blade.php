@@ -63,7 +63,7 @@
             <div class="my-0.5"></div>
             <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
             <div>
-                <a href="{{ route('rekapSkripsi.pdf') }}"
+                <a href="{{ route('rekapSkripsioperator.pdf') }}"
                     class="text-white bg-blue-500 hover:bg-blue-600 font-medium text-base text-center py-2 px-4 rounded-full"
                     target="">Cetak Rekap</a>
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-3">
@@ -89,10 +89,10 @@
                             @foreach ($tahunRange as $year)
                                 <td class="py-2 text-blue-500 font-medium text-base text-center">
                                     <a
-                                        href="{{ route('sudahskripsi', ['tahun' => $year]) }}">{{ $jumlahMahasiswaSkripsi[$year] }}</a>
+                                        href="{{ route('sudahskripsioperator', ['tahun' => $year]) }}">{{ $jumlahMahasiswaSkripsi[$year] }}</a>
                                 </td>
                                 <td class="py-2 text-blue-500 font-medium text-base text-center">
-                                    <a href="{{ route('belumskripsi', ['tahun' => $year]) }}">{{ $jumlahMahasiswaBlmSkripsi[$year] }}</a>
+                                    <a href="{{ route('belumskripsioperator', ['tahun' => $year]) }}">{{ $jumlahMahasiswaBlmSkripsi[$year] }}</a>
                                 </td>
                             @endforeach
                         </tr>

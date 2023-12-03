@@ -20,7 +20,7 @@
 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="/dashboarddepartment/daftarmahasiswa">
     <i class="fas fa-file-alt mr-2"></i>Data Mahasiswa
 </a>
-<button type="button" class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="/dashboarddepartment/rekap" id="rekapDropdown">
+<button type="button" class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" id="rekapDropdown">
     <i class="fas fa-users mr-2"></i>Rekap Data
     <i class="fas fa-chevron-down text-xs"></i>
 </button>

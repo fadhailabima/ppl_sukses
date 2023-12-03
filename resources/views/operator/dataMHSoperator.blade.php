@@ -60,6 +60,16 @@
 <div class="mt-2 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
     <div class="flex-1 bg-white p-2 shadow rounded-lg md:w-1/3">
         <h2 class="text-gray-500 text-lg font-semibold pb-1">Data Mahasiswa</h2>
+        @if (session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session()->has('gagal'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('gagal') }}
+            </div>
+        @endif
         <div class="my-0.5"></div> <!-- Espacio de separación -->
         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div>
         <div class="flex justify-center my-3">

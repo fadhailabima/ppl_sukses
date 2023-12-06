@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,46 +13,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous">
     </script>
-
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    
 </head>
-
-
 <body style="background-color:#bfdeeb">
+<div class="flex flex-col h-screen">
 
-    <!-- header-->
-
-    <nav class=" navbar navbar-expand-lg navbar-light text-light"
-        style="background-color:#083c7859; box-shadow: 2px 0px rgb(69, 67, 67);">
-        <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> -->
-        <svg xmlns="http://www.w3.org/2000/svg" href="#" id="navbarDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false" width="40" height="40" fill="currentColor"
-            class="bi bi-list ml-3" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-        </svg>
-        </a>
-        <ul class="dropdown-menu text-light" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
-
-        </ul>
-
-        <div class="container">
-            <img src="{{ asset('images/logo.png') }}" alt="logo" width="40" height="40">
-            <div class="container justify-content-left text-left text-light">
-                <h4>Sistem Monitoring Mahasiswa</h4>
-                <h4>UNDIP</h4>
+    <!-- Barra de navegación superior -->
+    <div class="bg-gray-300 text-white shadow w-full p-2 flex items-center justify-between">
+        <div class="flex items-center justify-center w-full">
+            <div class="flex items-center"> <!-- Mostrado en todos los dispositivos -->
+                <img src="https://1.bp.blogspot.com/-tThKR0i2DdQ/XrO4fFiulNI/AAAAAAAAB_s/4_UY2xeR3SsE9_5MGBdvsQtBJgNxf9e_wCLcBGAsYHQ/s1600/Logo%2BUndip%2BUniversitas%2BDiponegoro.png" alt="LogoUNDIP" class="w-16 h-16 mr-2">
+                <h2 class="font-bold text-blue-500 text-xl">Sistem Monitoring Mahasiswa<br>UNDIP</h2>
             </div>
         </div>
-        <div class="me-4 align-items-center flex justify-center text-light" style="text-align:center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 256 256">
-                <path fill="currentColor"
-                    d="m226.53 56.41l-96-32a8 8 0 0 0-5.06 0l-96 32A8 8 0 0 0 24 64v80a8 8 0 0 0 16 0V75.1l33.59 11.19a64 64 0 0 0 20.65 88.05c-18 7.06-33.56 19.83-44.94 37.29a8 8 0 1 0 13.4 8.74C77.77 197.25 101.57 184 128 184s50.23 13.25 65.3 36.37a8 8 0 0 0 13.4-8.74c-11.38-17.46-27-30.23-44.94-37.29a64 64 0 0 0 20.65-88l44.12-14.7a8 8 0 0 0 0-15.18ZM176 120a48 48 0 1 1-86.65-28.45l36.12 12a8 8 0 0 0 5.06 0l36.12-12A47.89 47.89 0 0 1 176 120Zm-48-32.43L57.3 64L128 40.43L198.7 64Z" />
-            </svg>
-            <!-- <li class="nav-item"><a href="profil-mahasiswa.php" class="nav-pills-link justify-content-center text-light"><h5>Mahasiswa</h5></a></li> -->
-            <h5>{{ auth()->user()->mahasiswa->nama }}</h5>
-        </div>
-    </nav>
+    </div>
 
     <!--form-->
     <div class="me-5 ms-5">

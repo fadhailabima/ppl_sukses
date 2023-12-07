@@ -219,9 +219,9 @@ class OperatorController extends Controller
 
         $belumPKL = MHS::where('angkatan', $tahun)
             ->whereDoesntHave('pkl', function ($query) {
-                $query->where('isverified', 0);
+                $query->where('isverified', 1); // Pastikan PKL belum diverifikasi (isverified = 1)
             })
-            ->orWhereDoesntHave('pkl')
+            ->orWhereDoesntHave('pkl') // Pastikan juga bahwa mahasiswa tidak memiliki relasi PKL sama sekali
             ->get();
 
         return view('operator.listBelumPKLoperator', compact('belumPKL', 'tahun', 'dosenwalis', 'namaDosenWali'));
@@ -258,9 +258,9 @@ class OperatorController extends Controller
 
         $belumPKL = MHS::where('angkatan', $tahun)
             ->whereDoesntHave('pkl', function ($query) {
-                $query->where('isverified', 0);
+                $query->where('isverified', 1); // Pastikan PKL belum diverifikasi (isverified = 1)
             })
-            ->orWhereDoesntHave('pkl')
+            ->orWhereDoesntHave('pkl') // Pastikan juga bahwa mahasiswa tidak memiliki relasi PKL sama sekali
             ->get();
 
         // Load view dengan data yang ingin Anda cetak ke PDF
@@ -372,7 +372,7 @@ class OperatorController extends Controller
 
         $belumSkripsi = MHS::where('angkatan', $tahun)
             ->whereDoesntHave('skripsi', function ($query) {
-                $query->where('isverified', 0);
+                $query->where('isverified', 1);
             })
             ->orWhereDoesntHave('skripsi')
             ->get();
@@ -391,7 +391,7 @@ class OperatorController extends Controller
 
         $belumSkripsi = MHS::where('angkatan', $tahun)
             ->whereDoesntHave('skripsi', function ($query) {
-                $query->where('isverified', 0);
+                $query->where('isverified', 1);
             })
             ->orWhereDoesntHave('skripsi')
             ->get();
@@ -584,7 +584,7 @@ class OperatorController extends Controller
         $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
 
         $status = MHS::where('angkatan', $tahun)
-            ->where('status', ['NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia']) // Ganti 'Aktif' dengan status yang diinginkan
+            ->whereIn('status', ['NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia']) // Ganti 'Aktif' dengan status yang diinginkan
             ->select('nim', 'nama', 'angkatan', 'dosen_wali', 'status')
             ->get();
 
@@ -601,7 +601,7 @@ class OperatorController extends Controller
         $namaDosenWali = $dosenwalis ? $dosenwalis->nama : null;
 
         $status = MHS::where('angkatan', $tahun)
-            ->where('status', ['NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia']) // Ganti 'Aktif' dengan status yang diinginkan
+            ->whereIn('status', ['NON AKTIF', 'Cuti', 'Mangkir', 'DO', 'Undur Diri', 'Lulus', 'Meninggal Dunia']) // Ganti 'Aktif' dengan status yang diinginkan
             ->select('nim', 'nama', 'angkatan', 'dosen_wali', 'status')
             ->get();
 

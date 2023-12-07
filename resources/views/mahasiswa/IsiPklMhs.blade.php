@@ -102,19 +102,6 @@
                 </div>
             </div>
             <div class="row justify-content-md-center mb-2">
-                <label for="ipsemester" class="col-sm-2 col-form-label">IP Semester :<sup
-                        class="text-danger">*</sup></label>
-                <div class="col-sm-2">
-                    <input type="text" class="form-control  @error('ipsemester') is-invalid @enderror" id="ipsemester" name="ipsemester" placeholder="IP Semester" required
-                     value="{{ old('ipsemester') }}">
-                    @error('ipsemester')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-            </div>
-            <div class="row justify-content-md-center mb-2">
                 <label for="nilai_pkl" class="col-sm-2 col-form-label">Nilai PKL :<sup
                         class="text-danger">*</sup></label>
                 <div class="col-sm-2">

@@ -205,18 +205,16 @@
                                     ->where('isverified', true)
                                     ->first()
                                 : null;
-                            $pklData = $mahasiswa->pkl
-                                ? $mahasiswa->pkl
+                                $pklData = $mahasiswa
+                                    ->pkl()
                                     ->where('semester', $semester)
                                     ->where('isverified', true)
-                                    ->first()
-                                : null;
-                            $skripsiData = $mahasiswa->skripsi
-                                ? $mahasiswa->skripsi
+                                    ->first();
+                                $skripsiData = $mahasiswa
+                                    ->skripsi()
                                     ->where('semester', $semester)
                                     ->where('isverified', true)
-                                    ->first()
-                                : null;
+                                    ->first();
                         @endphp
                         <ul class="nav nav-tabs" id="semesterTabs">
                             <li class="nav-item">

@@ -6,7 +6,7 @@
     </div>
 </div>
 <div class="mr-2 ">
-    <a href="/dashboardmahasiswa/profile/edit" class="dark:hover:text-primary hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium dark:text-neutral-400/90 text-secondary-inverse">{{ auth()->user()->operator->nama }}</a>
+    <a class="dark:hover:text-primary hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium dark:text-neutral-400/90 text-secondary-inverse">{{ auth()->user()->operator->nama }}</a>
     <span class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">{{ auth()->user()->operator->nip }}</span>
     <span class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">{{ auth()->user()->operator->email }}</span>
     <span class="text-secondary-dark dark:text-stone-500 font-medium block text-[0.85rem]">Fakultas Sains dan Matematika</span>
@@ -197,73 +197,74 @@
         <h2 class="text-gray-500 text-lg font-semibold pb-1">Status Mahasiswa</h2>
         <div class="my-0.5"></div> <!-- Espacio de separación -->
         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div> <!-- Línea con gradiente -->
-        <div class="card" style="width: 250px; height: 250px;">
-            <div id="piechart" style="width: 100%; height: 100%;">
-                <!-- Your IRS content here -->
-            </div>
-        </div>
+        <div class="shadow-lg rounded-lg overflow-hidden w-flex h-60">
+            <canvas class="ml-4 mr-4 py-2" id="chartStatusMhs"></canvas>
+        </div> 
     </div>
     <div class="flex-1 bg-white p-2 shadow rounded-lg md:w-1/3">
         <h2 class="text-gray-500 text-lg font-semibold pb-1">User Level</h2>
         <div class="my-0.5"></div> <!-- Espacio de separación -->
         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div> <!-- Línea con gradiente -->
-        <div class="card" style="width: 250px; height: 250px;">
-            <div id="piechart1" style="width: 100%; height: 100%;">
-                <!-- Your IRS content here -->
-            </div>
-        </div>
+        <div class="shadow-lg rounded-lg overflow-hidden w-flex h-60">
+            <canvas class="ml-4 mr-4 py-2" id="chartUserLevel"></canvas>
+        </div>        
     </div>
 </div>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChart);
+<!-- Required chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    function drawChart() {
+<!-- Chart pie -->
+<script>
+const dataUserLevel = {
+    labels: ["Mahasiswa", "Dosen", "Department", "Operator"],
+    datasets: [
+    {
+        label: "User Level",
+        data: [{{ $mahasiswa }}, {{ $dosen }}, {{ $department }}, {{ $operator }}],
+        backgroundColor: [
+        "#FFEC21",
+        "#378AFF",
+        "#F54F52",
+        "#93F03B"
+        ],
+        hoverOffset: 4,
+    },
+    ],
+};
 
-        var data = google.visualization.arrayToDataTable([
-            ['User', 'Status'],
-            ['Aktif', {{ $useractivecount }}],
-            ['Mangkir', {{ $userMangkircount }}],
-            ['Cuti', {{ $userCuticount }}],
-            ['Lulus', {{ $userLuluscount }}],
-        ]);
+const configPieUser = {
+    type: "pie",
+    data: dataUserLevel,
+    options: {},
+};
 
-        var options = {
-            title: 'Status Mahasiswa'
-        };
+var chartBar = new Chart(document.getElementById("chartUserLevel"), configPieUser);
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+const dataStatusMhs = {
+    labels: ["Aktif", "Mangkir", "Cuti", "Lulus"],
+    datasets: [
+    {
+        label: "Status Mahasiswa",
+        data: [{{ $useractivecount }}, {{ $userMangkircount }}, {{ $userCuticount }}, {{ $userLuluscount }}],
+        backgroundColor: [
+        "#93F03B",
+        "#378AFF",
+        "#F54F52",
+        "#FFEC21"
+        ],
+        hoverOffset: 4,
+    },
+    ],
+};
 
-        chart.draw(data, options);
-    }
+const configPieStatus = {
+    type: "pie",
+    data: dataStatusMhs,
+    options: {},
+};
 
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChart1);
-
-    function drawChart1() {
-
-        var data = google.visualization.arrayToDataTable([
-            ['User', 'Level'],
-            ['Mahasiswa', {{ $mahasiswa }}],
-            ['Dosen', {{ $dosen }}],
-            ['Department', {{ $department }}],
-            ['Operator', {{ $operator }}],
-        ]);
-
-        var options = {
-            title: 'User Level'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
-
-        chart.draw(data, options);
-    }
+var chartBar = new Chart(document.getElementById("chartStatusMhs"), configPieStatus);
 </script>
 
 @endsection

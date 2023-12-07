@@ -54,7 +54,7 @@
                 {{ session('gagal') }}
             </div>
         @endif
-        <form class="user justify-content-md-center flex-column align-items-center" method="POST" action="/dashboardmahasiswa/IsiIRSMahasiswa"
+        <form class="user justify-content-md-center flex-column align-items-center" method="POST" action="/dashboardmahasiswa/IsiSkripsiMahasiswa"
             enctype="multipart/form-data">
             @csrf
             <div class="row justify-content-md-center mb-2">

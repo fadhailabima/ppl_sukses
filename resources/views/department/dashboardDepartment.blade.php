@@ -84,31 +84,17 @@
         <h2 class="text-gray-500 text-lg font-semibold pb-1">IRS Mahasiswa</h2>
         <div class="my-0.5"></div> <!-- Espacio de separación -->
         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div> <!-- Línea con gradiente -->
-        <div class="card" style="width: 250px; height: 250px;">
-            <div id="piechartirs" style="width: 100%; height: 100%;">
-                <!-- Your IRS content here -->
-            </div>
-            <div class="mt-4 mb-4 ml-4">
-                <a href=""
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">IRS
-                    Mahasiswa</a>
-            </div>
-        </div>
+        <div class="shadow-lg rounded-lg overflow-hidden w-flex h-60">
+            <canvas class="ml-4 mr-4 py-2" id="chartStatusIRS"></canvas>
+        </div> 
     </div>
     <div class="flex-1 bg-white p-2 shadow rounded-lg md:w-1/3">
         <h2 class="text-gray-500 text-lg font-semibold pb-1">KHS Mahasiswa</h2>
         <div class="my-0.5"></div> <!-- Espacio de separación -->
         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div> <!-- Línea con gradiente -->
-        <div class="card" style="width: 250px; height: 250px;">
-            <div id="piechartkhs" style="width: 100%; height: 100%;">
-                <!-- Your IRS content here -->
-            </div>
-            <div class="mt-4 mb-4 ml-4">
-                <a href=""
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">KHS
-                    Mahasiswa</a>
-            </div>
-        </div>
+        <div class="shadow-lg rounded-lg overflow-hidden w-flex h-60">
+            <canvas class="ml-4 mr-4 py-2" id="chartStatusKHS"></canvas>
+        </div> 
     </div>
 </div>
 
@@ -117,126 +103,125 @@
         <h2 class="text-gray-500 text-lg font-semibold pb-1">PKL Mahasiswa</h2>
         <div class="my-0.5"></div> <!-- Espacio de separación -->
         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div> <!-- Línea con gradiente -->
-        <div class="card" style="width: 250px; height: 250px;">
-            <div id="piechartpkl" style="width: 100%; height: 100%;">
-                <!-- Your IRS content here -->
-            </div>
-            <div class="mt-4 mb-4 ml-4">
-                <a href=""
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">PKL
-                    Mahasiswa</a>
-            </div>
+        <div class="shadow-lg rounded-lg overflow-hidden w-flex h-60">
+            <canvas class="ml-4 mr-4 py-2" id="chartStatusPKL"></canvas>
         </div>
     </div>
     <div class="flex-1 bg-white p-2 shadow rounded-lg md:w-1/3">
         <h2 class="text-gray-500 text-lg font-semibold pb-1">Skripsi Mahasiswa</h2>
         <div class="my-0.5"></div> <!-- Espacio de separación -->
         <div class="bg-gradient-to-r from-cyan-300 to-cyan-500 h-px mb-3"></div> <!-- Línea con gradiente -->
-        <div class="card" style="width: 250px; height: 250px;">
-            <div id="piechartskripsi" style="width: 100%; height: 100%;">
-                <!-- Your IRS content here -->
-            </div>
-            <div class="mt-4 mb-4 ml-4">
-                <a href=""
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Skripsi
-                    Mahasiswa</a>
-            </div>
+        <div class="shadow-lg rounded-lg overflow-hidden w-flex h-60">
+            <canvas class="ml-4 mr-4 py-2" id="chartStatusSkripsi"></canvas>
         </div>
     </div>
 </div>
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChartirs);
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart pie -->
+<script>
 
-    function drawChartirs() {
+// Pie Chart IRS
+const dataChartIRS = {
+    labels: ["Belum Disetujui", "Sudah Disetujui", "Belum Mengisi"],
+    datasets: [
+    {
+        label: "Status IRS",
+        data: [{{ $irsCountNotVerified }}, {{ $irsCountVerified }}, {{ max(0, $irsbelum) }}],
+        backgroundColor: [
+        "#FFEC21",
+        "#378AFF",
+        "#F54F52",
+        ],
+        hoverOffset: 4,
+    },
+    ],
+};
 
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Belum Disetujui', {{ $irsCountNotVerified }}],
-            ['Sudah Disetujui', {{ $irsCountVerified }}],
-            ['Belum mengisi', {{ max(0, $irsbelum) }}],
-        ]);
+const configDataIRS = {
+    type: "pie",
+    data: dataChartIRS,
+    options: {},
+};
 
-        var options = {
-            title: 'Data IRS Mahasiswa'
-        };
+var chartBar = new Chart(document.getElementById("chartStatusIRS"), configDataIRS);
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechartirs'));
 
-        chart.draw(data, options);
-    }
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChartkhs);
+// Pie Chart KHS
+const dataChartKHS = {
+    labels: ["Belum Disetujui", "Sudah Disetujui", "Belum Mengisi"],
+    datasets: [
+    {
+        label: "Status KHS",
+        data: [{{ $khsCountNotVerified }}, {{ $khsCountVerified }}, {{ $khsbelum }}],
+        backgroundColor: [
+        "#FFEC21",
+        "#378AFF",
+        "#F54F52",
+        ],
+        hoverOffset: 4,
+    },
+    ],
+};
 
-    function drawChartkhs() {
+const configDataKHS = {
+    type: "pie",
+    data: dataChartKHS,
+    options: {},
+};
 
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Belum Disetujui', {{ $khsCountNotVerified }}],
-            ['Sudah Disetujui', {{ $khsCountVerified }}],
-            ['Belum mengisi', {{ $khsbelum }}],
-        ]);
+var chartBar = new Chart(document.getElementById("chartStatusKHS"), configDataKHS);
 
-        var options = {
-            title: 'Data KHS Mahasiswa'
-        };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechartkhs'));
+// Pie Chart PKL
+const dataChartPKL = {
+    labels: ["Belum Disetujui", "Sudah Disetujui", "Belum Mengisi"],
+    datasets: [
+    {
+        label: "Status PKL",
+        data: [{{ $pklCountNotVerified }}, {{ $pklCountVerified }}, {{ $pklbelum }}],
+        backgroundColor: [
+        "#FFEC21",
+        "#378AFF",
+        "#F54F52",
+        ],
+        hoverOffset: 4,
+    },
+    ],
+};
 
-        chart.draw(data, options);
-    }
+const configDataPKL = {
+    type: "pie",
+    data: dataChartPKL,
+    options: {},
+};
 
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChartpkl);
+var chartBar = new Chart(document.getElementById("chartStatusPKL"), configDataPKL);
 
-    function drawChartpkl() {
+// Pie Chart Skripsi
+const dataChartSkripsi = {
+    labels: ["Belum Disetujui", "Sudah Disetujui", "Belum Mengisi"],
+    datasets: [
+    {
+        label: "Status Skripsi",
+        data: [{{ $skripsicountnotverified }}, {{ $skripsicountverified }}, {{ $skripsibelum }}],
+        backgroundColor: [
+        "#FFEC21",
+        "#378AFF",
+        "#F54F52",
+        ],
+        hoverOffset: 4,
+    },
+    ],
+};
 
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Belum Disetujui', {{ $pklCountNotVerified }}],
-            ['Sudah Disetujui', {{ $pklCountVerified }}],
-            ['Belum mengisi', {{ $pklbelum }}],
-        ]);
+const configDataSkripsi = {
+    type: "pie",
+    data: dataChartSkripsi,
+    options: {},
+};
 
-        var options = {
-            title: 'Data PKL Mahasiswa'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechartpkl'));
-
-        chart.draw(data, options);
-    }
-
-    google.charts.load('current', {
-        'packages': ['corechart']
-    });
-    google.charts.setOnLoadCallback(drawChartskripsi);
-
-    function drawChartskripsi() {
-
-        var data = google.visualization.arrayToDataTable([
-            ['Task', 'Hours per Day'],
-            ['Belum Disetujui', {{ $skripsicountnotverified }}],
-            ['Sudah Disetujui', {{ $skripsicountverified }}],
-            ['Belum mengisi', {{ $skripsibelum }}],
-        ]);
-
-        var options = {
-            title: 'Data Skripsi Mahasiswa'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechartskripsi'));
-
-        chart.draw(data, options);
-    }
+var chartBar = new Chart(document.getElementById("chartStatusSkripsi"), configDataSkripsi);
 </script>
 
 @endsection

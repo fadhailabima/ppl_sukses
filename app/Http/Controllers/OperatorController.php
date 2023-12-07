@@ -457,7 +457,7 @@ class OperatorController extends Controller
             ->toArray();
 
         $minYear = 2017; // Tahun terkecil yang Anda inginkan
-        $maxYear = 2022; // Tahun terbesar yang Anda inginkan
+        $maxYear = 2023; // Tahun terbesar yang Anda inginkan
 
         // Generate range tahun dari minYear sampai maxYear
         $tahunRange = range($minYear, $maxYear);
@@ -503,7 +503,7 @@ class OperatorController extends Controller
             ->toArray();
 
         $minYear = 2017; // Tahun terkecil yang Anda inginkan
-        $maxYear = 2022; // Tahun terbesar yang Anda inginkan
+        $maxYear = 2023; // Tahun terbesar yang Anda inginkan
 
         $tahunRange = range($minYear, $maxYear);
 
